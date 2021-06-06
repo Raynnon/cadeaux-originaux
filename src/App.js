@@ -1,7 +1,7 @@
-import "./App.scss";
 import Header from "./components/header/Header";
-
 import Container from "react-bootstrap/Container";
+
+import "./App.scss";
 
 function App() {
   return (
