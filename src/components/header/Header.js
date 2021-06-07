@@ -7,12 +7,12 @@ import magnifyingGlass from "./magnifying-glass.png";
 
 function Header() {
   return (
-    <header>
+    <header style={{ marginLeft: "30px", marginRight: "30px" }}>
       <Image
         src={cadeauxOriginauxLogo}
         alt="cadeaux-originaux-logo"
         className="position-absolute"
-        style={{ height: "110px" }}
+        style={{ height: "75px" }}
       />
       <Row className="mx-auto mt-3 justify-content-center">
         <Nav activeKey="/home">
