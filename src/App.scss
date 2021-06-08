@@ -34,3 +34,11 @@ sub {
   color: #646464;
   top: 0;
 }
+
+.dropdown-toggle > p {
+  margin-bottom: 0;
+}
+
+.dropdown > .dropdown-toggle::after {
+  display: none;
+}

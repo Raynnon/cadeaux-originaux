@@ -12,3 +12,39 @@
   padding-left: 60px;
   padding-right: 60px;
 }
+
+/* SEARCH BAR */
+
+.dropdown-search {
+  position: relative;
+}
+
+@media screen and (max-width: 678px) {
+  #search {
+    display: none;
+  }
+}
+
+.dropdown-search::after {
+  content: "";
+  height: 50%;
+  width: 1px;
+
+  position: absolute;
+  right: 0;
+  top: 25%;
+
+  background-color: #ebebeb;
+}
+
+.dropdown-toggle-search {
+  padding: 0 50px !important;
+}
+
+.dropdown-toggle-search:hover {
+  background-color: #ebebeb;
+}
+
+.dropdown-toggle-search:focus {
+  box-shadow: none !important;
+}
