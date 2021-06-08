@@ -180,7 +180,7 @@ function Home() {
       </section>
       <section className="text-center mt-5">
         <h2>
-          <span className="text-warning">Meilleurs</span> produits
+          <span className="text-warning">Meilleures</span> ventes
         </h2>
         <Row className="mt-4">
           <Col>

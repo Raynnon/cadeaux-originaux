@@ -1,0 +1,14 @@
+th,
+td {
+  width: 50px !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+
+td > a {
+  color: white;
+}
+
+td > a:hover {
+  color: #646464;
+}
