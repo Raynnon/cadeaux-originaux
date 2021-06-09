@@ -1,8 +1,8 @@
+import Searchbox from "./searchbox/Searchbox";
 import "./home.css";
 
-import { Container, Row, Image, Button, Dropdown, Col } from "react-bootstrap";
+import { Container, Row, Image, Button, Col } from "react-bootstrap";
 
-import magnifyingGlass from "./images/magnifying-glass.png";
 import birthday from "./images/birthday.png";
 import cake from "./images/cake.png";
 import hearts from "./images/two-hearts.png";
@@ -15,73 +15,8 @@ import basket from "./images/basket.png";
 function Home() {
   return (
     <Container fluid>
-      <Row id="search" className="mt-3 justify-content-center">
-        <ul
-          className="d-flex px-0 shadow align-items-center"
-          style={{ border: "1px solid #ebebeb", borderRadius: "50px" }}
-        >
-          <li>
-            <Dropdown className="dropdown-search">
-              <Dropdown.Toggle
-                variant="white"
-                className="rounded-pill dropdown-toggle-search py-2"
-              >
-                <p>Pour qui?</p>
-                <sub>Tout le monde</sub>
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </li>
-          <li>
-            <Dropdown className="dropdown-search">
-              <Dropdown.Toggle
-                variant="white"
-                className="rounded-pill dropdown-toggle-search py-2"
-              >
-                <p>Prix</p>
-                <sub>Tous les prix</sub>
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </li>
-          <li>
-            <Dropdown className="dropdown-search">
-              <Dropdown.Toggle
-                variant="white"
-                className="rounded-pill dropdown-toggle-search py-2"
-              >
-                <p>Événement</p>
-                <sub>Toutes les occasions</sub>
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </li>
-          <li>
-            <div
-              className="bg-warning mx-3 rounded-circle d-flex align-items-center justify-content-center"
-              style={{ width: "45px", height: "45px" }}
-            >
-              <Image
-                src={magnifyingGlass}
-                alt="loupe"
-                style={{ width: "20px" }}
-              />
-            </div>
-          </li>
-        </ul>
-      </Row>
+      <Searchbox />
+      {/* BANNER */}
       <Row id="banner" className="mt-5">
         <Col
           xl={6}
