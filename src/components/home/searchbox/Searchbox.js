@@ -5,7 +5,9 @@ import { Row, Image, Dropdown, Form } from "react-bootstrap";
 import magnifyingGlass from "./magnifying-glass.png";
 
 function Searchbox() {
+  const [genreRadio, setGenreRadio] = useState("Tout le monde");
   const [typeRadio, setTypeRadio] = useState("");
+  const [priceRadio, setPriceRadio] = useState("Tous les prix");
 
   const typePossibility = [
     "Maman",
@@ -49,9 +51,23 @@ function Searchbox() {
     }
   };
 
+  const onGenreRadioChange = (e) => {
+    setGenreRadio(e.target.value);
+  };
+
   const onTypeRadioChange = (e) => {
     setTypeRadio(e.target.value);
   };
+
+  const onPriceRadioChange = (e) => {
+    setPriceRadio(e.target.value);
+  };
+
+  useEffect(() => {
+    setTypeRadio("");
+  }, [genreRadio]);
+
+  console.log(genreRadio, typeRadio);
 
   return (
     <Row id="search" className="mt-3 justify-content-center">
@@ -65,11 +81,17 @@ function Searchbox() {
               <Dropdown.Toggle
                 variant="white"
                 className="rounded-pill dropdown-toggle-search py-2"
+                style={{ width: "282px" }}
               >
                 <p>Pour qui?</p>
-                <sub>Tout le monde</sub>
+                <sub>
+                  {typeRadio ? genreRadio + ", " + typeRadio : genreRadio}
+                </sub>
               </Dropdown.Toggle>
-              <Dropdown.Menu className="d-flex flex-direction-row px-5">
+              <Dropdown.Menu
+                className="d-flex flex-direction-row px-5"
+                style={{ width: "418px" }}
+              >
                 <div className="mr-4">
                   <h4>Genre</h4>
                   {genrePossibility.map((gender) => {
@@ -79,17 +101,23 @@ function Searchbox() {
                         label={gender}
                         value={gender}
                         name="genre"
-                        onChange={(e) => onTypeRadioChange(e)}
+                        onChange={(e) => onGenreRadioChange(e)}
                       />
                     );
                   })}
                 </div>
-                {recipient(typeRadio) ? (
+                {recipient(genreRadio) ? (
                   <div className="ml-4">
                     <h4>Type</h4>
-                    {recipient(typeRadio).map((genre) => {
+                    {recipient(genreRadio).map((type) => {
                       return (
-                        <Form.Check type="radio" label={genre} name="type" />
+                        <Form.Check
+                          type="radio"
+                          label={type}
+                          value={type}
+                          name="type"
+                          onChange={(e) => onTypeRadioChange(e)}
+                        />
                       );
                     })}
                   </div>
@@ -102,14 +130,40 @@ function Searchbox() {
               <Dropdown.Toggle
                 variant="white"
                 className="rounded-pill dropdown-toggle-search py-2"
+                style={{ width: "170px" }}
               >
                 <p>Prix</p>
-                <sub>Tous les prix</sub>
+                <sub>{priceRadio}</sub>
               </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+              <Dropdown.Menu className="px-5" style={{ width: "205px" }}>
+                <Form.Check
+                  type="radio"
+                  label="€"
+                  value="€"
+                  name="prix"
+                  onChange={(e) => onPriceRadioChange(e)}
+                />
+                <Form.Check
+                  type="radio"
+                  label="€€"
+                  value="€€"
+                  name="prix"
+                  onChange={(e) => onPriceRadioChange(e)}
+                />
+                <Form.Check
+                  type="radio"
+                  label="€€€"
+                  value="€€€"
+                  name="prix"
+                  onChange={(e) => onPriceRadioChange(e)}
+                />
+                <Form.Check
+                  type="radio"
+                  label="Tous les prix"
+                  value="Tous les prix"
+                  name="prix"
+                  onChange={(e) => onPriceRadioChange(e)}
+                />
               </Dropdown.Menu>
             </Dropdown>
           </li>
