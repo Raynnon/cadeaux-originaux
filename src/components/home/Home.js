@@ -18,21 +18,17 @@ function Home() {
       <Searchbox />
       {/* BANNER */}
       <Row id="banner" className="mt-5">
-        <Col
-          xl={6}
-          className="d-flex justify-content-center flex-column"
-          style={{ paddingLeft: "20%" }}
-        >
-          <h1>Anniversaires</h1>
-          <p className="text-muted" style={{ fontSize: "1.3rem" }}>
+        <Col xl={6} className="d-flex justify-content-center flex-column">
+          <h1 id="banner-title">Anniversaires</h1>
+          <p id="banner-sub" className="text-muted">
             Découvrez notre sélection de cadeaux originaux
           </p>
           <Button
             variant="warning"
-            className="text-white rounded-pill"
+            className="text-white rounded-pill font-weight-bold"
             style={{ width: "150px", height: "50px" }}
           >
-            Découvrir &gt;
+            Découvrir!
           </Button>
         </Col>
         <Col
@@ -55,29 +51,69 @@ function Home() {
         </Col>
       </Row>
       <Row id="occasions" className="bg-secondary text-center py-4">
-        <Col>
-          <Image src={cake} alt="birthday-cake-logo" />
-          <h3 style={{ color: "#FF2929" }}>Anniversaire</h3>
+        <Col xs={4} lg={2}>
+          <a href="#home">
+            <div>
+              <Image
+                src={cake}
+                alt="birthday-cake-logo"
+                className="logo-occasion"
+              />
+              <h3 style={{ color: "#FF2929" }}>Anniversaire</h3>
+            </div>
+          </a>
         </Col>
-        <Col>
-          <Image src={hearts} alt="two-hearts-logo" />
-          <h3 style={{ color: "#FCE145" }}>Romantique</h3>
+        <Col xs={4} lg={2}>
+          <a href="#home">
+            <div>
+              <Image
+                src={hearts}
+                alt="two-hearts-logo"
+                className="logo-occasion"
+              />
+              <h3 style={{ color: "#FCE145" }}>Romantique</h3>
+            </div>
+          </a>
         </Col>
-        <Col>
-          <Image src={baby} alt="pacifier-baby-logo" />
-          <h3 style={{ color: "#76FD3C" }}>Naissance</h3>
+        <Col xs={4} lg={2}>
+          <a href="#home">
+            <div>
+              <Image
+                src={baby}
+                alt="pacifier-baby-logo"
+                className="logo-occasion"
+              />
+              <h3 style={{ color: "#76FD3C" }}>Naissance</h3>
+            </div>
+          </a>
         </Col>
-        <Col>
-          <Image src={mariage} alt="wedding-logo" />
-          <h3 style={{ color: "#4AFCAC" }}>Mariage</h3>
+        <Col xs={4} lg={2}>
+          <a href="#home">
+            <div>
+              <Image
+                src={mariage}
+                alt="wedding-logo"
+                className="logo-occasion"
+              />
+              <h3 style={{ color: "#4AFCAC" }}>Mariage</h3>
+            </div>
+          </a>
         </Col>
-        <Col>
-          <Image src={smiley} alt="smiley-logo" />
-          <h3 style={{ color: "#29A9FF" }}>Remerciements</h3>
+        <Col xs={4} lg={2}>
+          <a href="#home">
+            <div>
+              <Image src={smiley} alt="smiley-logo" className="logo-occasion" />
+              <h3 style={{ color: "#29A9FF" }}>Remerciements</h3>
+            </div>
+          </a>
         </Col>
-        <Col>
-          <Image src={joker} alt="joker-logo" />
-          <h3 style={{ color: "#5E29FF" }}>Fun</h3>
+        <Col xs={4} lg={2}>
+          <a href="#home">
+            <div>
+              <Image src={joker} alt="joker-logo" className="logo-occasion" />
+              <h3 style={{ color: "#5E29FF" }}>Fun</h3>
+            </div>
+          </a>
         </Col>
       </Row>
       <section className="text-center mt-5">

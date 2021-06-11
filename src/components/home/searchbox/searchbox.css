@@ -1,3 +1,39 @@
+/* * SEARCH BAR */
+
+.dropdown-search {
+  position: relative;
+}
+
+@media screen and (max-width: 799px) {
+  #search {
+    display: none;
+  }
+}
+
+.dropdown-search::after {
+  content: "";
+  height: 50%;
+  width: 1px;
+
+  position: absolute;
+  right: 0;
+  top: 25%;
+
+  background-color: #ebebeb;
+}
+
+.dropdown-toggle-search {
+  padding: 0 50px !important;
+}
+
+.dropdown-toggle-search:hover {
+  background-color: #ebebeb;
+}
+
+.dropdown-toggle-search:focus {
+  box-shadow: none !important;
+}
+
 input[type="radio"] {
   color: white;
 }

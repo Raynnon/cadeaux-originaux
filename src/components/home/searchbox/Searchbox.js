@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import "./searchbox.css";
 
-import { Row, Image, Dropdown, Form } from "react-bootstrap";
+import { Row, Image, Dropdown, Form, Button } from "react-bootstrap";
 import magnifyingGlass from "./magnifying-glass.png";
 
 function Searchbox() {
   const [genreRadio, setGenreRadio] = useState("Tout le monde");
   const [typeRadio, setTypeRadio] = useState("");
   const [priceRadio, setPriceRadio] = useState("Tous les prix");
+  const [eventRadio, setEventRadio] = useState("Toutes les occasions");
 
   const typePossibility = [
     "Maman",
@@ -27,6 +28,26 @@ function Searchbox() {
     "Bébé",
     "Animal",
     "Peu importe",
+  ];
+
+  const opportunityPossibility = [
+    "Anniversaire",
+    "Romantique",
+    "Mariage",
+    "Remerciements",
+    "Se faire Pardonner",
+    "Départ en retraite",
+    "Crémaillère",
+    "Cadeau rigolo",
+  ];
+  const partyPossibility = [
+    "Noël",
+    "Fête des mères",
+    "Fête des pères",
+    "Saint Valentin",
+    "Fête des grands mères",
+    "Pâques",
+    "Halloween",
   ];
 
   const recipient = (genre) => {
@@ -51,23 +72,9 @@ function Searchbox() {
     }
   };
 
-  const onGenreRadioChange = (e) => {
-    setGenreRadio(e.target.value);
-  };
-
-  const onTypeRadioChange = (e) => {
-    setTypeRadio(e.target.value);
-  };
-
-  const onPriceRadioChange = (e) => {
-    setPriceRadio(e.target.value);
-  };
-
   useEffect(() => {
     setTypeRadio("");
   }, [genreRadio]);
-
-  console.log(genreRadio, typeRadio);
 
   return (
     <Row id="search" className="mt-3 justify-content-center">
@@ -101,7 +108,7 @@ function Searchbox() {
                         label={gender}
                         value={gender}
                         name="genre"
-                        onChange={(e) => onGenreRadioChange(e)}
+                        onChange={(e) => setGenreRadio(e.target.value)}
                       />
                     );
                   })}
@@ -116,7 +123,7 @@ function Searchbox() {
                           label={type}
                           value={type}
                           name="type"
-                          onChange={(e) => onTypeRadioChange(e)}
+                          onChange={(e) => setTypeRadio(e.target.value)}
                         />
                       );
                     })}
@@ -141,28 +148,28 @@ function Searchbox() {
                   label="€"
                   value="€"
                   name="prix"
-                  onChange={(e) => onPriceRadioChange(e)}
+                  onChange={(e) => setPriceRadio(e.target.value)}
                 />
                 <Form.Check
                   type="radio"
                   label="€€"
                   value="€€"
                   name="prix"
-                  onChange={(e) => onPriceRadioChange(e)}
+                  onChange={(e) => setPriceRadio(e.target.value)}
                 />
                 <Form.Check
                   type="radio"
                   label="€€€"
                   value="€€€"
                   name="prix"
-                  onChange={(e) => onPriceRadioChange(e)}
+                  onChange={(e) => setPriceRadio(e.target.value)}
                 />
                 <Form.Check
                   type="radio"
                   label="Tous les prix"
                   value="Tous les prix"
                   name="prix"
-                  onChange={(e) => onPriceRadioChange(e)}
+                  onChange={(e) => setPriceRadio(e.target.value)}
                 />
               </Dropdown.Menu>
             </Dropdown>
@@ -172,14 +179,51 @@ function Searchbox() {
               <Dropdown.Toggle
                 variant="white"
                 className="rounded-pill dropdown-toggle-search py-2"
+                style={{ width: "221px" }}
               >
                 <p>Événement</p>
-                <sub>Toutes les occasions</sub>
+                <sub>{eventRadio}</sub>
               </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+              <Dropdown.Menu className="px-5" style={{ width: "475px" }}>
+                <div className="d-flex flex-direction-row">
+                  <div className="mr-4">
+                    <h4>Occasion</h4>
+                    {opportunityPossibility.map((item) => {
+                      return (
+                        <Form.Check
+                          type="radio"
+                          label={item}
+                          value={item}
+                          name="event"
+                          onChange={(e) => setEventRadio(e.target.value)}
+                        />
+                      );
+                    })}
+                  </div>
+
+                  <div className="ml-4">
+                    <h4>Type</h4>
+                    {partyPossibility.map((item) => {
+                      return (
+                        <Form.Check
+                          type="radio"
+                          label={item}
+                          value={item}
+                          name="event"
+                          onChange={(e) => setEventRadio(e.target.value)}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
+                <Button
+                  type="button"
+                  variant="warning"
+                  className="w-100 text-white mt-3"
+                  onClick={() => setEventRadio("Peu importe")}
+                >
+                  Peu importe
+                </Button>
               </Dropdown.Menu>
             </Dropdown>
           </li>
@@ -188,11 +232,18 @@ function Searchbox() {
               className="bg-warning mx-3 rounded-circle d-flex align-items-center justify-content-center"
               style={{ width: "45px", height: "45px" }}
             >
-              <Image
-                src={magnifyingGlass}
-                alt="loupe"
-                style={{ width: "20px" }}
-              />
+              <Button
+                type="submit"
+                variant="warning"
+                className="rounded-circle"
+                style={{ width: "45px", height: "45px" }}
+              >
+                <Image
+                  src={magnifyingGlass}
+                  alt="loupe"
+                  style={{ width: "20px" }}
+                />
+              </Button>
             </div>
           </li>
         </ul>

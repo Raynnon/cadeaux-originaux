@@ -1,50 +1,58 @@
+/* * Searchbox */
 #occasions h3 {
   margin-top: 10px;
   margin-bottom: 0;
   font-size: 1.1rem;
 }
 
-#occasions image {
-  height: 64px;
+/* * Banner */
+#banner {
+  padding-left: 20%;
 }
 
+#banner-title {
+  font-size: 2vw;
+}
+
+#banner-sub {
+  font-size: 1.5vw;
+}
+
+@media screen and (max-width: 1199px) {
+  #banner {
+    text-align: center;
+    padding-left: 0;
+  }
+
+  #banner button {
+    margin: 0 auto 30px auto;
+  }
+
+  #banner-title {
+    font-size: 1.3rem;
+  }
+
+  #banner-sub {
+    font-size: 1rem;
+  }
+}
+
+/* * Presentation */
 #presentation {
   padding-left: 60px;
   padding-right: 60px;
 }
 
-/* * SEARCH BAR */
-
-.dropdown-search {
-  position: relative;
+/* * Occasions */
+#occasions > .col > a:hover {
+  text-decoration: none;
 }
 
-@media screen and (max-width: 678px) {
-  #search {
-    display: none;
-  }
+.logo-occasion {
+  height: 52px;
 }
 
-.dropdown-search::after {
-  content: "";
-  height: 50%;
-  width: 1px;
-
-  position: absolute;
-  right: 0;
-  top: 25%;
-
-  background-color: #ebebeb;
-}
-
-.dropdown-toggle-search {
-  padding: 0 50px !important;
-}
-
-.dropdown-toggle-search:hover {
-  background-color: #ebebeb;
-}
-
-.dropdown-toggle-search:focus {
-  box-shadow: none !important;
+#occasions > .col > a:hover {
+  transform: scale(1.1);
+  text-decoration: none;
 }
