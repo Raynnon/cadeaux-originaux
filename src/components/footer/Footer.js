@@ -1,7 +1,5 @@
 import "./footer.css";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Table from "react-bootstrap/Table";
+import { Row, Col } from "react-bootstrap";
 
 function Footer() {
   const year = () => {
@@ -9,182 +7,109 @@ function Footer() {
     return today.getFullYear();
   };
 
+  const genre = [
+    "Femme",
+    "Homme",
+    "Fille",
+    "Garçon",
+    "Bébé",
+    "Animal",
+    "Peu importe",
+  ];
+
+  const type = [
+    "Maman",
+    "Papa",
+    "Soeur",
+    "Frère",
+    "Petite copain / copine",
+    "Ami / Amie",
+    "Collègue",
+    "Peu importe",
+  ];
+
+  const prices = ["Pas cher", "Intermédiaire", "Cher", "Peu importe"];
+
+  const occasion = [
+    "Anniversaire",
+    "Romantique",
+    "Mariage",
+    "Remerciements",
+    "Se faire pardonner",
+    "Départ en retraite",
+    "Crémaillère",
+    "Cadeau rigolo",
+  ];
+
+  const party = [
+    "Noël",
+    "Fête des mères",
+    "Fête des pères",
+    "Fête des grands mères",
+    "Saint Valentin",
+    "Pâques",
+    "Halloween",
+  ];
+
   return (
     <footer className="text-white text-center">
       <Row className="bg-primary pt-4">
-        <Col>
-          <h5>Nouveau</h5>
-          <h5>Meilleures ventes</h5>
+        <Col xs={6} md={4}>
+          <a href="#home">
+            <h5>Nouveau</h5>
+          </a>
+          <a href="#home">
+            <h5>Meilleures ventes</h5>
+          </a>
+
+          <h5 className="mt-5">Prix</h5>
+          <div className="d-flex flex-column">
+            {prices.map((item) => {
+              return <a href="#link">{item}</a>;
+            })}
+          </div>
         </Col>
-        <Col>
+        <Col xs={6} md={4}>
           <h5>Pour qui?</h5>
-          <Table className="mx-auto mx-5 text-white">
-            <thead>
-              <tr>
-                <th>Genre</th>
-                <th>Type</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <a href="#link">Femme</a>
-                </td>
-                <td>
-                  <a href="#link">Maman</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="#link">Homme</a>
-                </td>
-                <td>
-                  <a href="#link">Papa</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="#link">Fille</a>
-                </td>
-                <td>
-                  <a href="#link">Soeur</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="#link">Garçon</a>
-                </td>
-                <td>
-                  <a href="#link">Frère</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="#link">Bébé</a>
-                </td>
-                <td>
-                  <a href="#link">Petite copine</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="#link">Animal</a>
-                </td>
-                <td>
-                  <a href="#link">Petit copain</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="#link">Peu importe</a>
-                </td>
-                <td>
-                  <a href="#link">Ami</a>
-                </td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>
-                  <a href="#link">Amie</a>
-                </td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>
-                  <a href="#link">Collègue</a>
-                </td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>
-                  <a href="#link">Peu importe</a>
-                </td>
-              </tr>
-            </tbody>
-          </Table>
+          <Row>
+            <Col>
+              <h6>Genre</h6>
+              <div className="d-flex flex-column">
+                {genre.map((item) => {
+                  return <a href="#link">{item}</a>;
+                })}
+              </div>
+            </Col>
+            <Col>
+              <h6>Type</h6>
+              <div className="d-flex flex-column">
+                {type.map((item) => {
+                  return <a href="#link">{item}</a>;
+                })}
+              </div>
+            </Col>
+          </Row>
         </Col>
-        <Col>
+        <Col xs={12} md={4}>
           <h5>Événement</h5>
-          <Table className="mx-auto mx-5 text-white">
-            <thead>
-              <tr>
-                <th>Occasion</th>
-                <th>Fête</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <a href="#link">Anniversaire</a>
-                </td>
-                <td>
-                  <a href="#link">Noël</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="#link">Romantique</a>
-                </td>
-                <td>
-                  <a href="#link">Fête des mères</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="#link">Mariage</a>
-                </td>
-                <td>
-                  <a href="#link">Fête des pères</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="#link">Remerciements</a>
-                </td>
-                <td>
-                  <a href="#link">Saint Valentin</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="#link">Se faire pardonner</a>
-                </td>
-                <td>
-                  <a href="#link">Fête des grands mères</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="#link">Départ en retraite</a>
-                </td>
-                <td>
-                  <a href="#link">Pâques</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="#link">Crémaillère</a>
-                </td>
-                <td>
-                  <a href="#link">Halloween</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="#link">Cadeau Rigolo</a>
-                </td>
-                <td>
-                  <a href="#link">Peu importe</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="#link">Peu importe</a>
-                </td>
-                <td></td>
-              </tr>
-            </tbody>
-          </Table>
+          <Row>
+            <Col>
+              <h6>Occasion</h6>
+              <div className="d-flex flex-column">
+                {occasion.map((item) => {
+                  return <a href="#link">{item}</a>;
+                })}
+              </div>
+            </Col>
+            <Col>
+              <h6>Fête</h6>
+              <div className="d-flex flex-column">
+                {party.map((item) => {
+                  return <a href="#link">{item}</a>;
+                })}
+              </div>
+            </Col>
+          </Row>
         </Col>
       </Row>
       <Row className="bg-primary pt-4">

@@ -44,15 +44,34 @@
 }
 
 /* * Occasions */
-#occasions > .col > a:hover {
-  text-decoration: none;
-}
-
 .logo-occasion {
   height: 52px;
 }
 
-#occasions > .col > a:hover {
+.occasion {
+  margin: 24px 0;
+}
+.occasion:hover {
   transform: scale(1.1);
-  text-decoration: none;
+}
+
+/* * Products */
+.product {
+  width: 190px;
+  margin: 0 auto;
+  margin-bottom: 24px;
+}
+
+.product > img {
+  width: 190px;
+}
+
+@media screen and (max-width: 656px) {
+  .product {
+    width: 150px;
+  }
+
+  .product > img {
+    width: 150px;
+  }
 }
