@@ -1,9 +1,9 @@
 import Searchbox from "./searchbox/Searchbox";
+import Banner from "./banner/Banner";
 import "./home.css";
 
-import { Container, Row, Image, Button, Col } from "react-bootstrap";
+import { Container, Row, Image, Col } from "react-bootstrap";
 
-import birthday from "./images/birthday.png";
 import cake from "./images/cake.png";
 import hearts from "./images/two-hearts.png";
 import baby from "./images/baby.png";
@@ -34,40 +34,7 @@ function Home() {
   return (
     <Container fluid>
       <Searchbox />
-      {/* BANNER */}
-      <Row id="banner" className="mt-5">
-        <Col xl={6} className="d-flex justify-content-center flex-column">
-          <h1 id="banner-title">Anniversaires</h1>
-          <p id="banner-sub" className="text-muted">
-            Découvrez notre sélection de cadeaux originaux
-          </p>
-          <Button
-            variant="warning"
-            className="text-white rounded-pill font-weight-bold"
-            style={{ width: "150px", height: "50px" }}
-          >
-            Découvrir!
-          </Button>
-        </Col>
-        <Col
-          xl={6}
-          className="d-flex justify-content-center"
-          style={{ paddingRight: "5%" }}
-        >
-          <div
-            className="bg-warning"
-            style={{
-              position: "absolute",
-              width: "40%",
-              height: "75%",
-              bottom: "0",
-              zIndex: 1,
-              borderRadius: "50px 50px 0 0",
-            }}
-          ></div>
-          <Image src={birthday} fluid style={{ width: "30%", zIndex: "2" }} />
-        </Col>
-      </Row>
+      <Banner />
       <Row id="occasions" className="bg-secondary text-center">
         <Col xs={4} lg={2}>
           <a href="#home">
