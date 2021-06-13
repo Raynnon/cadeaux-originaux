@@ -56,7 +56,7 @@ function Home() {
                 alt="two-hearts-logo"
                 className="logo-occasion"
               />
-              <h3 style={{ color: "#FCE145" }}>Romantique</h3>
+              <h3 style={{ color: "#FC4AAC" }}>Romantique</h3>
             </div>
           </a>
         </Col>
@@ -68,7 +68,7 @@ function Home() {
                 alt="pacifier-baby-logo"
                 className="logo-occasion"
               />
-              <h3 style={{ color: "#76FD3C" }}>Naissance</h3>
+              <h3 style={{ color: "#FCE145" }}>Naissance</h3>
             </div>
           </a>
         </Col>
@@ -80,7 +80,7 @@ function Home() {
                 alt="wedding-logo"
                 className="logo-occasion"
               />
-              <h3 style={{ color: "#4AFCAC" }}>Mariage</h3>
+              <h3 style={{ color: "#76FD3C" }}>Mariage</h3>
             </div>
           </a>
         </Col>

@@ -32,21 +32,13 @@
 /* * Shapes */
 .triangle,
 .circle,
-.halo {
+.halo,
+.pill {
   position: absolute;
   z-index: -1;
-}
-
-.triangle {
-  border-style: solid;
-  border-width: 0 1.5vw 2vw 1.5vw;
-  border-color: transparent transparent #ffea29 transparent;
 }
 
 .circle {
   border: none;
   border-radius: 100%;
-}
-
-.halo {
 }
