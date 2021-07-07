@@ -1,6 +1,5 @@
-import Header from "./components/header/Header";
 import Home from "./components/home/Home";
-import Footer from "./components/footer/Footer";
+import Product from "./components/product/Product";
 import Container from "react-bootstrap/Container";
 
 import "./App.scss";
@@ -8,9 +7,8 @@ import "./App.scss";
 function App() {
   return (
     <Container className="App" fluid>
-      <Header />
-      <Home />
-      <Footer />
+      {/* <Home /> */}
+      <Product />
     </Container>
   );
 }

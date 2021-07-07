@@ -1,5 +1,7 @@
+import Header from "../header/Header";
 import Searchbox from "./searchbox/Searchbox";
 import Banner from "./banner/Banner";
+import Footer from "../footer/Footer";
 import "./home.css";
 
 import { Container, Row, Image, Col } from "react-bootstrap";
@@ -33,6 +35,7 @@ function Home() {
 
   return (
     <Container fluid>
+      <Header />
       <Searchbox />
       <Banner />
       <Row id="occasions" className="bg-secondary text-center">
@@ -178,6 +181,7 @@ function Home() {
           mollit anim id est laborum.
         </p>
       </Row>
+      <Footer />
     </Container>
   );
 }
