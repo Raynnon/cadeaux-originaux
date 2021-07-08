@@ -22,24 +22,3 @@
 .occasion:hover {
   transform: scale(1.1);
 }
-
-/* * Products */
-.product {
-  width: 190px;
-  margin: 0 auto;
-  margin-bottom: 24px;
-}
-
-.product > img {
-  width: 190px;
-}
-
-@media screen and (max-width: 656px) {
-  .product {
-    width: 150px;
-  }
-
-  .product > img {
-    width: 150px;
-  }
-}

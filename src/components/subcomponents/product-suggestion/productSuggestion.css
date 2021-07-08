@@ -1,0 +1,23 @@
+/* * Products */
+.product {
+  width: 12vw;
+  margin-bottom: 24px;
+}
+
+.product-image-miniature {
+  width: 100%;
+  border-radius: 8%;
+}
+
+@media screen and (max-width: 1199px) {
+  .product {
+    width: 17vw;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 656px) {
+  .product {
+    width: 150px;
+  }
+}

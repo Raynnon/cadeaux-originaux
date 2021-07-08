@@ -9,11 +9,13 @@ function Header() {
     <header>
       <Row className="mx-auto mt-3">
         <Col xs={12} lg={2} className="text-center">
-          <Image
-            src={cadeauxOriginauxLogo}
-            alt="cadeaux-originaux-logo"
-            style={{ height: "50px" }}
-          />
+          <a href="/home">
+            <Image
+              src={cadeauxOriginauxLogo}
+              alt="cadeaux-originaux-logo"
+              style={{ height: "50px" }}
+            />
+          </a>
         </Col>
         <Col
           xs={12}

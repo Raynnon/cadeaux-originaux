@@ -2,6 +2,7 @@ import Header from "../header/Header";
 import Searchbox from "./searchbox/Searchbox";
 import Banner from "./banner/Banner";
 import Footer from "../footer/Footer";
+import ProductSuggestion from "../subcomponents/product-suggestion/ProductSuggestion";
 import "./home.css";
 
 import { Container, Row, Image, Col } from "react-bootstrap";
@@ -12,25 +13,24 @@ import baby from "./images/baby.png";
 import mariage from "./images/mariage.png";
 import smiley from "./images/smiley.png";
 import joker from "./images/joker.png";
-import basket from "./images/basket.png";
 
 function Home() {
   const newProducts = [
-    "Shoes",
-    "Glasses",
-    "Coat",
-    "Watch",
-    "Keyboard",
-    "Scooter",
+    { name: "Shoes", imageSRC: "https://picsum.photos/200/200" },
+    { name: "Glasses", imageSRC: "https://picsum.photos/200/200" },
+    { name: "Coat", imageSRC: "https://picsum.photos/200/200" },
+    { name: "Watch", imageSRC: "https://picsum.photos/200/200" },
+    { name: "Keyboard", imageSRC: "https://picsum.photos/200/200" },
+    { name: "Scooter", imageSRC: "https://picsum.photos/200/200" },
   ];
 
   const bestProducts = [
-    "Shoes",
-    "Glasses",
-    "Coat",
-    "Watch",
-    "Keyboard",
-    "Scooter",
+    { name: "Shoes", imageSRC: "https://picsum.photos/200/200" },
+    { name: "Glasses", imageSRC: "https://picsum.photos/200/200" },
+    { name: "Coat", imageSRC: "https://picsum.photos/200/200" },
+    { name: "Watch", imageSRC: "https://picsum.photos/200/200" },
+    { name: "Keyboard", imageSRC: "https://picsum.photos/200/200" },
+    { name: "Scooter", imageSRC: "https://picsum.photos/200/200" },
   ];
 
   return (
@@ -104,62 +104,10 @@ function Home() {
           </a>
         </Col>
       </Row>
-      <section className="text-center mt-5">
-        <h2>
-          <span className="text-warning">Nouveaux</span> produits
-        </h2>
-        <Row className="products mt-4">
-          {newProducts.map((item) => {
-            return (
-              <Col xs={6} sm={4} xl={2}>
-                <a href="#home">
-                  <div className="product">
-                    <Image src="https://picsum.photos/200/200" alt={item} />
 
-                    <div className="d-flex justify-content-between">
-                      <p className="d-inline mb-0">{item}</p>
-                      <Image
-                        src={basket}
-                        alt="basket"
-                        className="bg-warning d-inline"
-                        style={{ height: "28px" }}
-                      />
-                    </div>
-                  </div>
-                </a>
-              </Col>
-            );
-          })}
-        </Row>
-      </section>
-      <section className="text-center">
-        <h2>
-          <span className="text-warning">Meilleures</span> ventes
-        </h2>
-        <Row className="products mt-4">
-          {bestProducts.map((item) => {
-            return (
-              <Col xs={6} sm={4} xl={2}>
-                <a href="#home">
-                  <div className="product">
-                    <Image src="https://picsum.photos/200/200" alt={item} />
+      <ProductSuggestion title="Nouveau produits" products={newProducts} />
+      <ProductSuggestion title="Meilleurs produits" products={bestProducts} />
 
-                    <div className="d-flex justify-content-between">
-                      <p className="d-inline mb-0">{item}</p>
-                      <Image
-                        src={basket}
-                        alt="basket"
-                        className="bg-warning d-inline"
-                        style={{ height: "28px" }}
-                      />
-                    </div>
-                  </div>
-                </a>
-              </Col>
-            );
-          })}
-        </Row>
-      </section>
       <Row as="section" id="presentation" className="bg-light mt-5 py-3">
         <p
           className="text-justify"
