@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import ProductSuggestion from "../subcomponents/product-suggestion/ProductSuggestion";
@@ -5,57 +7,76 @@ import "./product.css";
 
 import { Button, Row, Image, Col } from "react-bootstrap";
 
-import tick from "./tick.png";
+import tickIcon from "./tick.png";
 
 function App() {
-  const productAlternative = [
-    { name: "Shoes", imageSRC: "https://picsum.photos/200/200" },
-    { name: "Glasses", imageSRC: "https://picsum.photos/200/200" },
-    { name: "Coat", imageSRC: "https://picsum.photos/200/200" },
-    { name: "Watch", imageSRC: "https://picsum.photos/200/200" },
-    { name: "Keyboard", imageSRC: "https://picsum.photos/200/200" },
-    { name: "Scooter", imageSRC: "https://picsum.photos/200/200" },
-  ];
+  const [productImages, setProductImages] = useState([]);
+  const [ticks, setTicks] = useState([]);
+  const [productAlternative, setProductAlternative] = useState([]);
+  const [highlightedImage, setHighlightedImage] = useState("");
+
+  useEffect(() => {
+    /* TODO add the routes to import all from the server */
+    const productImagesImported = [
+      "https://picsum.photos/808/672",
+      "https://picsum.photos/245/200",
+      "https://picsum.photos/490/400",
+    ];
+
+    const ticks = [
+      "Lorem ipsum dolor sit ame",
+      "Lorem ipsum dolor sit ame",
+      "Lorem ipsum dolor sit ame",
+      "Lorem ipsum dolor sit ame",
+    ];
+
+    const productAlternative = [
+      { name: "Shoes", imageSRC: "https://picsum.photos/200/200" },
+      { name: "Glasses", imageSRC: "https://picsum.photos/200/200" },
+      { name: "Coat", imageSRC: "https://picsum.photos/200/200" },
+      { name: "Watch", imageSRC: "https://picsum.photos/200/200" },
+      { name: "Keyboard", imageSRC: "https://picsum.photos/200/200" },
+      { name: "Scooter", imageSRC: "https://picsum.photos/200/200" },
+    ];
+
+    setProductImages(productImagesImported);
+    setHighlightedImage(productImagesImported[0]);
+    setTicks(ticks);
+    setProductAlternative(productAlternative);
+  }, []);
 
   return (
     <div>
       <Header />
-      <div id="product">
+      <div style={{ margin: "30px 10%" }}>
         <Row as="main" className="mt-4" fluid>
-          <Col xs={5}>
+          <Col xs={12} lg={5} className="mb-4">
             <Image
-              id="product-big-picture"
-              src="https://picsum.photos/808/672"
+              id="highlighted-image"
+              src={highlightedImage}
               alt="product"
-              className="product-image"
+              className="product-image product-big-picture mx-auto d-block"
             />
             <Row id="product-miniatures" className="mt-5">
-              <Col>
-                <Image
-                  src="https://picsum.photos/245/200"
-                  alt="product-image2"
-                  className="product-image product-small-picture"
-                />
-              </Col>
-              <Col>
-                <Image
-                  src="https://picsum.photos/245/200"
-                  alt="product-image3"
-                  className="product-image product-small-picture"
-                />
-              </Col>
-              <Col>
-                <Image
-                  src="https://picsum.photos/245/200"
-                  alt="product-image4"
-                  className="product-image product-small-picture"
-                />
-              </Col>
+              {productImages.map((image) => {
+                return (
+                  <Col className="text-center">
+                    <Image
+                      src={image}
+                      alt="product-image2"
+                      className="product-image product-small-picture"
+                      onClick={(e) => setHighlightedImage(image)}
+                    />
+                  </Col>
+                );
+              })}
             </Row>
           </Col>
-          <Col xs={{ span: 6, offset: 1 }} as="section">
-            <h2 className="mb-5">Bracelet protecteur multicolor</h2>
-            <p id="product-description">
+          <Col xs={12} lg={{ span: 6, offset: 1 }} as="section">
+            <h2 className="mb-5" style={{ lineHeight: "2.5em" }}>
+              Bracelet protecteur multicolor
+            </h2>
+            <p id="product-description" className="mb-5 text-justify">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
               venenatis congue ipsum, vitae consequat ante pulvinar quis. Nunc
               congue diam in nulla fermentum dignissim. Suspendisse blandit sit
@@ -73,23 +94,23 @@ function App() {
             >
               Acheter!
             </Button>
-            <ul className="ticks">
-              <li>
-                <Image src={tick} alt="tick-icon" />
-                <p>Lorem ipsum dolor sit ame</p>
-              </li>
-              <li>
-                <Image src={tick} alt="tick-icon" />
-                <p>Lorem ipsum dolor sit ame</p>
-              </li>
-              <li>
-                <Image src={tick} alt="tick-icon" />
-                <p>Lorem ipsum dolor sit ame</p>
-              </li>
-              <li>
-                <Image src={tick} alt="tick-icon" />
-                <p>Lorem ipsum dolor sit ame</p>
-              </li>
+            <ul className="ticks pl-0 mt-5">
+              {ticks.map((tick) => {
+                return (
+                  <li className="d-flex">
+                    <Image
+                      src={tickIcon}
+                      alt="tick-icon"
+                      style={{
+                        width: "24px",
+                        height: "24px",
+                        marginRight: "10px",
+                      }}
+                    />
+                    <p>{tick}</p>
+                  </li>
+                );
+              })}
             </ul>
           </Col>
         </Row>

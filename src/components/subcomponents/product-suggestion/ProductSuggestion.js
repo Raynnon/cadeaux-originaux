@@ -6,15 +6,15 @@ import basket from "./basket.png";
 function App({ title, products }) {
   return (
     <section className="mt-5">
-      <h2>{title}</h2>
+      <h2 id="related-products-title">{title}</h2>
       <Row className="products mt-4">
         {products.map((product) => {
           return (
             <Col xs={6} sm={4} xl={2}>
               <a href="#home">
-                <div className="product">
+                <div className="product mb-4">
                   <Image
-                    className="product-image-miniature"
+                    className="product-image product-image-miniature w-100"
                     src={product.imageSRC}
                     alt={product.name}
                   />

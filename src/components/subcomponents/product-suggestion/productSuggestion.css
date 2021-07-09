@@ -1,18 +1,20 @@
-/* * Products */
 .product {
   width: 12vw;
-  margin-bottom: 24px;
+  max-width: 200px;
 }
 
 .product-image-miniature {
-  width: 100%;
-  border-radius: 8%;
+  max-width: 200px;
 }
 
 @media screen and (max-width: 1199px) {
   .product {
     width: 17vw;
     margin: 0 auto;
+  }
+
+  #related-products-title {
+    text-align: center;
   }
 }
 
