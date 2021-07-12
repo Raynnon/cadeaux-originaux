@@ -1,0 +1,4 @@
+.bg-light,
+.bg-light > img {
+  border-radius: 39px !important;
+}
