@@ -1,5 +1,5 @@
 const express = require("express");
-const fs = require("fs");
+const fs = require("fs-extra");
 const multer = require("multer");
 const router = new express.Router();
 const db = require("../database/postgre");
@@ -16,8 +16,15 @@ router.get("/products", async (req, res) => {
 });
 
 /* ADD PRODUCT */
+const tempFolder = "../images/products/temp";
+
+//if temporary Folder does not exist, create it
+if (!fs.existsSync(tempFolder)) {
+  fs.mkdir(tempFolder);
+}
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "../images/products/temp"),
+  //put the files in the temporary folder
+  destination: (req, file, cb) => cb(null, tempFolder),
 
   filename: (req, file, cb) => {
     cb(null, file.originalname);
@@ -28,8 +35,19 @@ const upload = multer({ storage: storage });
 
 router.post("/addProduct", upload.array("image"), async (req, res) => {
   try {
-    console.log(req.files);
-    res.send(req.files);
+    const imagesFolder = "../images/products/" + req.body.name;
+
+    //Copy temp folder to the image folder
+    fs.copy(tempFolder, imagesFolder, () => {
+      fs.readdir(tempFolder, (err, files) => {
+        files.forEach(async (file) => {
+          await fs.unlinkSync(tempFolder + "/" + file);
+        });
+      });
+    });
+
+    console.log(req.files, req.body);
+    res.send(req.body);
   } catch (e) {
     console.log(e);
     res.send(e);
