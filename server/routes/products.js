@@ -11,18 +11,22 @@ router.get("/products", async (req, res) => {
     res.send(products);
   } catch (e) {
     console.log(e);
-    res.status(200).send("Server unavailable");
+    res.status(200).send();
   }
 });
 
 /* READ PRODUCTS BY ID */
-router.get("/product/:id", async (req, res) => {
+router.get("/products/:id", async (req, res) => {
   try {
-    //const products = await db.select().from("products");
-    res.send(req.params);
+    const product = await db
+      .select()
+      .from("products")
+      .where("id", req.params.id);
+
+    res.send(product);
   } catch (e) {
     console.log(e);
-    res.status(200).send("Server unavailable");
+    res.status(400).send();
   }
 });
 
@@ -44,7 +48,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post("/addProduct", upload.array("image"), async (req, res) => {
+router.post("/products", upload.array("image"), async (req, res) => {
   try {
     const imagesFolder =
       "../images/products/" +
@@ -89,6 +93,18 @@ router.post("/addProduct", upload.array("image"), async (req, res) => {
     res.send("Product added");
   } catch (e) {
     res.status(400).send(e);
+  }
+});
+
+// DELETE PRODUCT
+router.delete("/products/:id", async (req, res) => {
+  try {
+    await db("products").where("id", req.params.id).del();
+
+    res.send("Product deleted");
+  } catch (e) {
+    console.log(e);
+    res.status(200).send();
   }
 });
 
