@@ -96,6 +96,53 @@ router.post("/products", upload.array("image"), async (req, res) => {
   }
 });
 
+// EDIT PRODUCT BY ID
+router.put("/products/:id", async (req, res) => {
+  try {
+    const {
+      name,
+      price,
+      description,
+      strong_points,
+      who_kind,
+      who_type,
+      occasions,
+      parties,
+    } = req.body;
+
+    const toUpdate = () => {
+      const values = {
+        name,
+        price,
+        description,
+        strong_points,
+        who_kind,
+        who_type,
+        occasions,
+        parties,
+      };
+
+      let notNull = {};
+
+      //filter values that are not null or undefined
+      for (key in values) {
+        if (values[key]) {
+          notNull[key] = values[key];
+        }
+      }
+
+      return notNull;
+    };
+
+    await db("products").update(toUpdate());
+
+    res.send("Product updated");
+  } catch (e) {
+    console.log(e);
+    res.status(400).send();
+  }
+});
+
 // DELETE PRODUCT
 router.delete("/products/:id", async (req, res) => {
   try {
