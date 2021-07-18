@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
@@ -10,24 +11,29 @@ import { Button, Row, Image, Col } from "react-bootstrap";
 import tickIcon from "./tick.png";
 
 function App() {
+  const [productData, setProductData] = useState({});
   const [productImages, setProductImages] = useState([]);
   const [ticks, setTicks] = useState([]);
   const [productAlternative, setProductAlternative] = useState([]);
   const [highlightedImage, setHighlightedImage] = useState("");
 
+  const getProduct = async () => {
+    try {
+      const res = await axios.get("http://localhost:4000/products/13");
+      setProductData(res.data[0]);
+      console.log(res.data[0]);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
-    /* TODO add the routes to import all from the server */
+    getProduct();
+
     const productImagesImported = [
       "https://picsum.photos/808/672",
       "https://picsum.photos/245/200",
       "https://picsum.photos/490/400",
-    ];
-
-    const ticks = [
-      "Lorem ipsum dolor sit ame",
-      "Lorem ipsum dolor sit ame",
-      "Lorem ipsum dolor sit ame",
-      "Lorem ipsum dolor sit ame",
     ];
 
     const productAlternative = [
@@ -41,7 +47,6 @@ function App() {
 
     setProductImages(productImagesImported);
     setHighlightedImage(productImagesImported[0]);
-    setTicks(ticks);
     setProductAlternative(productAlternative);
   }, []);
 
@@ -95,22 +100,26 @@ function App() {
               Acheter!
             </Button>
             <ul className="ticks pl-0 mt-5">
-              {ticks.map((tick) => {
-                return (
-                  <li className="d-flex">
-                    <Image
-                      src={tickIcon}
-                      alt="tick-icon"
-                      style={{
-                        width: "24px",
-                        height: "24px",
-                        marginRight: "10px",
-                      }}
-                    />
-                    <p>{tick}</p>
-                  </li>
-                );
-              })}
+              {productData ? (
+                <p>
+                  {productData.strong_points}
+                </p> /* productData.strong_points.map((tick) => {
+                    return (
+                      <li className="d-flex">
+                        <Image
+                          src={tickIcon}
+                          alt="tick-icon"
+                          style={{
+                            width: "24px",
+                            height: "24px",
+                            marginRight: "10px",
+                          }}
+                        />
+                        <p>{tick}</p>
+                      </li>
+                    );
+                  }) */
+              ) : null}
             </ul>
           </Col>
         </Row>

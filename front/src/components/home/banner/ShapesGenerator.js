@@ -24,8 +24,6 @@ function shapesGenerator({ minTop, maxTop, minLeft, maxLeft }) {
 
   const rotation = randomNum(0, 180);
 
-  console.log(top, left);
-
   if (shape === "triangle") {
     return (
       <div
