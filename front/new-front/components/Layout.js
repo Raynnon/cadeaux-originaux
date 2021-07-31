@@ -49,8 +49,8 @@ export default function Layout({ children, pageTitle }) {
             elements: [
               "Noël",
               "Fête des pères",
-              "Fète des mères",
-              "Fète des grands-mères",
+              "Fête des mères",
+              "Fête des grands-mères",
               "Saint Valentin",
               "Pâques",
               "Halloween",
