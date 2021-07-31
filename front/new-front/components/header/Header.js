@@ -3,7 +3,7 @@ import Link from "next/Link";
 
 export default function Header({ menuItems }) {
   return (
-    <header className="items-center shadow-sm xl:px-40 xl:flex text-center">
+    <header className="items-center shadow-sm xl:px-40 xl:flex text-center mb-10">
       <Link href="/">
         <a href="/">
           <Image

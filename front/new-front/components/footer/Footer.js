@@ -1,18 +1,41 @@
 import Link from "next/Link";
 
-export default function Footer({ menuItems }) {
+export default function Footer({ menuItems, prices }) {
+  console.log(prices);
   return (
-    <footer className="pb-5 pt-5 bg-coolGray-600 text-coolGray-300 items-center xl:px-40 ">
+    <footer className="pb-5 pt-5 bg-coolGray-600 text-coolGray-300 items-center xl:px-40 mt-10">
       <div className="text-center">
         <ul className="container mx-auto flex justify-between text-sm md:text-lg">
           <li>
             <ul className="flex flex-col font-semibold">
-              <Link href="/">
-                <a href="/">{"Nouveau".toUpperCase()}</a>
-              </Link>
-              <Link href="/">
-                <a href="/">{"Meilleures ventes".toUpperCase()}</a>
-              </Link>
+              <li>
+                <Link href="/">
+                  <a href="/">{"Nouveau".toUpperCase()}</a>
+                </Link>
+              </li>
+              <li>
+                <Link href="/">
+                  <a href="/">{"Meilleures ventes".toUpperCase()}</a>
+                </Link>
+              </li>
+              <li className="mt-10">
+                <h5>{"Prix".toUpperCase()}</h5>
+                <ul>
+                  {prices.length
+                    ? prices.map((price, index) => {
+                        return (
+                          <li key="index">
+                            <Link href="/">
+                              <a href="/" className="font-normal">
+                                {price}
+                              </a>
+                            </Link>
+                          </li>
+                        );
+                      })
+                    : null}
+                </ul>
+              </li>
             </ul>
           </li>
           <div></div>
@@ -56,7 +79,7 @@ export default function Footer({ menuItems }) {
         </ul>
       </div>
 
-      <p className="text-center mt-5">
+      <p className="text-center mt-5 md:text-lg">
         Mes cadeaux originaux © {new Date().getFullYear()} - Tous Droits
         Réservés
       </p>

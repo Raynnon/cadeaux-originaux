@@ -4,7 +4,10 @@ import { useState, useEffect } from "react";
 
 export default function Layout({ children, pageTitle }) {
   const [menuItems, setMenuItems] = useState([]);
+  const [prices, setPrices] = useState([]);
+
   useEffect(() => {
+    setPrices(["€", "€€", "€€€", "Peu importe"]);
     setMenuItems([
       {
         name: "Pour qui?",
@@ -69,7 +72,7 @@ export default function Layout({ children, pageTitle }) {
       </head>
       <Header menuItems={menuItems} />
       <main>{children}</main>
-      <Footer menuItems={menuItems} />
+      <Footer menuItems={menuItems} prices={prices} />
     </div>
   );
 }
