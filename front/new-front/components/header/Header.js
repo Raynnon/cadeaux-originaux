@@ -42,7 +42,7 @@ export default function Header({ menuItems }) {
                 return (
                   <li
                     key={index}
-                    className="hidden dropdown group mx-5 py-5 text-lg border-b-4 border-transparent hover:border-orange-500 lg:block "
+                    className="hidden dropdown group mx-5 py-5 text-lg border-b-4 border-transparent hover:border-orange-500 lg:block"
                   >
                     <Link href="/">
                       <a
