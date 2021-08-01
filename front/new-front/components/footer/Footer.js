@@ -1,7 +1,6 @@
-import Link from "next/Link";
+import Link from "next/link";
 
 export default function Footer({ menuItems, prices }) {
-  console.log(prices);
   return (
     <footer className="pb-5 pt-5 bg-coolGray-600 text-coolGray-300 items-center xl:px-40 mt-10">
       <div className="text-center">

@@ -8,7 +8,6 @@ export default function SearchBox({ menuItems }) {
   const [price, setPrice] = useState("Tous les prix");
 
   const radioAttribution = (subCategory, radioValue) => {
-    console.log("TEST", subCategory, radioValue);
     if (subCategory === "Genre") {
       setNature(radioValue);
     } else if (subCategory === "Type") {
@@ -63,10 +62,9 @@ export default function SearchBox({ menuItems }) {
 
   return (
     <div className="hidden justify-center lg:flex">
-      <ul className="flex text-center justify-center border border-coolGray-100 rounded-full w-2/4 justify-around">
+      <ul className="flex text-center bg-white justify-center border border-coolGray-100 rounded-full w-2/4 justify-around">
         {menuItems.length
           ? menuItems.map((item, index) => {
-              console.log(item);
               return (
                 <li
                   key={index}

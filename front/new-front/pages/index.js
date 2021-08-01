@@ -1,5 +1,7 @@
-import Layout from "../components/Layout";
+import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect } from "react";
+import Layout from "../components/Layout";
 import SearchBox from "../components/subcomponents/Searchbox";
 
 export default function Home() {
@@ -71,10 +73,33 @@ export default function Home() {
       },
     ]);
   }, []);
+
   return (
     <Layout pageTitle="Mes cadeaux originaux - Trouver des idées de cadeau">
       <main>
-        <SearchBox menuItems={menuItems} />
+        <div className="relative pt-10">
+          <Image
+            alt="gateau-anniversaire"
+            src="/images/gateau-anniversaire.png"
+            layout="fill"
+            objectFit="cover"
+            quality={100}
+            className="z-1"
+          />
+          <div className="relative">
+            <SearchBox menuItems={menuItems} className="relative" />
+            <div className="flex lg:block flex-col items-center  text-center lg:text-left lg:pt-20 xl:pt-40 pb-10 lg:pb-24 xl:pb-32">
+              <h1 className="p-5 md:mx-20 lg:mx-32 w-auto lg:w-2/5 bg-opacity-30 bg-coolGray-900 text-white font-black rounded-lg font-mono text-4xl xl:text-6xl leading-relaxed xl:leading-relaxed">
+                Nos meilleurs cadeaux d'anniversaire
+              </h1>
+              <Link href="/">
+                <button className="w-44 px-5 py-3 lg:ml-32 mt-10 rounded-lg text-white bg-orange-500 text-3xl">
+                  Découvrir
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
       </main>
     </Layout>
   );

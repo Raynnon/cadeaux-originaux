@@ -1,9 +1,9 @@
 import Image from "next/image";
-import Link from "next/Link";
+import Link from "next/link";
 
 export default function Header({ menuItems }) {
   return (
-    <header className="items-center shadow-sm xl:px-40 xl:flex text-center mb-10">
+    <header className="items-center shadow-sm xl:px-40 xl:flex text-center">
       <Link href="/">
         <a href="/">
           <Image
@@ -53,7 +53,7 @@ export default function Header({ menuItems }) {
                       </a>
                     </Link>
                     {item.dropdown ? (
-                      <ul className="flex absolute border border-coolGray-100 pb-2 bg-white rounded-xl hidden dropdown-menu group-hover:flex shadow">
+                      <ul className="flex absolute border border-coolGray-100 pb-2 bg-white rounded-lg hidden dropdown-menu group-hover:flex shadow z-10">
                         {item.dropdown.map((item, index) => {
                           return (
                             <div key={index} className="flex flex-col">
