@@ -74,9 +74,37 @@ export default function Home() {
     ]);
   }, []);
 
+  const categoriesShowcase = [
+    {
+      name: "Anniversaire",
+      image: "/images/categories-showcase/ballons-anniversaire.jpg",
+    },
+    {
+      name: "Romantique",
+      image: "/images/categories-showcase/couple-s-embrasse.jpg",
+    },
+    {
+      name: "Naissance",
+      image: "/images/categories-showcase/bebe-yeux-bleus.jpg",
+    },
+    {
+      name: "Mariage",
+      image: "/images/categories-showcase/couple-mariage.jpg",
+    },
+    {
+      name: "Remerciement",
+      image: "/images/categories-showcase/carte-merci.jpg",
+    },
+    {
+      name: "Fun",
+      image: "/images/categories-showcase/mamie-sombrero.jpg",
+    },
+  ];
+
   return (
     <Layout pageTitle="Mes cadeaux originaux - Trouver des idées de cadeau">
       <main>
+        {/* BANNER */}
         <div className="relative pt-10">
           <Image
             alt="gateau-anniversaire"
@@ -99,6 +127,32 @@ export default function Home() {
               </Link>
             </div>
           </div>
+        </div>
+        {/* CATEGORIES */}
+        <div className="items-center grid grid-flow-col grid-cols-3 grid-rows-2 gap-1 text-center mt-5 xl:mx-56">
+          {categoriesShowcase.length
+            ? categoriesShowcase.map((category, index) => {
+                return (
+                  <Link href="/">
+                    <div class="flex items-center justify-center">
+                      <figure class="relative max-w-xs cursor-pointer">
+                        <Image
+                          alt={category.name}
+                          src={category.image}
+                          width={600}
+                          height={350}
+                          objectFit="cover"
+                          quality={50}
+                        />
+                        <figcaption class="absolute text-lg -mt-16 text-white px-4 bg-opacity-30 bg-coolGray-900">
+                          <p>{category.name}</p>
+                        </figcaption>
+                      </figure>
+                    </div>
+                  </Link>
+                );
+              })
+            : null}
         </div>
       </main>
     </Layout>
