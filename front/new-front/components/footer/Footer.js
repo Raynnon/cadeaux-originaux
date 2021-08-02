@@ -23,7 +23,7 @@ export default function Footer({ menuItems, prices }) {
                   {prices.length
                     ? prices.map((price, index) => {
                         return (
-                          <li key="index">
+                          <li key={index}>
                             <Link href="/">
                               <a href="/" className="font-normal">
                                 {price}
@@ -48,16 +48,16 @@ export default function Footer({ menuItems, prices }) {
                       </li>
                       <ul className="flex">
                         {item.dropdown
-                          ? item.dropdown.map((dropdown, index) => {
+                          ? item.dropdown.map((dropdown) => {
                               return (
-                                <li href="/">
+                                <li key={dropdown.name} href="/">
                                   <p>{dropdown.name.toUpperCase()}</p>
                                   <ul className="flex flex-col">
                                     {dropdown.elements
                                       ? dropdown.elements.map(
                                           (element, index) => {
                                             return (
-                                              <Link href="/">
+                                              <Link key={index} href="/">
                                                 <a href="/">{element}</a>
                                               </Link>
                                             );

@@ -80,7 +80,7 @@ export default function SearchBox({ menuItems }) {
                             return (
                               <div className="flex-grow" key={index}>
                                 <p>{category.name.toUpperCase()}</p>
-                                <ul className="flex-grow" key={index}>
+                                <ul className="flex-grow">
                                   {category.name !== "Type"
                                     ? category.elements.map(
                                         //element (Femme, Homme...)
@@ -90,10 +90,10 @@ export default function SearchBox({ menuItems }) {
                                               key={index}
                                               className="hover:bg-orange-300 flex-grow text-left px-2"
                                             >
-                                              <label class="inline-flex items-center">
+                                              <label className="inline-flex items-center">
                                                 <input
                                                   type="radio"
-                                                  class="form-radio"
+                                                  className="form-radio"
                                                   name="radio"
                                                   value={element}
                                                   onChange={(e) => {
@@ -103,7 +103,7 @@ export default function SearchBox({ menuItems }) {
                                                     );
                                                   }}
                                                 />
-                                                <span class="ml-2">
+                                                <span className="ml-2">
                                                   {element}
                                                 </span>
                                               </label>
@@ -117,10 +117,10 @@ export default function SearchBox({ menuItems }) {
                                             key={index}
                                             className="hover:bg-orange-300 flex-grow text-left px-2"
                                           >
-                                            <label class="inline-flex items-center">
+                                            <label className="inline-flex items-center">
                                               <input
                                                 type="radio"
-                                                class="form-radio"
+                                                className="form-radio"
                                                 name="radio"
                                                 value={recipient}
                                                 onChange={(e) => {
@@ -130,7 +130,7 @@ export default function SearchBox({ menuItems }) {
                                                   );
                                                 }}
                                               />
-                                              <span class="ml-2">
+                                              <span className="ml-2">
                                                 {recipient}
                                               </span>
                                             </label>

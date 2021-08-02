@@ -1,5 +1,6 @@
 import Header from "./header/Header";
 import Footer from "./footer/Footer";
+import Head from "next/head";
 import { useState, useEffect } from "react";
 
 export default function Layout({ children, pageTitle }) {
@@ -67,9 +68,9 @@ export default function Layout({ children, pageTitle }) {
 
   return (
     <div className="text-coolGray-900">
-      <head>
+      <Head>
         <title>{pageTitle}</title>
-      </head>
+      </Head>
       <Header menuItems={menuItems} />
       <main>{children}</main>
       <Footer menuItems={menuItems} prices={prices} />
