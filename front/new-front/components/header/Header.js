@@ -60,13 +60,23 @@ export default function Header({ menuItems }) {
                               <h4>{item.name.toUpperCase()}</h4>
                               {item.elements.map((element, index) => {
                                 return (
-                                  <a
-                                    key={index}
-                                    className="px-5 py-1 hover:bg-orange-300 font-normal"
-                                    href="/"
+                                  <Link
+                                    href={{
+                                      pathname: `/categorie/${element
+                                        .toLowerCase()
+                                        .split(/[ ,]+/)
+                                        .join("-")}`,
+                                      query: { categoryName: element },
+                                    }}
                                   >
-                                    {element}
-                                  </a>
+                                    <a
+                                      key={index}
+                                      className="px-5 py-1 hover:bg-orange-300 font-normal"
+                                      href={`/categorie/${element}`}
+                                    >
+                                      {element}
+                                    </a>
+                                  </Link>
                                 );
                               })}
                             </div>

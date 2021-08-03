@@ -109,7 +109,7 @@ export default function Home() {
         <div className="relative pt-10">
           <Image
             alt="gateau-anniversaire"
-            src="/images/banners/pere-noel-surpris.jpg"
+            src="/images/banners/gateau-anniversaire.png"
             layout="fill"
             objectFit="cover"
             quality={100}
@@ -117,7 +117,7 @@ export default function Home() {
           />
           <div className="relative">
             <SearchBox menuItems={menuItems} className="relative" />
-            <div className="flex lg:block flex-col items-center  text-center lg:text-left lg:pt-20 xl:pt-40 pb-10 lg:pb-24 xl:pb-32">
+            <div className="flex lg:block flex-col items-center text-center lg:text-left lg:pt-20 xl:pt-40 pb-10 lg:pb-24 xl:pb-32">
               <h1 className="p-5 md:mx-20 lg:mx-32 w-auto lg:w-2/5 bg-opacity-30 bg-coolGray-900 text-white font-black rounded-lg font-mono text-4xl xl:text-6xl leading-relaxed xl:leading-relaxed">
                 Nos meilleurs cadeaux d'anniversaire
               </h1>
