@@ -60,7 +60,7 @@ export default function Home({ categoryName }) {
     <Layout pageTitle={`Cadeau pour ${categoryName} - Mes cadeaux originaux`}>
       <div className="flex -mb-10">
         {/* FILTER */}
-        <aside className="w-96 mb-5">
+        <aside className="hidden md:block w-96 mb-5">
           <div className="lg:px-32">
             <h3 className="py-5 text-2xl font-semibold">Filtres</h3>
           </div>
@@ -85,7 +85,7 @@ export default function Home({ categoryName }) {
                 return (
                   <li key={index} className="flex-grow text-left pr-2">
                     <label className="inline-flex items-center">
-                      <input type="radio" name="genre" value={type} />
+                      <input type="radio" name="Type" value={type} />
                       <span className="ml-2">{type}</span>
                     </label>
                   </li>
@@ -131,9 +131,9 @@ export default function Home({ categoryName }) {
             </select>
           </form>
         </aside>
-        <main className="lg:px-32 border-2 border-transparent border-l-coolGray-100">
-          <h1 className="mt-10 text-4xl font-semibold">{`Cadeau pour ${categoryName}`}</h1>
-          <p className="my-5 text-justify">
+        <main className="xl:px-20 border-2 border-transparent border-l-coolGray-100">
+          <h1 className="mx-1 xl:mx-0 mt-10 text-4xl font-semibold">{`Cadeau pour ${categoryName}`}</h1>
+          <p className="mx-1 xl:mx-0 my-5 text-justify">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
             in fringilla libero, eget gravida sem. Integer viverra a nulla nec
             ultrices. Donec volutpat ligula et sagittis iaculis. Pellentesque
@@ -145,16 +145,33 @@ export default function Home({ categoryName }) {
             elementum risus sem, nec egestas erat pellentesque vitae.
           </p>
           {/*PRODUCTS */}
-          <div className="flex flex-wrap justify-between">
+          <div className="flex flex-wrap justify-between mb-10">
             {products.map((product, index) => {
               return (
                 <Link key={index} href="/">
-                  <div className="border-2 border-coolGray-100 w-72 h-96 rounded-lg">
-                    <Image src={product.imageSRC} width={225} height={225} />
-                    <h2 className="text-center">Title</h2>
-                    <p>price</p>
-                    <button>En savoir plus</button>
-                  </div>
+                  <a href="/" className="xl:w-1/4">
+                    <div className="flex flex-col border-2 border-coolGray-100 hover:bg-coolGray-100 rounded-lg p-5 mx-1 mt-5 group">
+                      <Image
+                        src={product.imageSRC}
+                        width={225}
+                        height={225}
+                        layout="responsive"
+                        className="rounded-lg"
+                      />
+                      <h2 className="text-xl font-semibold text-center mt-3">
+                        {product.name}
+                      </h2>
+                      <div className="flex justify-around items-center mt-3">
+                        <div>
+                          <p className="font-semibold">Prix</p>
+                          <p className="text-center">{product.price}</p>
+                        </div>
+                        <button className="border border-coolGray-900 group-hover:bg-orange-500 group-hover:border-transparent group-hover:text-white rounded-lg p-1 h-9">
+                          En savoir plus
+                        </button>
+                      </div>
+                    </div>
+                  </a>
                 </Link>
               );
             })}
