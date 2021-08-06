@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -122,9 +123,11 @@ export default function Home() {
                 Nos meilleurs cadeaux d'anniversaire
               </h1>
               <Link href="/">
-                <button className="w-44 px-5 py-3 lg:ml-32 mt-10 rounded-lg text-white bg-orange-500 text-3xl">
-                  Découvrir
-                </button>
+                <a>
+                  <button className="w-44 px-5 py-3 lg:ml-32 mt-10 rounded-lg text-white bg-orange-500 text-3xl">
+                    Découvrir
+                  </button>
+                </a>
               </Link>
             </div>
           </div>
@@ -132,26 +135,28 @@ export default function Home() {
         {/* CATEGORIES */}
         <div className="px-1 items-center grid grid-flow-col grid-cols-3 grid-rows-2 gap-1 text-center py-5 xl:px-56 bg-coolGray-100">
           {categoriesShowcase.length
-            ? categoriesShowcase.map((category) => {
+            ? categoriesShowcase.map((category, index) => {
                 return (
-                  <Link key={category.name} href="/">
-                    <div className="flex items-center justify-center">
-                      <figure className="relative max-w-xs cursor-pointer">
-                        <Image
-                          alt={category.name}
-                          src={category.image}
-                          width={600}
-                          height={350}
-                          objectFit="cover"
-                          quality={50}
-                          className="rounded-lg"
-                        />
-                        <figcaption className="absolute text-lg -mt-16 text-white px-4 bg-opacity-30 bg-coolGray-900">
-                          <p className="font-medium">{category.name}</p>
-                        </figcaption>
-                      </figure>
-                    </div>
-                  </Link>
+                  <div key={index} className="flex items-center justify-center">
+                    <figure className="relative max-w-xs cursor-pointer">
+                      <Link href="/">
+                        <a>
+                          <Image
+                            alt={category.name}
+                            src={category.image}
+                            width={600}
+                            height={350}
+                            objectFit="cover"
+                            quality={50}
+                            className="rounded-lg"
+                          />
+                        </a>
+                      </Link>
+                      <figcaption className="absolute text-lg -mt-16 text-white px-4 bg-opacity-30 bg-coolGray-900">
+                        <p className="font-medium">{category.name}</p>
+                      </figcaption>
+                    </figure>
+                  </div>
                 );
               })
             : null}

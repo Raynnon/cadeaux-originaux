@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -31,13 +32,13 @@ export default function ProductsSuggestion({ type }) {
   }, [type]);
 
   return (
-    <section className="mt-5 lg:mx-32">
+    <section className="mt-5">
       <h2 className="text-3xl font-medium mb-3">{title}</h2>
       <div className="grid grid-flow-col grid-cols-3 md:grid-cols-6 grid-rows-2 md:grid-rows-1 gap-2">
         {products.map((product, index) => {
           return (
             <Link key={index} href="/">
-              <a href="/">
+              <a>
                 <div className="mx-1 p-2 rounded-lg bg-coolGray-100 hover:scale-105 flex flex-col">
                   <Image
                     alt={product.name}

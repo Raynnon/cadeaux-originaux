@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import Layout from "../../components/Layout";
 import Image from "next/image";
 import Link from "next/link";
+const slugify = require("slugify");
 
-export default function Home({ categoryName }) {
+export default function Category({ categoryName }) {
   const genres = ["Femme", "Homme", "Fille", "Garçon", "Bébé", "Tous"];
   const types = [
     "Maman",
@@ -38,22 +40,102 @@ export default function Home({ categoryName }) {
   const prices = ["€", "€€€", "€€€", "Tous les prix"];
 
   const products = [
-    { name: "Shoes", imageSRC: "https://picsum.photos/100/100", price: "€" },
-    { name: "Glasses", imageSRC: "https://picsum.photos/150/150", price: "€€" },
-    { name: "Coat", imageSRC: "https://picsum.photos/200/200", price: "€€€" },
-    { name: "Watch", imageSRC: "https://picsum.photos/250/250", price: "€" },
-    { name: "Keyboard", imageSRC: "https://picsum.photos/300/300", price: "€" },
-    { name: "Scooter", imageSRC: "https://picsum.photos/350/350", price: "€€" },
-    { name: "Shoes", imageSRC: "https://picsum.photos/100/100", price: "€" },
-    { name: "Glasses", imageSRC: "https://picsum.photos/150/150", price: "€€" },
-    { name: "Shoes", imageSRC: "https://picsum.photos/100/100", price: "€" },
-    { name: "Glasses", imageSRC: "https://picsum.photos/150/150", price: "€€" },
-    { name: "Coat", imageSRC: "https://picsum.photos/200/200", price: "€€€" },
-    { name: "Watch", imageSRC: "https://picsum.photos/250/250", price: "€" },
-    { name: "Keyboard", imageSRC: "https://picsum.photos/300/300", price: "€" },
-    { name: "Scooter", imageSRC: "https://picsum.photos/350/350", price: "€€" },
-    { name: "Shoes", imageSRC: "https://picsum.photos/100/100", price: "€" },
-    { name: "Glasses", imageSRC: "https://picsum.photos/150/150", price: "€€" },
+    {
+      id: "1",
+      name: "Shoes",
+      imageSRC: "https://picsum.photos/100/100",
+      price: "€",
+    },
+    {
+      id: "1",
+      name: "Glasses",
+      imageSRC: "https://picsum.photos/150/150",
+      price: "€€",
+    },
+    {
+      id: "1",
+      name: "Coat",
+      imageSRC: "https://picsum.photos/200/200",
+      price: "€€€",
+    },
+    {
+      id: "1",
+      name: "Watch",
+      imageSRC: "https://picsum.photos/250/250",
+      price: "€",
+    },
+    {
+      id: "1",
+      name: "Keyboard",
+      imageSRC: "https://picsum.photos/300/300",
+      price: "€",
+    },
+    {
+      id: "1",
+      name: "Scooter",
+      imageSRC: "https://picsum.photos/350/350",
+      price: "€€",
+    },
+    {
+      id: "1",
+      name: "Shoes",
+      imageSRC: "https://picsum.photos/100/100",
+      price: "€",
+    },
+    {
+      id: "1",
+      name: "Green glasses",
+      imageSRC: "https://picsum.photos/150/150",
+      price: "€€",
+    },
+    {
+      id: "1",
+      name: "Shoes",
+      imageSRC: "https://picsum.photos/100/100",
+      price: "€",
+    },
+    {
+      id: "1",
+      name: "Glasses",
+      imageSRC: "https://picsum.photos/150/150",
+      price: "€€",
+    },
+    {
+      id: "1",
+      name: "Coat",
+      imageSRC: "https://picsum.photos/200/200",
+      price: "€€€",
+    },
+    {
+      id: "1",
+      name: "Watch",
+      imageSRC: "https://picsum.photos/250/250",
+      price: "€",
+    },
+    {
+      id: "1",
+      name: "Keyboard",
+      imageSRC: "https://picsum.photos/300/300",
+      price: "€",
+    },
+    {
+      id: "1",
+      name: "Scooter",
+      imageSRC: "https://picsum.photos/350/350",
+      price: "€€",
+    },
+    {
+      id: "1",
+      name: "Shoes",
+      imageSRC: "https://picsum.photos/100/100",
+      price: "€",
+    },
+    {
+      id: "1",
+      name: "Glasses",
+      imageSRC: "https://picsum.photos/150/150",
+      price: "€€",
+    },
   ];
 
   return (
@@ -106,24 +188,24 @@ export default function Home({ categoryName }) {
               })}
             </ul>
 
-            <label for="occasion">
+            <label htmlFor="occasion">
               <h4>Occasion</h4>
             </label>
             <select
               id="occasion"
-              class="block w-full bg-white border border-gray-100 hover:border-gray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
+              className="block w-full bg-white border border-gray-100 hover:border-gray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
             >
               {occasions.map((occasion, index) => {
                 return <option key={index}>{occasion}</option>;
               })}
             </select>
 
-            <label for="occasion">
+            <label htmlFor="occasion">
               <h4>Fête</h4>
             </label>
             <select
               id="fetes"
-              class="block w-full bg-white border border-gray-100 hover:border-gray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
+              className="block w-full bg-white border border-gray-100 hover:border-gray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
             >
               {parties.map((party, index) => {
                 return <option key={index}>{party}</option>;
@@ -148,8 +230,17 @@ export default function Home({ categoryName }) {
           <div className="flex flex-wrap justify-between mb-10">
             {products.map((product, index) => {
               return (
-                <Link key={index} href="/">
-                  <a href="/" className="xl:w-1/4">
+                <Link
+                  key={index}
+                  href={{
+                    pathname: `/produit/${slugify(product.name)}`,
+                    query: {
+                      productId: product.id,
+                      productName: product.name,
+                    },
+                  }}
+                >
+                  <a className="xl:w-1/4">
                     <div className="flex flex-col border-2 border-coolGray-100 hover:bg-coolGray-100 rounded-lg p-5 mx-1 mt-5 group">
                       <Image
                         src={product.imageSRC}
@@ -166,7 +257,7 @@ export default function Home({ categoryName }) {
                           <p className="font-semibold">Prix</p>
                           <p className="text-center">{product.price}</p>
                         </div>
-                        <button className="border border-coolGray-900 group-hover:bg-orange-500 group-hover:border-transparent group-hover:text-white rounded-lg p-1 h-9">
+                        <button className="border border-coolGray-300 group-hover:bg-orange-500 group-hover:border-transparent group-hover:text-white rounded-lg p-1 h-9 font-semibold">
                           En savoir plus
                         </button>
                       </div>
@@ -191,7 +282,6 @@ export default function Home({ categoryName }) {
 
 export async function getServerSideProps({ query }) {
   try {
-    console.log(query);
     return { props: { categoryName: query.categoryName } };
   } catch (e) {
     console.error(e);

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import Link from "next/link";
 
 export default function Footer({ menuItems, prices }) {
@@ -9,12 +10,12 @@ export default function Footer({ menuItems, prices }) {
             <ul className="flex flex-col font-semibold">
               <li>
                 <Link href="/">
-                  <a href="/">{"Nouveau".toUpperCase()}</a>
+                  <a>{"Nouveau".toUpperCase()}</a>
                 </Link>
               </li>
               <li>
                 <Link href="/">
-                  <a href="/">{"Meilleures ventes".toUpperCase()}</a>
+                  <a>{"Meilleures ventes".toUpperCase()}</a>
                 </Link>
               </li>
               <li className="mt-10">
@@ -25,9 +26,7 @@ export default function Footer({ menuItems, prices }) {
                         return (
                           <li key={index}>
                             <Link href="/">
-                              <a href="/" className="font-normal">
-                                {price}
-                              </a>
+                              <a className="font-normal">{price}</a>
                             </Link>
                           </li>
                         );
@@ -58,7 +57,7 @@ export default function Footer({ menuItems, prices }) {
                                           (element, index) => {
                                             return (
                                               <Link key={index} href="/">
-                                                <a href="/">{element}</a>
+                                                <a>{element}</a>
                                               </Link>
                                             );
                                           }

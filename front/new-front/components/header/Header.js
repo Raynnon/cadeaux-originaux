@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import Image from "next/image";
 import Link from "next/link";
 
@@ -5,7 +6,7 @@ export default function Header({ menuItems }) {
   return (
     <header className="items-center shadow-sm lg:px-32 xl:flex text-center">
       <Link href="/">
-        <a href="/">
+        <a>
           <Image
             src="/logos/logo-cadeaux-originaux-small.png"
             alt="logo-cadeaux-originaux"
@@ -18,20 +19,14 @@ export default function Header({ menuItems }) {
         <ul className="flex font-semibold">
           <li className="dropdown group mx-5 py-5 text-sm border-b-4 border-transparent hover:border-orange-500  md:text-lg ">
             <Link href="/">
-              <a
-                className="dropdown text-coolGray-500 group-hover:text-coolGray-900"
-                href="/"
-              >
+              <a className="dropdown text-coolGray-500 group-hover:text-coolGray-900">
                 Nouveau
               </a>
             </Link>
           </li>
           <li className="dropdown group mx-5 py-5 text-sm border-b-4 border-transparent hover:border-orange-500  md:text-lg ">
             <Link href="/">
-              <a
-                className="dropdown text-coolGray-500 group-hover:text-coolGray-900"
-                href="/"
-              >
+              <a className="dropdown text-coolGray-500 group-hover:text-coolGray-900">
                 Meilleures ventes
               </a>
             </Link>
@@ -45,10 +40,7 @@ export default function Header({ menuItems }) {
                     className="hidden dropdown group mx-5 py-5 text-lg border-b-4 border-transparent hover:border-orange-500 lg:block"
                   >
                     <Link href="/">
-                      <a
-                        className="dropdown text-coolGray-500 group-hover:text-coolGray-900"
-                        href="/"
-                      >
+                      <a className="dropdown text-coolGray-500 group-hover:text-coolGray-900">
                         {item.name}
                       </a>
                     </Link>
@@ -61,6 +53,7 @@ export default function Header({ menuItems }) {
                               {item.elements.map((element, index) => {
                                 return (
                                   <Link
+                                    key={index}
                                     href={{
                                       pathname: `/categorie/${element
                                         .toLowerCase()
@@ -69,11 +62,7 @@ export default function Header({ menuItems }) {
                                       query: { categoryName: element },
                                     }}
                                   >
-                                    <a
-                                      key={index}
-                                      className="px-5 py-1 hover:bg-orange-300 font-normal"
-                                      href={`/categorie/${element}`}
-                                    >
+                                    <a className="px-5 py-1 hover:bg-orange-300 font-normal">
                                       {element}
                                     </a>
                                   </Link>
