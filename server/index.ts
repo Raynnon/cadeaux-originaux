@@ -1,8 +1,9 @@
-const express = require("express");
+import express from "express";
+import cors from "cors";
 const products = require("./routes/products");
-const cors = require("cors");
+
 const app = express();
-const port = 4000;
+const port:number = 4000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
