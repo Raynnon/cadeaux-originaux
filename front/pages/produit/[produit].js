@@ -3,8 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import ProductsSuggestion from "../../components/subcomponents/ProductsSuggestion";
+import axios from "axios";
 
-export default function Product({ productId, productName }) {
+export default function Product({ productData }) {
+  console.log(productData);
   const product = {
     id: "1",
     name: "Shoes",
@@ -12,22 +14,22 @@ export default function Product({ productId, productName }) {
       "https://picsum.photos/750/750",
       "https://picsum.photos/600/600",
       "https://picsum.photos/650/650",
-      "https://picsum.photos/700/700",
+      "https://picsum.photos/700/700"
     ],
     price: "€",
-    strengths: ["Super cool", "Il est très doux", "Vraiment très économique"],
+    strengths: ["Super cool", "Il est très doux", "Vraiment très économique"]
   };
   const [mainImage, setMainImage] = useState(product.imagesSRC[0]);
 
   return (
-    <Layout pageTitle={`${productName} - Mes cadeaux originaux`}>
+    <Layout pageTitle={`${productData.name} - Mes cadeaux originaux`}>
       <main className="mt-10 px-10 xl:px-32 ">
         <div className="flex flex-col lg:flex-row justify-between">
           <div className="flex lg:flex-col xl:flex-row justify-center lg:justify-start xl:justify-between items-center xl:items-center lg:pr-20 mb-10">
             {mainImage ? (
               <div className="w-2/3 md:w-1/2 lg:w-3/4">
                 <Image
-                  alt={product.name}
+                  alt={productData.name}
                   src={mainImage}
                   width={580}
                   height={580}
@@ -43,7 +45,7 @@ export default function Product({ productId, productName }) {
                   <div className="w-20 xl:w-36 border-2 border-transparent hover:border-orange-500 rounded-lg">
                     <Image
                       key={index}
-                      alt={product.name}
+                      alt={productData.name}
                       src={image}
                       width={140}
                       height={140}
@@ -57,7 +59,7 @@ export default function Product({ productId, productName }) {
             </div>
           </div>
           <div className="flex flex-col items-center lg:items-start mx-5 lg:w-1/2">
-            <h1 className="mb-5 text-4xl font-semibold">{productName}</h1>
+            <h1 className="mb-5 text-4xl font-semibold">{productData.name}</h1>
             <p className="text-justify leading-loose">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
               lacinia mi purus, ut mattis ante pharetra non. Fusce et odio
@@ -124,8 +126,12 @@ export default function Product({ productId, productName }) {
 
 export async function getServerSideProps({ query }) {
   try {
+    const productData = await axios.get(
+      "http://localhost:4000/products/611113c90378f811d9271cc8"
+    );
+
     return {
-      props: { productId: query.productId, productName: query.productName },
+      props: { productData: productData.data }
     };
   } catch (e) {
     console.error(e);

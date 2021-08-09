@@ -14,7 +14,7 @@ export default function Category({ categoryName }) {
     "Petite copine",
     "Petit copain",
     "Collègue de travail",
-    "Peu importe",
+    "Peu importe"
   ];
   const occasions = [
     "Anniversaire",
@@ -24,7 +24,7 @@ export default function Category({ categoryName }) {
     "Se faire pardonner",
     "Départ en retraite",
     "Crémaillère",
-    "Cadeau rigolo",
+    "Cadeau rigolo"
   ];
   const parties = [
     "Noël",
@@ -34,7 +34,7 @@ export default function Category({ categoryName }) {
     "Saint Valentin",
     "Pâques",
     "Halloween",
-    "Peu importe",
+    "Peu importe"
   ];
 
   const prices = ["€", "€€€", "€€€", "Tous les prix"];
@@ -44,98 +44,98 @@ export default function Category({ categoryName }) {
       id: "1",
       name: "Shoes",
       imageSRC: "https://picsum.photos/100/100",
-      price: "€",
+      price: "€"
     },
     {
       id: "1",
       name: "Glasses",
       imageSRC: "https://picsum.photos/150/150",
-      price: "€€",
+      price: "€€"
     },
     {
       id: "1",
       name: "Coat",
       imageSRC: "https://picsum.photos/200/200",
-      price: "€€€",
+      price: "€€€"
     },
     {
       id: "1",
       name: "Watch",
       imageSRC: "https://picsum.photos/250/250",
-      price: "€",
+      price: "€"
     },
     {
       id: "1",
       name: "Keyboard",
       imageSRC: "https://picsum.photos/300/300",
-      price: "€",
+      price: "€"
     },
     {
       id: "1",
       name: "Scooter",
       imageSRC: "https://picsum.photos/350/350",
-      price: "€€",
+      price: "€€"
     },
     {
       id: "1",
       name: "Shoes",
       imageSRC: "https://picsum.photos/100/100",
-      price: "€",
+      price: "€"
     },
     {
       id: "1",
       name: "Green glasses",
       imageSRC: "https://picsum.photos/150/150",
-      price: "€€",
+      price: "€€"
     },
     {
       id: "1",
       name: "Shoes",
       imageSRC: "https://picsum.photos/100/100",
-      price: "€",
+      price: "€"
     },
     {
       id: "1",
       name: "Glasses",
       imageSRC: "https://picsum.photos/150/150",
-      price: "€€",
+      price: "€€"
     },
     {
       id: "1",
       name: "Coat",
       imageSRC: "https://picsum.photos/200/200",
-      price: "€€€",
+      price: "€€€"
     },
     {
       id: "1",
       name: "Watch",
       imageSRC: "https://picsum.photos/250/250",
-      price: "€",
+      price: "€"
     },
     {
       id: "1",
       name: "Keyboard",
       imageSRC: "https://picsum.photos/300/300",
-      price: "€",
+      price: "€"
     },
     {
       id: "1",
       name: "Scooter",
       imageSRC: "https://picsum.photos/350/350",
-      price: "€€",
+      price: "€€"
     },
     {
       id: "1",
       name: "Shoes",
       imageSRC: "https://picsum.photos/100/100",
-      price: "€",
+      price: "€"
     },
     {
       id: "1",
       name: "Glasses",
       imageSRC: "https://picsum.photos/150/150",
-      price: "€€",
-    },
+      price: "€€"
+    }
   ];
 
   return (
@@ -236,8 +236,8 @@ export default function Category({ categoryName }) {
                     pathname: `/produit/${slugify(product.name)}`,
                     query: {
                       productId: product.id,
-                      productName: product.name,
-                    },
+                      productName: product.name
+                    }
                   }}
                 >
                   <a className="xl:w-1/4">
