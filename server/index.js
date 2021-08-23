@@ -1,9 +1,10 @@
-import express from "express";
-import cors from "cors";
+const express = require("express");
+const cors = require("cors");
 const products = require("./routes/products");
+require("./database/mongoDB");
 
 const app = express();
-const port: number = 4000;
+const port = 4000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
