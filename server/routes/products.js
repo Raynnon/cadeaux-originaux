@@ -22,25 +22,35 @@ router.get("/products", async (req, res) => {
 router.get("/products/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id).exec();
-    /* const productToSend = {
-      id: product?._id,
-      name: product?.name,
-      price: product?.price,
-      description: product?.description,
-      strongPoints: product?.strongPoints,
-      whoKind: product?.whoKind,
-      whoType: product?.whoType,
-      occasions: product?.occasions,
-      parties: product?.parties,
-      visits: product?.visits,
-      urlAmazon: product?.urlAmazon,
-      createdAt: product?.createdAt,
-      editedAt: product?.editedAt,
+    const productToSend = {
+      id: product._id,
+      name: product.name,
+      price: product.price,
+      description: product.description,
+      strongPoints: product.strongPoints,
+      whoKind: product.whoKind,
+      whoType: product.whoType,
+      occasions: product.occasions,
+      parties: product.parties,
+      visits: product.visits,
+      urlAmazon: product.urlAmazon,
+      createdAt: product.createdAt,
+      editedAt: product.editedAt,
+      images: []
     };
 
-    console.log(productToSend);
- */
-    res.send(product);
+    fs.readdir("./public/" + product.imagesFolder, (err, files) => {
+      if (err) {
+        console.log(`Unable to reach ${product.imagesFolder}`);
+      }
+
+      files.forEach((file) => {
+        productToSend.images.push(
+          process.env.APP_URL + product.imagesFolder + "/" + file
+        );
+      });
+      res.send(productToSend);
+    });
   } catch (e) {
     console.log(e);
     res.status(400).send();
@@ -48,7 +58,7 @@ router.get("/products/:id", async (req, res) => {
 });
 
 /* ADD PRODUCT */
-const tempFolder = "./images/products/temp";
+const tempFolder = "./public/images/products/temp";
 
 //if temporary Folder does not exist, create it
 if (!fs.existsSync(tempFolder)) {
@@ -68,11 +78,10 @@ const upload = multer({ storage: storage });
 router.post("/products", upload.array("image"), async (req, res) => {
   try {
     const imagesFolder =
-      "./images/products/" +
-      slugify(req.body.name, { trim: true, lower: true });
+      "/images/products/" + slugify(req.body.name, { trim: true, lower: true });
 
     //Copy temp folder to the image folder
-    fs.copy(tempFolder, imagesFolder, () => {
+    fs.copy(tempFolder, "public/" + imagesFolder, () => {
       fs.readdir(tempFolder, (err, files) => {
         files.forEach(async (file) => {
           await fs.unlinkSync(tempFolder + "/" + file);

@@ -6,20 +6,7 @@ import ProductsSuggestion from "../../components/subcomponents/ProductsSuggestio
 import axios from "axios";
 
 export default function Product({ productData }) {
-  console.log(productData);
-  const product = {
-    id: "1",
-    name: "Shoes",
-    imagesSRC: [
-      "https://picsum.photos/750/750",
-      "https://picsum.photos/600/600",
-      "https://picsum.photos/650/650",
-      "https://picsum.photos/700/700"
-    ],
-    price: "€",
-    strengths: ["Super cool", "Il est très doux", "Vraiment très économique"]
-  };
-  const [mainImage, setMainImage] = useState(product.imagesSRC[0]);
+  const [mainImage, setMainImage] = useState(productData.images[0]);
 
   return (
     <Layout pageTitle={`${productData.name} - Mes cadeaux originaux`}>
@@ -40,11 +27,13 @@ export default function Product({ productData }) {
             ) : null}
 
             <div className="flex flex-col lg:flex-row xl:flex-col justify-between">
-              {product.imagesSRC.map((image, index) => {
+              {productData.images.map((image, index) => {
                 return (
-                  <div className="w-20 xl:w-36 border-2 border-transparent hover:border-orange-500 rounded-lg">
+                  <div
+                    key={index}
+                    className="w-20 xl:w-36 border-2 border-transparent hover:border-orange-500 rounded-lg"
+                  >
                     <Image
-                      key={index}
                       alt={productData.name}
                       src={image}
                       width={140}
@@ -61,27 +50,14 @@ export default function Product({ productData }) {
           <div className="flex flex-col items-center lg:items-start mx-5 lg:w-1/2">
             <h1 className="mb-5 text-4xl font-semibold">{productData.name}</h1>
             <p className="text-justify leading-loose">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              lacinia mi purus, ut mattis ante pharetra non. Fusce et odio
-              commodo, hendrerit est ac, aliquam sem. Morbi commodo suscipit
-              tincidunt. Donec molestie mi nec mauris sollicitudin, eu dapibus
-              eros sollicitudin. Fusce maximus justo sed placerat pellentesque.
-              Vivamus mollis, enim in tincidunt rhoncus, purus lectus fermentum
-              dolor, eu semper est lacus vitae ex. Phasellus porta ex justo.
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quis
-              dignissim purus, at viverra mi. Morbi vel ligula quis eros
-              facilisis mattis in non massa. Fusce euismod metus id mauris
-              ultrices gravida. Proin laoreet nisl at metus vestibulum, eget
-              tristique lorem finibus. Duis feugiat felis turpis, ut eleifend
-              elit lobortis ac. Sed ipsum enim, dignissim a ultrices ac, mattis
-              et ipsum.
+              {productData.description}
             </p>
-            <button className="w-44 py-3 mt-10 rounded-lg text-white bg-orange-500 text-3xl">
-              Acheter
+            <button className="w-44 py-3 mt-10 rounded-lg text-white bg-orange-500 text-2xl">
+              En Savoir plus
             </button>
             <ul className="mt-10">
-              {product.strengths.length
-                ? product.strengths.map((strength, index) => {
+              {productData.strongPoints.length
+                ? productData.strongPoints.map((strength, index) => {
                     return (
                       <li
                         key={index}
@@ -127,7 +103,7 @@ export default function Product({ productData }) {
 export async function getServerSideProps({ query }) {
   try {
     const productData = await axios.get(
-      "http://localhost:4000/products/611113c90378f811d9271cc8"
+      "http://localhost:4000/products/612634aae11ed80bcf7aff28"
     );
 
     return {
