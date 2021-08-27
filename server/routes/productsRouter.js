@@ -4,6 +4,7 @@ const slugify = require("slugify");
 
 const Product = require("../Models/Product");
 const uploadFile = require("../middlewares/uploadFile");
+const moveFile = require("../middlewares/moveFile");
 
 const router = new express.Router();
 
@@ -39,7 +40,7 @@ router.get("/products/:id", async (req, res) => {
       images: []
     };
 
-    fs.readdir("./public/" + product.imagesFolder, (err, files) => {
+    fs.readdir(product.imagesFolder, (err, files) => {
       if (err) {
         console.log(`Unable to reach ${product.imagesFolder}`);
       }
@@ -58,25 +59,13 @@ router.get("/products/:id", async (req, res) => {
 });
 
 /* ADD PRODUCT */
-const tempFolder = "./temp";
-
-router.post("/products", uploadFile(tempFolder), async (req, res) => {
+router.post("/products", uploadFile(), async (req, res) => {
   try {
     const imagesFolder =
-      "/images/products/" + slugify(req.body.name, { trim: true, lower: true });
+      "./public/images/products/" +
+      slugify(req.body.name, { trim: true, lower: true });
 
-    //Copy temp folder to the image folder
-    fs.copy(tempFolder, "public/" + imagesFolder, () => {
-      fs.readdir(tempFolder, (err, files) => {
-        if (err) {
-          console.log(err);
-        }
-
-        files.forEach(async (file) => {
-          await fs.unlinkSync(tempFolder + "/" + file);
-        });
-      });
-    });
+    moveFile(imagesFolder);
 
     const newProduct = new Product({
       ...req.body,
@@ -95,15 +84,7 @@ router.post("/products", uploadFile(tempFolder), async (req, res) => {
 router.put("/products/:id", async (req, res) => {
   try {
     const toUpdate = {
-      name: req.body.name,
-      price: req.body.price,
-      description: req.body.description,
-      strongPoints: req.body.strongPoints,
-      whoKind: req.body.whoKind,
-      whoType: req.body.whoType,
-      occasions: req.body.occasions,
-      parties: req.body.parties,
-      urlAmazon: req.body.urlAmazon
+      ...req.body
     };
 
     const toUpdateNotNull = (obj) => {

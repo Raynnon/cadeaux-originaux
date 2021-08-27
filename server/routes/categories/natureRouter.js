@@ -1,18 +1,26 @@
 const express = require("express");
+const slugify = require("slugify");
 
 const Nature = require("../../Models/categories/Nature");
 const uploadFile = require("../../middlewares/uploadFile");
+const moveFile = require("../../middlewares/moveFile");
 
 const router = new express.Router();
 
-/* ADD PRODUCT */
+/* ADD Nature */
 const tempFolder = "./temp";
 
 router.post("/nature", uploadFile(tempFolder), async (req, res) => {
   try {
-    /*  const newNature = new Nature({ ...req.body });
+    const imagesFolder =
+      "./public/images/categories/nature/" +
+      slugify(req.body.name, { trim: true, lower: true });
 
-    await newNature.save(); */
+    moveFile(imagesFolder);
+
+    const newNature = new Nature({ ...req.body, imagesFolder });
+
+    await newNature.save();
 
     res.send("Nature added");
   } catch (e) {
