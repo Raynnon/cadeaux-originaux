@@ -1,9 +1,9 @@
 const express = require("express");
 const fs = require("fs-extra");
-const Product = require("../Models/Product");
-
-const multer = require("multer");
 const slugify = require("slugify");
+
+const Product = require("../Models/Product");
+const uploadFile = require("../middlewares/uploadFile");
 
 const router = new express.Router();
 
@@ -58,24 +58,9 @@ router.get("/products/:id", async (req, res) => {
 });
 
 /* ADD PRODUCT */
-const tempFolder = "./public/images/products/temp";
+const tempFolder = "./temp";
 
-//if temporary Folder does not exist, create it
-if (!fs.existsSync(tempFolder)) {
-  fs.mkdir(tempFolder);
-}
-
-const storage = multer.diskStorage({
-  //put the files in the temporary folder
-  destination: (req, file, cb) => cb(null, tempFolder),
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  }
-});
-
-const upload = multer({ storage: storage });
-
-router.post("/products", upload.array("image"), async (req, res) => {
+router.post("/products", uploadFile(tempFolder), async (req, res) => {
   try {
     const imagesFolder =
       "/images/products/" + slugify(req.body.name, { trim: true, lower: true });
@@ -83,6 +68,10 @@ router.post("/products", upload.array("image"), async (req, res) => {
     //Copy temp folder to the image folder
     fs.copy(tempFolder, "public/" + imagesFolder, () => {
       fs.readdir(tempFolder, (err, files) => {
+        if (err) {
+          console.log(err);
+        }
+
         files.forEach(async (file) => {
           await fs.unlinkSync(tempFolder + "/" + file);
         });

@@ -8,5 +8,6 @@ const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${p
 mongoose.connect(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useFindAndModify: false
+  useFindAndModify: false,
+  useCreateIndex: true
 });
