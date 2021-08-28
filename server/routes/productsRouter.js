@@ -1,5 +1,6 @@
 const express = require("express");
 const fs = require("fs-extra");
+const util = require("util");
 const slugify = require("slugify");
 
 const Product = require("../Models/Product");
@@ -8,10 +9,33 @@ const moveFile = require("../middlewares/moveFile");
 
 const router = new express.Router();
 
+const toSend = (product) => {
+  const productToSend = {
+    ...product,
+    images: []
+  };
+
+  fs.readdir("./public/" + product.imagesFolder, (err, files) => {
+    if (files) {
+      files.forEach((file) => {
+        productToSend.images.push(
+          process.env.APP_URL + product.imagesFolder + "/" + file
+        );
+      });
+    } else {
+      console.log(`Unable to reach ${product.imagesFolder}`);
+    }
+  });
+
+  return productToSend;
+};
+
 /* READ PRODUCTS */
 router.get("/products", async (req, res) => {
   try {
     const products = await Product.find({});
+    const productsToSend = products.map((product) => {});
+
     res.send(products);
   } catch (e) {
     console.log(e);
@@ -23,35 +47,8 @@ router.get("/products", async (req, res) => {
 router.get("/products/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id).exec();
-    const productToSend = {
-      id: product._id,
-      name: product.name,
-      price: product.price,
-      description: product.description,
-      strongPoints: product.strongPoints,
-      whoKind: product.whoKind,
-      whoType: product.whoType,
-      occasions: product.occasions,
-      parties: product.parties,
-      visits: product.visits,
-      urlAmazon: product.urlAmazon,
-      createdAt: product.createdAt,
-      editedAt: product.editedAt,
-      images: []
-    };
 
-    fs.readdir(product.imagesFolder, (err, files) => {
-      if (err) {
-        console.log(`Unable to reach ${product.imagesFolder}`);
-      }
-
-      files.forEach((file) => {
-        productToSend.images.push(
-          process.env.APP_URL + product.imagesFolder + "/" + file
-        );
-      });
-      res.send(productToSend);
-    });
+    res.send(toSend(product));
   } catch (e) {
     console.log(e);
     res.status(400).send();
@@ -62,10 +59,9 @@ router.get("/products/:id", async (req, res) => {
 router.post("/products", uploadFile(), async (req, res) => {
   try {
     const imagesFolder =
-      "./public/images/products/" +
-      slugify(req.body.name, { trim: true, lower: true });
+      "images/products/" + slugify(req.body.name, { trim: true, lower: true });
 
-    moveFile(imagesFolder);
+    moveFile("./public/" + imagesFolder);
 
     const newProduct = new Product({
       ...req.body,
