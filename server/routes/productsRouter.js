@@ -9,23 +9,36 @@ const moveFile = require("../middlewares/moveFile");
 
 const router = new express.Router();
 
-const toSend = (product) => {
+const toSend = async (product) => {
   const productToSend = {
     ...product,
     images: []
   };
 
-  fs.readdir("./public/" + product.imagesFolder, (err, files) => {
-    if (files) {
-      files.forEach((file) => {
-        productToSend.images.push(
-          process.env.APP_URL + product.imagesFolder + "/" + file
-        );
-      });
-    } else {
-      console.log(`Unable to reach ${product.imagesFolder}`);
+  const readdir = util.promisify(fs.readdir);
+
+  const dirImages = await readdir(
+    "./public/" + product.imagesFolder,
+    (err, files) => {
+      if (files) {
+        const productImages = [];
+
+        files.forEach((file) => {
+          productImages.push(
+            process.env.APP_URL + product.imagesFolder + "/" + file
+          );
+        });
+
+        productToSend.images = productImages;
+
+        return productToSend;
+      } else {
+        console.log(`Unable to reach ${product.imagesFolder}`);
+
+        return productToSend;
+      }
     }
-  });
+  );
 
   return productToSend;
 };

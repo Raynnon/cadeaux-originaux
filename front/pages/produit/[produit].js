@@ -7,16 +7,17 @@ import axios from "axios";
 
 export default function Product({ productData }) {
   const [mainImage, setMainImage] = useState(productData.images[0]);
+  const { name, description, strongPoints } = productData._doc;
 
   return (
-    <Layout pageTitle={`${productData.name} - Mes cadeaux originaux`}>
+    <Layout pageTitle={`${name} - Mes cadeaux originaux`}>
       <main className="mt-10 px-10 xl:px-32 ">
         <div className="flex flex-col lg:flex-row justify-between">
           <div className="flex lg:flex-col xl:flex-row justify-center lg:justify-start xl:justify-between items-center xl:items-center lg:pr-20 mb-10">
             {mainImage ? (
               <div className="w-2/3 md:w-1/2 lg:w-3/4">
                 <Image
-                  alt={productData.name}
+                  alt={name}
                   src={mainImage}
                   width={580}
                   height={580}
@@ -34,7 +35,7 @@ export default function Product({ productData }) {
                     className="w-20 xl:w-36 border-2 border-transparent hover:border-orange-500 rounded-lg"
                   >
                     <Image
-                      alt={productData.name}
+                      alt={name}
                       src={image}
                       width={140}
                       height={140}
@@ -48,16 +49,14 @@ export default function Product({ productData }) {
             </div>
           </div>
           <div className="flex flex-col items-center lg:items-start mx-5 lg:w-1/2">
-            <h1 className="mb-5 text-4xl font-semibold">{productData.name}</h1>
-            <p className="text-justify leading-loose">
-              {productData.description}
-            </p>
+            <h1 className="mb-5 text-4xl font-semibold">{name}</h1>
+            <p className="text-justify leading-loose">{description}</p>
             <button className="w-44 py-3 mt-10 rounded-lg text-white bg-orange-500 text-2xl">
               En Savoir plus
             </button>
             <ul className="mt-10">
-              {productData.strongPoints.length
-                ? productData.strongPoints.map((strength, index) => {
+              {strongPoints
+                ? strongPoints.map((strength, index) => {
                     return (
                       <li
                         key={index}
@@ -103,7 +102,7 @@ export default function Product({ productData }) {
 export async function getServerSideProps({ query }) {
   try {
     const productData = await axios.get(
-      "http://localhost:4000/products/6129fbedbfc728070ac3cb7c"
+      "http://localhost:4000/products/612ca60eda6aea1d9b731097"
     );
 
     return {
