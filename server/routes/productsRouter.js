@@ -1,6 +1,5 @@
 const express = require("express");
-const fs = require("fs-extra");
-const util = require("util");
+const { readdir } = require("fs/promises");
 const slugify = require("slugify");
 
 const Product = require("../Models/Product");
@@ -15,30 +14,13 @@ const toSend = async (product) => {
     images: []
   };
 
-  const readdir = util.promisify(fs.readdir);
+  const files = await readdir("./public/" + product.imagesFolder);
 
-  const dirImages = await readdir(
-    "./public/" + product.imagesFolder,
-    (err, files) => {
-      if (files) {
-        const productImages = [];
-
-        files.forEach((file) => {
-          productImages.push(
-            process.env.APP_URL + product.imagesFolder + "/" + file
-          );
-        });
-
-        productToSend.images = productImages;
-
-        return productToSend;
-      } else {
-        console.log(`Unable to reach ${product.imagesFolder}`);
-
-        return productToSend;
-      }
-    }
-  );
+  for (const file of files) {
+    productToSend.images.push(
+      process.env.APP_URL + product.imagesFolder + "/" + file
+    );
+  }
 
   return productToSend;
 };
@@ -46,10 +28,14 @@ const toSend = async (product) => {
 /* READ PRODUCTS */
 router.get("/products", async (req, res) => {
   try {
-    const products = await Product.find({});
-    const productsToSend = products.map((product) => {});
+    const products = await Product.find({}).lean();
+    const productsToSend = [];
 
-    res.send(products);
+    for (const product of products) {
+      productsToSend.push(await toSend(product));
+    }
+
+    res.send(productsToSend);
   } catch (e) {
     console.log(e);
     res.status(200).send();
@@ -59,9 +45,9 @@ router.get("/products", async (req, res) => {
 /* READ PRODUCTS BY ID */
 router.get("/products/:id", async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id).exec();
+    const product = await Product.findById(req.params.id).lean().exec();
 
-    res.send(toSend(product));
+    res.send(await toSend(product));
   } catch (e) {
     console.log(e);
     res.status(400).send();

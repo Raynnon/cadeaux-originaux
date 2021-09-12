@@ -7,7 +7,7 @@ import axios from "axios";
 
 export default function Product({ productData }) {
   const [mainImage, setMainImage] = useState(productData.images[0]);
-  const { name, description, strongPoints } = productData._doc;
+  const { name, description, strongPoints, urlAmazon } = productData;
 
   return (
     <Layout pageTitle={`${name} - Mes cadeaux originaux`}>
@@ -51,9 +51,14 @@ export default function Product({ productData }) {
           <div className="flex flex-col items-center lg:items-start mx-5 lg:w-1/2">
             <h1 className="mb-5 text-4xl font-semibold">{name}</h1>
             <p className="text-justify leading-loose">{description}</p>
-            <button className="w-44 py-3 mt-10 rounded-lg text-white bg-orange-500 text-2xl">
-              En Savoir plus
-            </button>
+            <Link href={urlAmazon}>
+              <a>
+                <button className="w-44 py-3 mt-10 rounded-lg text-white bg-orange-500 text-2xl">
+                  En Savoir plus
+                </button>
+              </a>
+            </Link>
+
             <ul className="mt-10">
               {strongPoints
                 ? strongPoints.map((strength, index) => {
@@ -102,7 +107,7 @@ export default function Product({ productData }) {
 export async function getServerSideProps({ query }) {
   try {
     const productData = await axios.get(
-      "http://localhost:4000/products/612ca60eda6aea1d9b731097"
+      "http://localhost:4000/products/613ddd08cd669a0245edb347"
     );
 
     return {
