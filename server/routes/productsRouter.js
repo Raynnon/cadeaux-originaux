@@ -1,10 +1,10 @@
 const express = require("express");
 const { readdir } = require("fs/promises");
-const slugify = require("slugify");
 
 const Product = require("../Models/Product");
 const uploadFile = require("../middlewares/uploadFile");
-const moveFile = require("../middlewares/moveFile");
+const readAllItems = require("./creator/readAllItems");
+const addItem = require("./creator/addItem");
 
 const router = new express.Router();
 
@@ -28,14 +28,7 @@ const toSend = async (product) => {
 /* READ PRODUCTS */
 router.get("/products", async (req, res) => {
   try {
-    const products = await Product.find({}).lean();
-    const productsToSend = [];
-
-    for (const product of products) {
-      productsToSend.push(await toSend(product));
-    }
-
-    res.send(productsToSend);
+    res.send(await readAllItems(Product));
   } catch (e) {
     console.log(e);
     res.status(200).send();
@@ -57,17 +50,7 @@ router.get("/products/:id", async (req, res) => {
 /* ADD PRODUCT */
 router.post("/products", uploadFile(), async (req, res) => {
   try {
-    const imagesFolder =
-      "images/products/" + slugify(req.body.name, { trim: true, lower: true });
-
-    moveFile("./public/" + imagesFolder);
-
-    const newProduct = new Product({
-      ...req.body,
-      imagesFolder
-    });
-
-    await newProduct.save();
+    await addItem(req, Product, "products/");
 
     res.send("Product added");
   } catch (e) {

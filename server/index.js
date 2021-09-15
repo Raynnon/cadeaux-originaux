@@ -3,7 +3,6 @@ const cors = require("cors");
 const productsRouter = require("./routes/productsRouter");
 const natureRouter = require("./routes/categories/natureRouter");
 require("./database/mongoDB");
-const dotenv = require("dotenv");
 
 const app = express();
 

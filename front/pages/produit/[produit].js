@@ -107,7 +107,7 @@ export default function Product({ productData }) {
 export async function getServerSideProps({ query }) {
   try {
     const productData = await axios.get(
-      "http://localhost:4000/products/613ddd08cd669a0245edb347"
+      "http://localhost:4000/products/6140fa09ef4fc002956a58af"
     );
 
     return {
