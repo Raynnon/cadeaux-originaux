@@ -1,6 +1,5 @@
 const moveFile = require("../../middlewares/moveFile");
 const slugify = require("slugify");
-const { readdir } = require("fs/promises");
 
 const addItem = async (req, model, imagesSubFolder) => {
   const imagesFolder =

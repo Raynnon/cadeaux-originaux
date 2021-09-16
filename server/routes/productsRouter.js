@@ -1,29 +1,14 @@
 const express = require("express");
-const { readdir } = require("fs/promises");
 
 const Product = require("../Models/Product");
 const uploadFile = require("../middlewares/uploadFile");
 const readAllItems = require("./creator/readAllItems");
 const addItem = require("./creator/addItem");
+const deleteItem = require("./creator/deleteItem");
+const readOneItem = require("./creator/readOneItem");
+const updateOneItem = require("./creator/readOneItem");
 
 const router = new express.Router();
-
-const toSend = async (product) => {
-  const productToSend = {
-    ...product,
-    images: []
-  };
-
-  const files = await readdir("./public/" + product.imagesFolder);
-
-  for (const file of files) {
-    productToSend.images.push(
-      process.env.APP_URL + product.imagesFolder + "/" + file
-    );
-  }
-
-  return productToSend;
-};
 
 /* READ PRODUCTS */
 router.get("/products", async (req, res) => {
@@ -38,9 +23,9 @@ router.get("/products", async (req, res) => {
 /* READ PRODUCTS BY ID */
 router.get("/products/:id", async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id).lean().exec();
+    const data = await readOneItem(req.params.id, Product);
 
-    res.send(await toSend(product));
+    res.send(data);
   } catch (e) {
     console.log(e);
     res.status(400).send();
@@ -61,23 +46,7 @@ router.post("/products", uploadFile(), async (req, res) => {
 // EDIT PRODUCT BY ID
 router.put("/products/:id", async (req, res) => {
   try {
-    const toUpdate = {
-      ...req.body
-    };
-
-    const toUpdateNotNull = (obj) => {
-      for (let propName in obj) {
-        if (obj[propName] === null || obj[propName] === undefined) {
-          delete obj[propName];
-        }
-      }
-      return obj;
-    };
-
-    await Product.findOneAndUpdate(
-      { _id: req.params.id },
-      toUpdateNotNull(toUpdate)
-    );
+    await updateOneItem(req, Product);
 
     res.send("Product updated");
   } catch (e) {
@@ -89,7 +58,7 @@ router.put("/products/:id", async (req, res) => {
 // DELETE PRODUCT
 router.delete("/products/:id", async (req, res) => {
   try {
-    await await Product.deleteOne({ _id: req.params.id });
+    await deleteItem(req.params.id, Product);
 
     res.send("Product deleted");
   } catch (e) {
