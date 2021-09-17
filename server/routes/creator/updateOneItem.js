@@ -1,4 +1,7 @@
+const moveFile = require("../../middlewares/moveFile.js");
+
 const updateOneItem = async (req, model) => {
+  const _id = req.params.id;
   const toUpdate = {
     ...req.body
   };
@@ -12,10 +15,10 @@ const updateOneItem = async (req, model) => {
     return obj;
   };
 
-  await model.findOneAndUpdate(
-    { _id: req.params.id },
-    toUpdateNotNull(toUpdate)
-  );
+  const data = await model.findById(_id).lean().exec();
+  moveFile("./public/" + data.imagesFolder);
+
+  await model.findOneAndUpdate({ _id }, toUpdateNotNull(toUpdate));
 };
 
 module.exports = updateOneItem;

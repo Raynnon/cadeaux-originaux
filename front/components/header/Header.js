@@ -25,7 +25,12 @@ export default function Header({ menuItems }) {
             </Link>
           </li>
           <li className="dropdown group mx-5 py-5 text-sm border-b-4 border-transparent hover:border-orange-500  md:text-lg ">
-            <Link href="/">
+            <Link
+              href={{
+                pathname: `/categorie/meilleurs-cadeaux`,
+                query: { categoryName: "Meilleurs Cadeaux" }
+              }}
+            >
               <a className="dropdown text-coolGray-500 group-hover:text-coolGray-900">
                 Meilleures ventes
               </a>
@@ -59,7 +64,7 @@ export default function Header({ menuItems }) {
                                         .toLowerCase()
                                         .split(/[ ,]+/)
                                         .join("-")}`,
-                                      query: { categoryName: element },
+                                      query: { categoryName: element }
                                     }}
                                   >
                                     <a className="px-5 py-1 hover:bg-orange-300 font-normal">

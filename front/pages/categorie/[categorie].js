@@ -2,9 +2,10 @@
 import Layout from "../../components/Layout";
 import Image from "next/image";
 import Link from "next/link";
+import axios from "axios";
 const slugify = require("slugify");
 
-export default function Category({ categoryName }) {
+export default function Category({ categoryName, products }) {
   const genres = ["Femme", "Homme", "Fille", "Garçon", "Bébé", "Tous"];
   const types = [
     "Maman",
@@ -38,105 +39,6 @@ export default function Category({ categoryName }) {
   ];
 
   const prices = ["€", "€€€", "€€€", "Tous les prix"];
-
-  const products = [
-    {
-      id: "1",
-      name: "Shoes",
-      imageSRC: "https://picsum.photos/100/100",
-      price: "€"
-    },
-    {
-      id: "1",
-      name: "Glasses",
-      imageSRC: "https://picsum.photos/150/150",
-      price: "€€"
-    },
-    {
-      id: "1",
-      name: "Coat",
-      imageSRC: "https://picsum.photos/200/200",
-      price: "€€€"
-    },
-    {
-      id: "1",
-      name: "Watch",
-      imageSRC: "https://picsum.photos/250/250",
-      price: "€"
-    },
-    {
-      id: "1",
-      name: "Keyboard",
-      imageSRC: "https://picsum.photos/300/300",
-      price: "€"
-    },
-    {
-      id: "1",
-      name: "Scooter",
-      imageSRC: "https://picsum.photos/350/350",
-      price: "€€"
-    },
-    {
-      id: "1",
-      name: "Shoes",
-      imageSRC: "https://picsum.photos/100/100",
-      price: "€"
-    },
-    {
-      id: "1",
-      name: "Green glasses",
-      imageSRC: "https://picsum.photos/150/150",
-      price: "€€"
-    },
-    {
-      id: "1",
-      name: "Shoes",
-      imageSRC: "https://picsum.photos/100/100",
-      price: "€"
-    },
-    {
-      id: "1",
-      name: "Glasses",
-      imageSRC: "https://picsum.photos/150/150",
-      price: "€€"
-    },
-    {
-      id: "1",
-      name: "Coat",
-      imageSRC: "https://picsum.photos/200/200",
-      price: "€€€"
-    },
-    {
-      id: "1",
-      name: "Watch",
-      imageSRC: "https://picsum.photos/250/250",
-      price: "€"
-    },
-    {
-      id: "1",
-      name: "Keyboard",
-      imageSRC: "https://picsum.photos/300/300",
-      price: "€"
-    },
-    {
-      id: "1",
-      name: "Scooter",
-      imageSRC: "https://picsum.photos/350/350",
-      price: "€€"
-    },
-    {
-      id: "1",
-      name: "Shoes",
-      imageSRC: "https://picsum.photos/100/100",
-      price: "€"
-    },
-    {
-      id: "1",
-      name: "Glasses",
-      imageSRC: "https://picsum.photos/150/150",
-      price: "€€"
-    }
-  ];
 
   return (
     <Layout pageTitle={`Cadeau pour ${categoryName} - Mes cadeaux originaux`}>
@@ -235,7 +137,7 @@ export default function Category({ categoryName }) {
                   href={{
                     pathname: `/produit/${slugify(product.name)}`,
                     query: {
-                      productId: product.id,
+                      productId: product._id,
                       productName: product.name
                     }
                   }}
@@ -243,7 +145,7 @@ export default function Category({ categoryName }) {
                   <a className="xl:w-1/4">
                     <div className="flex flex-col border-2 border-coolGray-100 hover:bg-coolGray-100 rounded-lg p-5 mx-1 mt-5 group">
                       <Image
-                        src={product.imageSRC}
+                        src={product.images[0]}
                         width={225}
                         height={225}
                         layout="responsive"
@@ -282,7 +184,112 @@ export default function Category({ categoryName }) {
 
 export async function getServerSideProps({ query }) {
   try {
-    return { props: { categoryName: query.categoryName } };
+    const products = [
+      {
+        id: "1",
+        name: "Shoes",
+        imageSRC: "https://picsum.photos/100/100",
+        price: "€"
+      },
+      {
+        id: "1",
+        name: "Glasses",
+        imageSRC: "https://picsum.photos/150/150",
+        price: "€€"
+      },
+      {
+        id: "1",
+        name: "Coat",
+        imageSRC: "https://picsum.photos/200/200",
+        price: "€€€"
+      },
+      {
+        id: "1",
+        name: "Watch",
+        imageSRC: "https://picsum.photos/250/250",
+        price: "€"
+      },
+      {
+        id: "1",
+        name: "Keyboard",
+        imageSRC: "https://picsum.photos/300/300",
+        price: "€"
+      },
+      {
+        id: "1",
+        name: "Scooter",
+        imageSRC: "https://picsum.photos/350/350",
+        price: "€€"
+      },
+      {
+        id: "1",
+        name: "Shoes",
+        imageSRC: "https://picsum.photos/100/100",
+        price: "€"
+      },
+      {
+        id: "1",
+        name: "Green glasses",
+        imageSRC: "https://picsum.photos/150/150",
+        price: "€€"
+      },
+      {
+        id: "1",
+        name: "Shoes",
+        imageSRC: "https://picsum.photos/100/100",
+        price: "€"
+      },
+      {
+        id: "1",
+        name: "Glasses",
+        imageSRC: "https://picsum.photos/150/150",
+        price: "€€"
+      },
+      {
+        id: "1",
+        name: "Coat",
+        imageSRC: "https://picsum.photos/200/200",
+        price: "€€€"
+      },
+      {
+        id: "1",
+        name: "Watch",
+        imageSRC: "https://picsum.photos/250/250",
+        price: "€"
+      },
+      {
+        id: "1",
+        name: "Keyboard",
+        imageSRC: "https://picsum.photos/300/300",
+        price: "€"
+      },
+      {
+        id: "1",
+        name: "Scooter",
+        imageSRC: "https://picsum.photos/350/350",
+        price: "€€"
+      },
+      {
+        id: "1",
+        name: "Shoes",
+        imageSRC: "https://picsum.photos/100/100",
+        price: "€"
+      },
+      {
+        id: "1",
+        name: "Glasses",
+        imageSRC: "https://picsum.photos/150/150",
+        price: "€€"
+      }
+    ];
+
+    if (query.categoryName === ("Meilleurs Cadeaux" || "Nouveau")) {
+      const data = await axios.get("http://localhost:4000/products");
+      const products = data.data;
+      return { props: { categoryName: query.categoryName, products } };
+    } else {
+      return { props: { categoryName: query.categoryName, products } };
+    }
   } catch (e) {
     console.error(e);
   }

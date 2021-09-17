@@ -6,6 +6,7 @@ import ProductsSuggestion from "../../components/subcomponents/ProductsSuggestio
 import axios from "axios";
 
 export default function Product({ productData }) {
+  console.log("prod", productData[0]);
   const [mainImage, setMainImage] = useState(productData.images[0]);
   const { name, description, strongPoints, urlAmazon } = productData;
 
@@ -107,7 +108,7 @@ export default function Product({ productData }) {
 export async function getServerSideProps({ query }) {
   try {
     const productData = await axios.get(
-      "http://localhost:4000/products/6140fa09ef4fc002956a58af"
+      `http://localhost:4000/products/${query.productId}`
     );
 
     return {
