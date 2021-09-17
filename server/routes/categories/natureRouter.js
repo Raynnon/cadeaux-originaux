@@ -6,6 +6,7 @@ const readAllItems = require("../creator/readAllItems");
 const addItem = require("../creator/addItem");
 const deleteItem = require("../creator/deleteItem");
 const readOneItem = require("../creator/readOneItem");
+const updateOneItem = require("../creator/updateOneItem");
 
 const router = new express.Router();
 
@@ -39,6 +40,18 @@ router.post("/nature", uploadFile(), async (req, res) => {
     res.send("Nature added");
   } catch (e) {
     res.status(400).send(e);
+  }
+});
+
+// EDIT NATURE BY ID
+router.put("/nature/:id", uploadFile(), async (req, res) => {
+  try {
+    await updateOneItem(req, Nature);
+
+    res.send("Nature updated");
+  } catch (e) {
+    console.log(e);
+    res.status(400).send();
   }
 });
 

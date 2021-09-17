@@ -6,7 +6,7 @@ const readAllItems = require("./creator/readAllItems");
 const addItem = require("./creator/addItem");
 const deleteItem = require("./creator/deleteItem");
 const readOneItem = require("./creator/readOneItem");
-const updateOneItem = require("./creator/readOneItem");
+const updateOneItem = require("./creator/updateOneItem");
 
 const router = new express.Router();
 
@@ -44,7 +44,7 @@ router.post("/products", uploadFile(), async (req, res) => {
 });
 
 // EDIT PRODUCT BY ID
-router.put("/products/:id", async (req, res) => {
+router.put("/products/:id", uploadFile(), async (req, res) => {
   try {
     await updateOneItem(req, Product);
 
