@@ -137,8 +137,7 @@ export default function Category({ categoryName, products }) {
                   href={{
                     pathname: `/produit/${slugify(product.name)}`,
                     query: {
-                      productId: product._id,
-                      productName: product.name
+                      productId: product._id
                     }
                   }}
                 >
