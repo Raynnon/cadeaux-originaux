@@ -2,11 +2,11 @@ const express = require("express");
 
 const Nature = require("../../Models/categories/Nature");
 const uploadFile = require("../../middlewares/uploadFile");
-const readAllItems = require("../creator/readAllItems");
-const addItem = require("../creator/addItem");
-const deleteItem = require("../creator/deleteItem");
-const readOneItem = require("../creator/readOneItem");
-const updateOneItem = require("../creator/updateOneItem");
+const readAllItems = require("../crud/readAllItems");
+const addItem = require("../crud/addItem");
+const deleteItem = require("../crud/deleteItem");
+const readOneItem = require("../crud/readOneItem");
+const updateOneItem = require("../crud/updateOneItem");
 
 const router = new express.Router();
 
