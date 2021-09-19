@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
-const natureSchema = new mongoose.Schema({
+const categorySchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
   description: String,
   imagesFolder: String
 });
 
-const Nature = mongoose.model("Nature", natureSchema);
+const Category = mongoose.model("Category", categorySchema);
 
-module.exports = Nature;
+module.exports = Category;

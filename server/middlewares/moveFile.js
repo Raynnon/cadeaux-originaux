@@ -1,18 +1,15 @@
 const fs = require("fs-extra");
 
-const moveFile = (imagesFolder = "./public/images", tempFolder = "./temp") => {
+const moveFile = async (
+  imagesFolder = "./public/images",
+  tempFolder = "./public/temp"
+) => {
   try {
-    fs.copy(tempFolder, imagesFolder, () => {
-      fs.readdir(tempFolder, (err, files) => {
-        if (err) {
-          console.log(err);
-        }
+    await fs.copy(tempFolder, imagesFolder);
 
-        files.forEach(async (file) => {
-          await fs.unlinkSync(tempFolder + "/" + file);
-        });
-      });
-    });
+    if (fs.existsSync(tempFolder)) {
+      fs.rmdirSync(tempFolder, { recursive: true });
+    }
   } catch (err) {
     console.log(err);
   }

@@ -1,11 +1,11 @@
 const express = require("express");
 const helpers = require("./helpers");
-const Nature = require("../Models/categories/Nature");
-const products = require("./products");
+const Category = require("../Models/Category");
+const Product = require("../Models/Product");
 
 const router = new express.Router();
 
-products(router);
-helpers.crud(router, "natures", Nature);
+helpers.crud(router, "products", Product);
+helpers.crud(router, "categories", Category);
 
 module.exports = router;
