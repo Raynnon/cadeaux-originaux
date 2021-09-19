@@ -37,51 +37,37 @@ export default function Header({ menuItems }) {
             </Link>
           </li>
 
-          {menuItems.length
-            ? menuItems.map((item, index) => {
-                return (
-                  <li
-                    key={index}
-                    className="hidden dropdown group mx-5 py-5 text-lg border-b-4 border-transparent hover:border-orange-500 lg:block"
-                  >
-                    <Link href="/">
-                      <a className="dropdown text-coolGray-500 group-hover:text-coolGray-900">
-                        {item.name}
-                      </a>
-                    </Link>
-                    {item.dropdown ? (
-                      <ul className="flex absolute border border-coolGray-100 pb-2 bg-white rounded-lg hidden dropdown-menu group-hover:flex shadow z-10">
-                        {item.dropdown.map((item, index) => {
-                          return (
-                            <div key={index} className="flex flex-col">
-                              <h4>{item.name.toUpperCase()}</h4>
-                              {item.elements.map((element, index) => {
-                                return (
-                                  <Link
-                                    key={index}
-                                    href={{
-                                      pathname: `/categorie/${element
-                                        .toLowerCase()
-                                        .split(/[ ,]+/)
-                                        .join("-")}`,
-                                      query: { categoryName: element }
-                                    }}
-                                  >
-                                    <a className="px-5 py-1 hover:bg-orange-300 font-normal">
-                                      {element}
-                                    </a>
-                                  </Link>
-                                );
-                              })}
-                            </div>
-                          );
-                        })}
-                      </ul>
-                    ) : null}
-                  </li>
-                );
-              })
-            : null}
+          <li className="hidden dropdown group mx-5 py-5 text-lg border-b-4 border-transparent hover:border-orange-500 lg:block">
+            <Link href="/">
+              <a className="dropdown text-coolGray-500 group-hover:text-coolGray-900">
+                Pour qui?
+              </a>
+            </Link>
+            {menuItems ? (
+              <ul className="flex absolute border border-coolGray-100 pb-2 bg-white rounded-lg hidden dropdown-menu group-hover:flex shadow z-10">
+                {menuItems.map((item, index) => {
+                  return (
+                    <div key={index} className="flex flex-col">
+                      <h4>Genre</h4>
+                      <Link
+                        href={{
+                          pathname: `/categorie/Maman
+                            .toLowerCase()
+                            .split(/[ ,]+/)
+                            .join("-")}`,
+                          query: { categoryName: "Maman" }
+                        }}
+                      >
+                        <a className="px-5 py-1 hover:bg-orange-300 font-normal">
+                          Maman
+                        </a>
+                      </Link>
+                    </div>
+                  );
+                })}
+              </ul>
+            ) : null}
+          </li>
         </ul>
       </nav>
     </header>
