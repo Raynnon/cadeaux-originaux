@@ -6,25 +6,29 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function Layout({ children, pageTitle }) {
-  const [menuItems, setMenuItems] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [subCategories, setSubCategories] = useState([]);
-  const [prices, setPrices] = useState([]);
+  const [categories, setCategories] = useState({});
 
   useEffect(async () => {
     const categoriesReq = await axios("http://localhost:4000/categories");
-    const categories = categoriesReq.data;
+    const categoriesData = categoriesReq.data;
 
-    console.log(categories);
+    //Organise Categories
+    const menuItems = [];
+    const topCategories = [];
+    const subCategories = [];
+    const prices = ["€", "€€", "€€€", "Peu importe"];
 
-    setPrices(["€", "€€", "€€€", "Peu importe"]);
-
-    const getMenuItems = categories.filter((item) => {
-      return !item.parent.length;
+    categoriesData.forEach((category) => {
+      if (!category.parent.length) {
+        menuItems.push(category);
+      } else if (category.parent[0] === "Genre") {
+        topCategories.push(category);
+      } else {
+        subCategories.push(category);
+      }
     });
 
-    console.log("test", getMenuItems);
-    setMenuItems([...categories]);
+    setCategories({ menuItems, topCategories, subCategories, prices });
   }, []);
 
   return (
@@ -32,9 +36,9 @@ export default function Layout({ children, pageTitle }) {
       <Head>
         <title>{pageTitle}</title>
       </Head>
-      <Header menuItems={menuItems} />
+      <Header categories={categories} />
       <main>{children}</main>
-      <Footer menuItems={menuItems} prices={prices} />
+      {/* <Footer categories={categories} /> */}
     </div>
   );
 }

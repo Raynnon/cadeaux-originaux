@@ -1,7 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import Link from "next/link";
 
-export default function Footer({ menuItems, prices }) {
+export default function Footer({
+  menuItems,
+  topCategories,
+  subCategories,
+  prices
+} = categories) {
   return (
     <footer className="pb-5 pt-5 bg-coolGray-600 text-coolGray-300 items-center xl:px-40 mt-10">
       <div className="text-center">

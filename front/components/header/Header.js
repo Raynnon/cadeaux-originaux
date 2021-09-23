@@ -2,7 +2,12 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Header({ menuItems }) {
+export default function Header({
+  menuItems,
+  topCategories,
+  subCategories,
+  prices
+} = categories) {
   return (
     <header className="items-center shadow-sm lg:px-32 xl:flex text-center">
       <Link href="/">
