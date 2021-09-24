@@ -1,11 +1,33 @@
 const imageToDataAdder = require("./tools/imageToDataAdder");
 
 const readAllItems = async (model) => {
-  const datas = await model.find({}).lean();
+  const datas = await model.find({});
+  let organisedDatas = [];
   const dataToSend = [];
 
-  for (const data of datas) {
-    dataToSend.push(await imageToDataAdder(data));
+  if (datas[0].parent) {
+    const menu = { Genre: [], Type: [], Occasion: [], Fête: [] };
+
+    datas.forEach((category) => {
+      category.parent.forEach((item) => {
+        if (
+          item === "Genre" ||
+          item === "Type" ||
+          item === "Occasion" ||
+          item === "Fête"
+        ) {
+          menu[item].push(category);
+        }
+      });
+    });
+
+    organisedDatas.push(menu);
+  } else {
+    organisedDatas = datas;
+  }
+
+  for (const data of organisedDatas) {
+    dataToSend.push(await imageToDataAdder(organisedDatas));
   }
 
   return dataToSend;
