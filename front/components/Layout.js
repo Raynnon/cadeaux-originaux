@@ -6,29 +6,22 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function Layout({ children, pageTitle }) {
-  const [categories, setCategories] = useState({});
+  const [categories, setCategories] = useState([]);
+  const [prices, setPrices] = useState([]);
 
   useEffect(async () => {
     const categoriesReq = await axios("http://localhost:4000/categories");
-    const categoriesData = categoriesReq.data;
+    const categoriesData = categoriesReq.data[0][0];
 
-    //Organise Categories
-    const menuItems = [];
-    const topCategories = [];
-    const subCategories = [];
-    const prices = ["€", "€€", "€€€", "Peu importe"];
+    const prices = [
+      { shortName: "€", name: "Pas cher" },
+      { shortName: "€€", name: "Bon rapport qualité prix" },
+      { shortName: "€€€", name: "Haut de gamme" }
+    ];
 
-    categoriesData.forEach((category) => {
-      if (!category.parent.length) {
-        menuItems.push(category);
-      } else if (category.parent[0] === "Genre") {
-        topCategories.push(category);
-      } else {
-        subCategories.push(category);
-      }
-    });
-
-    setCategories({ menuItems, topCategories, subCategories, prices });
+    setCategories(categoriesData);
+    setPrices(prices);
+    console.log(categories);
   }, []);
 
   return (
@@ -38,7 +31,7 @@ export default function Layout({ children, pageTitle }) {
       </Head>
       <Header categories={categories} />
       <main>{children}</main>
-      {/* <Footer categories={categories} /> */}
+      <Footer categoriest={categories} prices={prices} />
     </div>
   );
 }

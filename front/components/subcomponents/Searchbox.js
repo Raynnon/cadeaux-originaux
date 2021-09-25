@@ -41,7 +41,7 @@ export default function SearchBox({ menuItems }) {
         "Soeur",
         "Frère",
         "Petit copain / copine",
-        "Collègue",
+        "Collègue"
       ];
     } else if (nature === "Femme") {
       return ["Maman", "Soeur", "Petit copain / copine", "Collègue"].concat(

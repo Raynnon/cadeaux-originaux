@@ -143,13 +143,16 @@ export default function Category({ categoryName, products }) {
                 >
                   <a className="xl:w-1/4">
                     <div className="flex flex-col border-2 border-coolGray-100 hover:bg-coolGray-100 rounded-lg p-5 mx-1 mt-5 group">
-                      <Image
-                        src={product.images[0]}
-                        width={225}
-                        height={225}
-                        layout="responsive"
-                        className="rounded-lg"
-                      />
+                      {product.image ? (
+                        <Image
+                          src={product.images[0]}
+                          width={225}
+                          height={225}
+                          layout="responsive"
+                          className="rounded-lg"
+                        />
+                      ) : null}
+
                       <h2 className="text-xl font-semibold text-center mt-3">
                         {product.name}
                       </h2>

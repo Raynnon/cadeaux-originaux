@@ -1,12 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import Link from "next/link";
 
-export default function Footer({
-  menuItems,
-  topCategories,
-  subCategories,
-  prices
-} = categories) {
+export default function Footer({ categories, prices }) {
+  console.log(categories);
   return (
     <footer className="pb-5 pt-5 bg-coolGray-600 text-coolGray-300 items-center xl:px-40 mt-10">
       <div className="text-center">
@@ -30,8 +26,16 @@ export default function Footer({
                     ? prices.map((price, index) => {
                         return (
                           <li key={index}>
-                            <Link href="/">
-                              <a className="font-normal">{price}</a>
+                            <Link
+                              href={{
+                                pathname: `/categorie/${price.name
+                                  .toLowerCase()
+                                  .split(/[ ,]+/)
+                                  .join("-")}`,
+                                query: { categoryName: price.name }
+                              }}
+                            >
+                              <a className="font-normal">{price.shortName}</a>
                             </Link>
                           </li>
                         );
@@ -42,7 +46,7 @@ export default function Footer({
             </ul>
           </li>
           <div></div>
-          {menuItems.length
+          {/* menuItems.length
             ? menuItems.map((item, index) => {
                 return (
                   <li key={index}>
@@ -78,7 +82,7 @@ export default function Footer({
                   </li>
                 );
               })
-            : null}
+            : null */}
         </ul>
       </div>
 
