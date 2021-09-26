@@ -62,7 +62,7 @@ export default function SearchBox({ menuItems }) {
 
   return (
     <div className="hidden justify-center lg:flex">
-      <ul className="flex text-center bg-white justify-center border border-coolGray-100 rounded-full w-2/4 justify-around">
+      {/* <ul className="flex text-center bg-white justify-center border border-coolGray-100 rounded-full w-2/4 justify-around">
         {menuItems.length
           ? menuItems.map((item, index) => {
               return (
@@ -162,7 +162,7 @@ export default function SearchBox({ menuItems }) {
             />
           </button>
         </li>
-      </ul>
+      </ul> */}
     </div>
   );
 }

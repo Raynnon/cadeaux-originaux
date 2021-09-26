@@ -11,7 +11,7 @@ export default function Layout({ children, pageTitle }) {
 
   useEffect(async () => {
     const categoriesReq = await axios("http://localhost:4000/categories");
-    const categoriesData = categoriesReq.data[0][0];
+    const categoriesData = categoriesReq.data[0];
 
     const prices = [
       { shortName: "€", name: "Pas cher" },
@@ -21,7 +21,6 @@ export default function Layout({ children, pageTitle }) {
 
     setCategories(categoriesData);
     setPrices(prices);
-    console.log(categories);
   }, []);
 
   return (

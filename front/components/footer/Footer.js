@@ -2,7 +2,6 @@
 import Link from "next/link";
 
 export default function Footer({ categories, prices }) {
-  console.log("test", categories);
   return (
     <footer className="pb-5 pt-5 bg-coolGray-600 text-coolGray-300 items-center xl:px-40 mt-10">
       <div className="text-center">
@@ -46,7 +45,6 @@ export default function Footer({ categories, prices }) {
             </ul>
           </li>
           {Object.keys(categories).map((category, index) => {
-            console.log("cat", categories[category]);
             return (
               <li key={index}>
                 <ul>
