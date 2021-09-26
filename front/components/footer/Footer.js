@@ -2,7 +2,7 @@
 import Link from "next/link";
 
 export default function Footer({ categories, prices }) {
-  console.log(categories);
+  console.log("test", categories);
   return (
     <footer className="pb-5 pt-5 bg-coolGray-600 text-coolGray-300 items-center xl:px-40 mt-10">
       <div className="text-center">
@@ -45,44 +45,37 @@ export default function Footer({ categories, prices }) {
               </li>
             </ul>
           </li>
-          <div></div>
-          {/* menuItems.length
-            ? menuItems.map((item, index) => {
-                return (
-                  <li key={index}>
-                    <ul>
-                      <li className="font-semibold">
-                        {item.name.toUpperCase()}
-                      </li>
-                      <ul className="flex">
-                        {item.dropdown
-                          ? item.dropdown.map((dropdown) => {
-                              return (
-                                <li key={dropdown.name} href="/">
-                                  <p>{dropdown.name.toUpperCase()}</p>
-                                  <ul className="flex flex-col">
-                                    {dropdown.elements
-                                      ? dropdown.elements.map(
-                                          (element, index) => {
-                                            return (
-                                              <Link key={index} href="/">
-                                                <a>{element}</a>
-                                              </Link>
-                                            );
-                                          }
-                                        )
-                                      : null}
-                                  </ul>
-                                </li>
-                              );
-                            })
-                          : null}
-                      </ul>
-                    </ul>
-                  </li>
-                );
-              })
-            : null */}
+          {Object.keys(categories).map((category, index) => {
+            console.log("cat", categories[category]);
+            return (
+              <li key={index}>
+                <ul>
+                  <li className="font-semibold">{category.toUpperCase()}</li>
+                  <ul>
+                    {categories[category]
+                      ? categories[category].map((list, index) => {
+                          return (
+                            <li key={index}>
+                              <Link
+                                href={{
+                                  pathname: `/categorie/${list.name
+                                    .toLowerCase()
+                                    .split(/[ ,]+/)
+                                    .join("-")}`,
+                                  query: { categoryName: list.name }
+                                }}
+                              >
+                                <a>{list.name}</a>
+                              </Link>
+                            </li>
+                          );
+                        })
+                      : null}
+                  </ul>
+                </ul>
+              </li>
+            );
+          })}
         </ul>
       </div>
 

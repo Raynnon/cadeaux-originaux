@@ -31,7 +31,7 @@ export default function Layout({ children, pageTitle }) {
       </Head>
       <Header categories={categories} />
       <main>{children}</main>
-      <Footer categoriest={categories} prices={prices} />
+      <Footer categories={categories} prices={prices} />
     </div>
   );
 }
