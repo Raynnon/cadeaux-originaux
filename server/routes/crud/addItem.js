@@ -6,8 +6,8 @@ const addItem = async (req, model, imagesSubFolder) => {
     "images/" +
     imagesSubFolder +
     slugify(req.body.name, { trim: true, lower: true });
-  const newItem = new model({ ...req.body, imagesFolder });
 
+  const newItem = new model({ ...req.body, imagesFolder });
   await newItem.save();
   moveFile("./public/" + imagesFolder);
 };

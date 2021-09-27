@@ -19,7 +19,7 @@ export default function ProductsSuggestion({ type }) {
       setTitle("Meilleurs produits");
     }
   }, [type]);
-  console.log("PRO", products);
+
   return (
     <section className="mt-5">
       <h2 className="text-3xl font-medium mb-3">{title}</h2>

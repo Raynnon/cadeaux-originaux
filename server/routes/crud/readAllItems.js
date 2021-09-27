@@ -25,7 +25,6 @@ const readAllItems = async (model) => {
   } else {
     organisedDatas = datas;
   }
-  console.log(organisedDatas);
 
   for (const data of organisedDatas) {
     dataToSend.push(await imageToDataAdder(data));

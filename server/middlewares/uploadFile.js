@@ -4,7 +4,7 @@ const multer = require("multer");
 const uploadFile = (tempFolder = "./public/temp") => {
   //if temporary Folder does not exist, create it
   if (!fs.existsSync(tempFolder)) {
-    fs.mkdir(tempFolder);
+    fs.mkdirSync(tempFolder);
   }
 
   const storage = multer.diskStorage({

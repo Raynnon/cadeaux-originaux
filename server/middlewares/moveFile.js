@@ -5,11 +5,12 @@ const moveFile = async (
   tempFolder = "./public/temp"
 ) => {
   try {
-    await fs.copy(tempFolder, imagesFolder);
+    await fs.copySync(tempFolder, imagesFolder);
 
-    if (fs.existsSync(tempFolder)) {
-      fs.rmdirSync(tempFolder, { recursive: true });
-    }
+    const files = fs.readdirSync(tempFolder);
+    files.forEach((file) => {
+      fs.unlinkSync(tempFolder + "/" + file);
+    });
   } catch (err) {
     console.log(err);
   }
