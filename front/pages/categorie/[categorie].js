@@ -5,40 +5,8 @@ import Link from "next/link";
 import axios from "axios";
 const slugify = require("slugify");
 
-export default function Category({ categoryName, products }) {
-  const genres = ["Femme", "Homme", "Fille", "Garçon", "Bébé", "Tous"];
-  const types = [
-    "Maman",
-    "Papa",
-    "Soeur",
-    "Frère",
-    "Petite copine",
-    "Petit copain",
-    "Collègue de travail",
-    "Peu importe"
-  ];
-  const occasions = [
-    "Anniversaire",
-    "Romantique",
-    "Mariage",
-    "Remerciements",
-    "Se faire pardonner",
-    "Départ en retraite",
-    "Crémaillère",
-    "Cadeau rigolo"
-  ];
-  const parties = [
-    "Noël",
-    "Fête des pères",
-    "Fête des mères",
-    "Fête des grands-mères",
-    "Saint Valentin",
-    "Pâques",
-    "Halloween",
-    "Peu importe"
-  ];
-
-  const prices = ["€", "€€€", "€€€", "Tous les prix"];
+export default function Category({ categoryName, products, categories }) {
+  const prices = ["€", "€€€", "€€€"];
 
   return (
     <Layout pageTitle={`Cadeau pour ${categoryName} - Mes cadeaux originaux`}>
@@ -51,30 +19,42 @@ export default function Category({ categoryName, products }) {
           <form className="lg:pr-5 lg:pl-32 border-2 border-transparent border-t-coolGray-100 pt-4">
             <h4>Genre</h4>
             <ul>
-              {genres.map((genre, index) => {
+              {categories.Genre.map((genre, index) => {
                 return (
                   <li key={index} className="flex-grow text-left pr-2">
                     <label className="inline-flex items-center">
-                      <input type="radio" name="genre" value={genre} />
-                      <span className="ml-2">{genre}</span>
+                      <input type="radio" name="genre" value={genre.name} />
+                      <span className="ml-2">{genre.name}</span>
                     </label>
                   </li>
                 );
               })}
+              <li className="flex-grow text-left pr-2">
+                <label className="inline-flex items-center">
+                  <input type="radio" name="genre" value="Peu importe" />
+                  <span className="ml-2">Peu importe</span>
+                </label>
+              </li>
             </ul>
 
             <h4>Type</h4>
             <ul>
-              {types.map((type, index) => {
+              {categories.Type.map((type, index) => {
                 return (
                   <li key={index} className="flex-grow text-left pr-2">
                     <label className="inline-flex items-center">
-                      <input type="radio" name="Type" value={type} />
-                      <span className="ml-2">{type}</span>
+                      <input type="radio" name="Type" value={type.name} />
+                      <span className="ml-2">{type.name}</span>
                     </label>
                   </li>
                 );
               })}
+              <li className="flex-grow text-left pr-2">
+                <label className="inline-flex items-center">
+                  <input type="radio" name="Type" value="Peu importe" />
+                  <span className="ml-2">Peu importe</span>
+                </label>
+              </li>
             </ul>
             <h4>Prix</h4>
             <ul>
@@ -88,6 +68,12 @@ export default function Category({ categoryName, products }) {
                   </li>
                 );
               })}
+              <li className="flex-grow text-left pr-2">
+                <label className="inline-flex items-center">
+                  <input type="checkbox" name="prix" value="Tous les prix" />
+                  <span className="ml-2">Tous les prix</span>
+                </label>
+              </li>
             </ul>
 
             <label htmlFor="occasion">
@@ -97,9 +83,10 @@ export default function Category({ categoryName, products }) {
               id="occasion"
               className="block w-full bg-white border border-gray-100 hover:border-gray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
             >
-              {occasions.map((occasion, index) => {
-                return <option key={index}>{occasion}</option>;
+              {categories.Occasion.map((occasion, index) => {
+                return <option key={index}>{occasion.name}</option>;
               })}
+              <option>Peu importe</option>
             </select>
 
             <label htmlFor="occasion">
@@ -109,9 +96,10 @@ export default function Category({ categoryName, products }) {
               id="fetes"
               className="block w-full bg-white border border-gray-100 hover:border-gray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
             >
-              {parties.map((party, index) => {
-                return <option key={index}>{party}</option>;
+              {categories.Fête.map((party, index) => {
+                return <option key={index}>{party.name}</option>;
               })}
+              <option>Peu importe</option>
             </select>
           </form>
         </aside>
@@ -143,14 +131,16 @@ export default function Category({ categoryName, products }) {
                 >
                   <a className="xl:w-1/4">
                     <div className="flex flex-col border-2 border-coolGray-100 hover:bg-coolGray-100 rounded-lg p-5 mx-1 mt-5 group">
-                      {product.image ? (
-                        <Image
-                          src={product.images[0]}
-                          width={225}
-                          height={225}
-                          layout="responsive"
-                          className="rounded-lg"
-                        />
+                      {product.images ? (
+                        <div>
+                          <Image
+                            src={product.images[0]}
+                            width={225}
+                            height={225}
+                            layout="responsive"
+                            className="rounded-lg"
+                          />
+                        </div>
                       ) : null}
 
                       <h2 className="text-xl font-semibold text-center mt-3">
@@ -186,112 +176,19 @@ export default function Category({ categoryName, products }) {
 
 export async function getServerSideProps({ query }) {
   try {
-    const products = [
-      {
-        id: "1",
-        name: "Shoes",
-        imageSRC: "https://picsum.photos/100/100",
-        price: "€"
-      },
-      {
-        id: "1",
-        name: "Glasses",
-        imageSRC: "https://picsum.photos/150/150",
-        price: "€€"
-      },
-      {
-        id: "1",
-        name: "Coat",
-        imageSRC: "https://picsum.photos/200/200",
-        price: "€€€"
-      },
-      {
-        id: "1",
-        name: "Watch",
-        imageSRC: "https://picsum.photos/250/250",
-        price: "€"
-      },
-      {
-        id: "1",
-        name: "Keyboard",
-        imageSRC: "https://picsum.photos/300/300",
-        price: "€"
-      },
-      {
-        id: "1",
-        name: "Scooter",
-        imageSRC: "https://picsum.photos/350/350",
-        price: "€€"
-      },
-      {
-        id: "1",
-        name: "Shoes",
-        imageSRC: "https://picsum.photos/100/100",
-        price: "€"
-      },
-      {
-        id: "1",
-        name: "Green glasses",
-        imageSRC: "https://picsum.photos/150/150",
-        price: "€€"
-      },
-      {
-        id: "1",
-        name: "Shoes",
-        imageSRC: "https://picsum.photos/100/100",
-        price: "€"
-      },
-      {
-        id: "1",
-        name: "Glasses",
-        imageSRC: "https://picsum.photos/150/150",
-        price: "€€"
-      },
-      {
-        id: "1",
-        name: "Coat",
-        imageSRC: "https://picsum.photos/200/200",
-        price: "€€€"
-      },
-      {
-        id: "1",
-        name: "Watch",
-        imageSRC: "https://picsum.photos/250/250",
-        price: "€"
-      },
-      {
-        id: "1",
-        name: "Keyboard",
-        imageSRC: "https://picsum.photos/300/300",
-        price: "€"
-      },
-      {
-        id: "1",
-        name: "Scooter",
-        imageSRC: "https://picsum.photos/350/350",
-        price: "€€"
-      },
-      {
-        id: "1",
-        name: "Shoes",
-        imageSRC: "https://picsum.photos/100/100",
-        price: "€"
-      },
-      {
-        id: "1",
-        name: "Glasses",
-        imageSRC: "https://picsum.photos/150/150",
-        price: "€€"
-      }
-    ];
+    const dataProducts = await axios.get("http://localhost:4000/products");
+    const products = dataProducts.data;
 
-    if (query.categoryName === ("Meilleurs Cadeaux" || "Nouveau")) {
-      const data = await axios.get("http://localhost:4000/products");
-      const products = data.data;
-      return { props: { categoryName: query.categoryName, products } };
-    } else {
-      return { props: { categoryName: query.categoryName, products } };
-    }
+    const dataCategories = await axios.get("http://localhost:4000/categories");
+    const categories = dataCategories.data[0];
+
+    return {
+      props: {
+        categoryName: query.categoryName,
+        products,
+        categories
+      }
+    };
   } catch (e) {
     console.error(e);
   }
