@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import SearchBox from "../components/subcomponents/Searchbox";
 import ProductsSuggestion from "../components/subcomponents/ProductsSuggestion";

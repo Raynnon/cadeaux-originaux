@@ -2,11 +2,19 @@
 import Layout from "../../components/Layout";
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import axios from "axios";
 const slugify = require("slugify");
 
 export default function Category({ categoryName, products, categories }) {
+  const [selectedGenre, setSelectedGenre] = useState("Peu importe");
+  const [selectedType, setSelectedType] = useState([]);
+
   const prices = ["€", "€€€", "€€€"];
+
+  useEffect(() => {
+    setSelectedType(["Peu importe"]);
+  }, [selectedGenre]);
 
   return (
     <Layout pageTitle={`Cadeau pour ${categoryName} - Mes cadeaux originaux`}>
@@ -18,7 +26,7 @@ export default function Category({ categoryName, products, categories }) {
           </div>
           <form className="lg:pr-5 lg:pl-32 border-2 border-transparent border-t-coolGray-100 pt-4">
             <h4>Genre</h4>
-            <ul>
+            <ul onChange={(e) => setSelectedGenre(e.target.value)}>
               {categories.Genre.map((genre, index) => {
                 return (
                   <li key={index} className="flex-grow text-left pr-2">
@@ -31,27 +39,50 @@ export default function Category({ categoryName, products, categories }) {
               })}
               <li className="flex-grow text-left pr-2">
                 <label className="inline-flex items-center">
-                  <input type="radio" name="genre" value="Peu importe" />
+                  <input
+                    type="radio"
+                    name="genre"
+                    value="Peu importe"
+                    defaultChecked
+                  />
                   <span className="ml-2">Peu importe</span>
                 </label>
               </li>
             </ul>
 
             <h4>Type</h4>
-            <ul>
+            <ul
+              onChange={(e) => {
+                if (e.target.value === "Peu importe") {
+                  setSelectedType([e.target.value]);
+                } else {
+                  if (selectedType.includes("Peu importe")) {
+                    setSelectedType()
+                  } else {
+                  }
+                }
+              }}
+            >
               {categories.Type.map((type, index) => {
-                return (
-                  <li key={index} className="flex-grow text-left pr-2">
-                    <label className="inline-flex items-center">
-                      <input type="radio" name="Type" value={type.name} />
-                      <span className="ml-2">{type.name}</span>
-                    </label>
-                  </li>
-                );
+                if (type.parent.includes(selectedGenre)) {
+                  return (
+                    <li key={index} className="flex-grow text-left pr-2">
+                      <label className="inline-flex items-center">
+                        <input type="checkbox" name="Type" value={type.name} />
+                        <span className="ml-2">{type.name}</span>
+                      </label>
+                    </li>
+                  );
+                }
               })}
               <li className="flex-grow text-left pr-2">
                 <label className="inline-flex items-center">
-                  <input type="radio" name="Type" value="Peu importe" />
+                  <input
+                    type="checkbox"
+                    name="Type"
+                    value="Peu importe"
+                    defaultChecked
+                  />
                   <span className="ml-2">Peu importe</span>
                 </label>
               </li>
@@ -70,7 +101,12 @@ export default function Category({ categoryName, products, categories }) {
               })}
               <li className="flex-grow text-left pr-2">
                 <label className="inline-flex items-center">
-                  <input type="checkbox" name="prix" value="Tous les prix" />
+                  <input
+                    type="checkbox"
+                    name="prix"
+                    value="Tous les prix"
+                    defaultChecked
+                  />
                   <span className="ml-2">Tous les prix</span>
                 </label>
               </li>

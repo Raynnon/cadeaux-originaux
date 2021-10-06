@@ -54,7 +54,12 @@ export default function Header({ categories }) {
       <nav className="flex justify-center">
         <ul className="flex font-semibold">
           <li className="dropdown group mx-5 py-5 text-sm border-b-4 border-transparent hover:border-orange-500  md:text-lg ">
-            <Link href="/">
+            <Link
+              href={{
+                pathname: `/categorie/nouveau`,
+                query: { categoryName: "Nouveaux Cadeaux" }
+              }}
+            >
               <a className="dropdown text-coolGray-500 group-hover:text-coolGray-900">
                 Nouveau
               </a>
@@ -73,11 +78,9 @@ export default function Header({ categories }) {
             </Link>
           </li>
           <li className="dropdown group mx-5 py-5 text-lg border-b-4 border-transparent hover:border-orange-500 lg:block">
-            <Link href="/">
-              <a className="dropdown text-coolGray-500 group-hover:text-coolGray-900">
-                Pour qui?
-              </a>
-            </Link>
+            <p className="dropdown text-coolGray-500 group-hover:text-coolGray-900">
+              Pour qui?
+            </p>
 
             <ul className="invisible absolute border border-coolGray-100 pb-2 bg-white rounded-lg dropdown-menu shadow z-10 flex-row group-hover:visible">
               {menuItem("Genre")}
@@ -86,11 +89,9 @@ export default function Header({ categories }) {
           </li>
 
           <li className="dropdown group mx-5 py-5 text-lg border-b-4 border-transparent hover:border-orange-500 lg:block">
-            <Link href="/">
-              <a className="dropdown text-coolGray-500 group-hover:text-coolGray-900">
-                Événements
-              </a>
-            </Link>
+            <p className="dropdown text-coolGray-500 group-hover:text-coolGray-900">
+              Événements
+            </p>
 
             <ul className="invisible absolute border border-coolGray-100 pb-2 bg-white rounded-lg dropdown-menu shadow z-10 flex-row group-hover:visible">
               {menuItem("Occasion")}
