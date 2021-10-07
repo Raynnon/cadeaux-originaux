@@ -27,14 +27,6 @@ export default function Header({ categories }) {
               );
             })
           : null}
-        <Link
-          href={{
-            pathname: `/categorie/tout`,
-            query: { categoryName: "tout" }
-          }}
-        >
-          <a className="px-5 py-1 hover:bg-orange-300 font-normal">Tout</a>
-        </Link>
       </div>
     );
   };

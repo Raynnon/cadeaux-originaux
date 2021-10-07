@@ -7,13 +7,20 @@ import axios from "axios";
 const slugify = require("slugify");
 
 export default function Category({ categoryName, products, categories }) {
-  const [selectedGenre, setSelectedGenre] = useState("Peu importe");
-  const [selectedType, setSelectedType] = useState([]);
-
-  const prices = ["€", "€€€", "€€€"];
+  const [selectedGenre, setSelectedGenre] = useState("Tout");
+  const [selectedType, setSelectedType] = useState({});
+  const [prices, setPrices] = useState({ "€": true, "€€": true, "€€€": true });
+  const [selectedOccasion, setSelectedOccasion] = useState("Tout");
+  const [selectedParty, setSelectedParty] = useState("Tout");
 
   useEffect(() => {
-    setSelectedType(["Peu importe"]);
+    const typeObj = {};
+
+    categories.Type.forEach((item) => {
+      typeObj[item.name] = true;
+    });
+
+    setSelectedType(typeObj);
   }, [selectedGenre]);
 
   return (
@@ -42,74 +49,84 @@ export default function Category({ categoryName, products, categories }) {
                   <input
                     type="radio"
                     name="genre"
-                    value="Peu importe"
+                    value="Tout"
                     defaultChecked
                   />
-                  <span className="ml-2">Peu importe</span>
+                  <span className="ml-2">Tout</span>
                 </label>
               </li>
             </ul>
+            {selectedGenre !== "Animal" ? (
+              <div>
+                <h4>Type</h4>
+                <ul
+                  onChange={(e) => {
+                    const updatedTypeStatus = {};
+                    updatedTypeStatus[e.target.value] =
+                      !selectedType[e.target.value];
 
-            <h4>Type</h4>
+                    setSelectedType({ ...selectedType, ...updatedTypeStatus });
+                  }}
+                >
+                  {categories.Type.map((type, index) => {
+                    if (type.parent.includes(selectedGenre)) {
+                      return (
+                        <li key={index} className="flex-grow text-left pr-2">
+                          <label className="inline-flex items-center">
+                            <input
+                              type="checkbox"
+                              name="Type"
+                              value={type.name}
+                              defaultChecked
+                            />
+                            <span className="ml-2">{type.name}</span>
+                          </label>
+                        </li>
+                      );
+                    } else if (selectedGenre === "Tout") {
+                      return (
+                        <li key={index} className="flex-grow text-left pr-2">
+                          <label className="inline-flex items-center">
+                            <input
+                              type="checkbox"
+                              name="Type"
+                              value={type.name}
+                              defaultChecked
+                            />
+                            <span className="ml-2">{type.name}</span>
+                          </label>
+                        </li>
+                      );
+                    }
+                  })}
+                </ul>
+              </div>
+            ) : null}
+
+            <h4>Prix</h4>
             <ul
               onChange={(e) => {
-                if (e.target.value === "Peu importe") {
-                  setSelectedType([e.target.value]);
-                } else {
-                  if (selectedType.includes("Peu importe")) {
-                    setSelectedType()
-                  } else {
-                  }
-                }
+                const updatedPricesStatus = {};
+                updatedPricesStatus[e.target.value] = !prices[e.target.value];
+
+                setPrices({ ...prices, ...updatedPricesStatus });
               }}
             >
-              {categories.Type.map((type, index) => {
-                if (type.parent.includes(selectedGenre)) {
-                  return (
-                    <li key={index} className="flex-grow text-left pr-2">
-                      <label className="inline-flex items-center">
-                        <input type="checkbox" name="Type" value={type.name} />
-                        <span className="ml-2">{type.name}</span>
-                      </label>
-                    </li>
-                  );
-                }
-              })}
-              <li className="flex-grow text-left pr-2">
-                <label className="inline-flex items-center">
-                  <input
-                    type="checkbox"
-                    name="Type"
-                    value="Peu importe"
-                    defaultChecked
-                  />
-                  <span className="ml-2">Peu importe</span>
-                </label>
-              </li>
-            </ul>
-            <h4>Prix</h4>
-            <ul>
-              {prices.map((price, index) => {
+              {Object.keys(prices).map((price, index) => {
                 return (
                   <li key={index} className="flex-grow text-left pr-2">
                     <label className="inline-flex items-center">
-                      <input type="checkbox" name="prix" value={price} />
+                      <input
+                        type="checkbox"
+                        name="prix"
+                        value={price}
+                        defaultChecked
+                      />
                       <span className="ml-2">{price}</span>
                     </label>
                   </li>
                 );
               })}
-              <li className="flex-grow text-left pr-2">
-                <label className="inline-flex items-center">
-                  <input
-                    type="checkbox"
-                    name="prix"
-                    value="Tous les prix"
-                    defaultChecked
-                  />
-                  <span className="ml-2">Tous les prix</span>
-                </label>
-              </li>
             </ul>
 
             <label htmlFor="occasion">
@@ -118,11 +135,14 @@ export default function Category({ categoryName, products, categories }) {
             <select
               id="occasion"
               className="block w-full bg-white border border-gray-100 hover:border-gray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
+              onChange={(e) => {
+                setSelectedOccasion(e.target.value);
+              }}
             >
               {categories.Occasion.map((occasion, index) => {
                 return <option key={index}>{occasion.name}</option>;
               })}
-              <option>Peu importe</option>
+              <option selected>Tout</option>
             </select>
 
             <label htmlFor="occasion">
@@ -131,16 +151,19 @@ export default function Category({ categoryName, products, categories }) {
             <select
               id="fetes"
               className="block w-full bg-white border border-gray-100 hover:border-gray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
+              onChange={(e) => {
+                setSelectedParty(e.target.value);
+              }}
             >
               {categories.Fête.map((party, index) => {
                 return <option key={index}>{party.name}</option>;
               })}
-              <option>Peu importe</option>
+              <option selected>Tout</option>
             </select>
           </form>
         </aside>
         <main className="xl:px-20 border-2 border-transparent border-l-coolGray-100">
-          <h1 className="mx-1 xl:mx-0 mt-10 text-4xl font-semibold">{`Cadeau pour ${categoryName}`}</h1>
+          <h1 className="mx-1 xl:mx-0 mt-10 text-4xl font-semibold">{`${categoryName}`}</h1>
           <p className="mx-1 xl:mx-0 my-5 text-justify">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
             in fringilla libero, eget gravida sem. Integer viverra a nulla nec
