@@ -1,16 +1,29 @@
-const readAllItems = require("../crud/readAllItems");
-const readOneItem = require("../crud/readOneItem");
+const imageToDataAdder = require("../crud/tools/imageToDataAdder");
 
 const read = async (model, params) => {
-  console.log(params);
-  if (Object.keys(params).length) {
-    //const newData = await model.find({ _id }).lean().exec();
-    const data = await readOneItem(params.id, model);
+  const options = {};
+  const optionParameters = [
+    "_id",
+    "whoKind",
+    "whoType",
+    "occasions",
+    "parties",
+    "price"
+  ];
 
-    return data;
-  }
+  const addOptions = (optionParam) => {
+    if (params[optionParam]) {
+      options[optionParam] = params[optionParam];
+    }
+  };
 
-  return await readAllItems(model);
+  optionParameters.forEach((item) => {
+    addOptions(item);
+  });
+
+  const data = await model.find(options).lean().exec();
+
+  return imageToDataAdder(data);
 };
 
 module.exports = { read };

@@ -238,7 +238,10 @@ export async function getServerSideProps({ query }) {
     const dataProducts = await axios.get("http://localhost:4000/products");
     const products = dataProducts.data;
 
-    const dataCategories = await axios.get("http://localhost:4000/categories");
+    const dataCategories = await axios.get(
+      "http://localhost:4000/categories/?ordered=true"
+    );
+
     const categories = dataCategories.data[0];
 
     return {

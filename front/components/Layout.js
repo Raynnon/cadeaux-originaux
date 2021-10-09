@@ -10,7 +10,9 @@ export default function Layout({ children, pageTitle }) {
   const [prices, setPrices] = useState([]);
 
   useEffect(async () => {
-    const categoriesReq = await axios("http://localhost:4000/categories");
+    const categoriesReq = await axios(
+      "http://localhost:4000/categories/?ordered=true"
+    );
     const categoriesData = categoriesReq.data[0];
 
     const prices = [

@@ -1,29 +1,28 @@
 const imageToDataAdder = require("../crud/tools/imageToDataAdder");
-const readOneItem = require("../crud/readOneItem");
 
 const read = async (model, params) => {
-  const datas = await model.find({}).lean().exec();
-  let organisedDatas = [];
-  const dataToSend = [];
+  const options = {};
 
-  if (params.id) {
-    const data = await readOneItem(params.id, model);
-
-    return data;
+  if (params._id) {
+    options._id = params._id;
   }
 
+  const data = await model.find(options).lean().exec();
+  let organisedData = [];
+  let dataToSend = [];
+
   if (!params.ordered) {
-    organisedDatas = datas;
+    organisedData = data;
   } else {
     const menu = {};
 
-    datas.forEach((category) => {
+    data.forEach((category) => {
       if (!category.parent.length) {
         menu[category.name] = [];
       }
     });
 
-    datas.forEach((dataItem) => {
+    data.forEach((dataItem) => {
       Object.keys(menu).forEach((menuItem) => {
         if (dataItem.parent.includes(menuItem)) {
           menu[menuItem].push(dataItem);
@@ -31,10 +30,10 @@ const read = async (model, params) => {
       });
     });
 
-    organisedDatas.push(menu);
+    organisedData.push(menu);
   }
 
-  for (const data of organisedDatas) {
+  for (const data of organisedData) {
     dataToSend.push(await imageToDataAdder(data));
   }
 
