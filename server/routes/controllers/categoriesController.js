@@ -1,11 +1,18 @@
 const imageToDataAdder = require("../crud/tools/imageToDataAdder");
+const readOneItem = require("../crud/readOneItem");
 
-const read = async (model, ordered) => {
+const read = async (model, params) => {
   const datas = await model.find({}).lean().exec();
   let organisedDatas = [];
   const dataToSend = [];
 
-  if (ordered) {
+  if (params.id) {
+    const data = await readOneItem(params.id, model);
+
+    return data;
+  }
+
+  if (!params.ordered) {
     organisedDatas = datas;
   } else {
     const menu = {};

@@ -1,27 +1,14 @@
 const uploadFile = require("../middlewares/uploadFile");
 const addItem = require("./crud/addItem");
 const deleteItem = require("./crud/deleteItem");
-const readOneItem = require("./crud/readOneItem");
 const updateOneItem = require("./crud/updateOneItem");
 
 module.exports = {
   crud(router, name, model, controller) {
-    /* READ PRODUCTS */
+    /* READ */
     router.get(`/${name}`, async (req, res) => {
       try {
-        res.send(await controller.read(model));
-      } catch (e) {
-        console.log(e);
-        res.status(400).send();
-      }
-    });
-
-    /* READ BY ID */
-    router.get(`/${name}/:id`, async (req, res) => {
-      try {
-        const data = await readOneItem(req.params.id, model);
-
-        res.send(data);
+        res.send(await controller.read(model, req.query));
       } catch (e) {
         console.log(e);
         res.status(400).send();
