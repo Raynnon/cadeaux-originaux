@@ -6,15 +6,16 @@ const read = async (model, params) => {
   if (params._id) {
     options._id = params._id;
   }
-
   const data = await model.find(options).lean().exec();
   let organisedData = [];
   let dataToSend = [];
 
   if (!params.ordered) {
-    organisedData = data;
+    return await imageToDataAdder(data);
   } else {
     const menu = {};
+
+    const fullData = await imageToDataAdder(data);
 
     data.forEach((category) => {
       if (!category.parent.length) {
@@ -22,7 +23,7 @@ const read = async (model, params) => {
       }
     });
 
-    data.forEach((dataItem) => {
+    fullData.forEach((dataItem) => {
       Object.keys(menu).forEach((menuItem) => {
         if (dataItem.parent.includes(menuItem)) {
           menu[menuItem].push(dataItem);
@@ -31,10 +32,6 @@ const read = async (model, params) => {
     });
 
     organisedData.push(menu);
-  }
-
-  for (const data of organisedData) {
-    dataToSend.push(await imageToDataAdder(data));
   }
 
   return dataToSend;

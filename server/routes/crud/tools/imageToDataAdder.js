@@ -1,25 +1,25 @@
 const fs = require("fs-extra");
 
 const imageToDataAdder = async (data) => {
-  const dataToSend = {
-    ...data
-  };
+  const dataToSend = data.map(async (item) => {
+    filesDirectory = "./public/" + item.imagesFolder;
 
-  filesDirectory = "./public/" + data.imagesFolder;
+    if (fs.existsSync(filesDirectory)) {
+      images = [];
+      const files = await fs.readdir(filesDirectory);
 
-  if (fs.existsSync(filesDirectory)) {
-    dataToSend.images = [];
+      files.forEach((file) => {
+        images.push(process.env.APP_URL + item.imagesFolder + "/" + file);
+      });
 
-    const files = await fs.readdir("./public/" + data.imagesFolder);
-
-    for (const file of files) {
-      dataToSend.images.push(
-        process.env.APP_URL + data.imagesFolder + "/" + file
-      );
+      const updatedItem = Object.assign(item, { images });
+      return updatedItem;
+    } else {
+      return item;
     }
-  }
+  });
 
-  return dataToSend;
+  return await Promise.all(dataToSend);
 };
 
 module.exports = imageToDataAdder;
