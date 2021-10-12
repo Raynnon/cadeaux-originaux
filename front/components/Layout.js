@@ -10,19 +10,24 @@ export default function Layout({ children, pageTitle }) {
   const [prices, setPrices] = useState([]);
 
   useEffect(async () => {
-    const categoriesReq = await axios(
-      "http://localhost:4000/categories/?ordered=true"
-    );
-    const categoriesData = categoriesReq.data[0];
+    try {
+      const categoriesReq = await axios(
+        "http://localhost:4000/categories/?ordered=true"
+      );
 
-    const prices = [
-      { shortName: "€", name: "Pas cher" },
-      { shortName: "€€", name: "Bon rapport qualité prix" },
-      { shortName: "€€€", name: "Haut de gamme" }
-    ];
+      const categoriesData = categoriesReq.data;
 
-    setCategories(categoriesData);
-    setPrices(prices);
+      const prices = [
+        { shortName: "€", name: "Pas cher" },
+        { shortName: "€€", name: "Bon rapport qualité prix" },
+        { shortName: "€€€", name: "Haut de gamme" }
+      ];
+
+      setCategories(categoriesData);
+      setPrices(prices);
+    } catch (e) {
+      console.log("categoriesReq error", e);
+    }
   }, []);
 
   return (

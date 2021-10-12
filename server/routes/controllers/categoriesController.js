@@ -7,8 +7,6 @@ const read = async (model, params) => {
     options._id = params._id;
   }
   const data = await model.find(options).lean().exec();
-  let organisedData = [];
-  let dataToSend = [];
 
   if (!params.ordered) {
     return await imageToDataAdder(data);
@@ -31,10 +29,8 @@ const read = async (model, params) => {
       });
     });
 
-    organisedData.push(menu);
+    return menu;
   }
-
-  return dataToSend;
 };
 
 module.exports = { read };

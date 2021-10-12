@@ -9,8 +9,6 @@ export default function ProductsSuggestion({ type }) {
   const [title, setTitle] = useState("");
   const [products, setProducts] = useState([]);
 
-  console.log(products);
-
   useEffect(async () => {
     const productsReq = await axios("http://localhost:4000/products");
     setProducts(productsReq.data);
@@ -26,12 +24,12 @@ export default function ProductsSuggestion({ type }) {
     <section className="mt-5">
       <h2 className="text-3xl font-medium mb-3">{title}</h2>
       <div className="grid grid-flow-col grid-cols-3 md:grid-cols-6 grid-rows-2 md:grid-rows-1 gap-2">
-        {Object.keys(products).map((product, index) => {
+        {products.map((product, index) => {
           return (
             <Link key={index} href="/">
               <a>
                 <div className="mx-1 p-2 rounded-lg bg-coolGray-100 hover:scale-105 flex flex-col">
-                  {product.images[0] ? (
+                  {product.images.length ? (
                     <Image
                       alt={product.name}
                       src={product.images[0]}

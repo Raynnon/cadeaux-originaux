@@ -5,7 +5,7 @@ const imageToDataAdder = async (data) => {
     filesDirectory = "./public/" + item.imagesFolder;
 
     if (fs.existsSync(filesDirectory)) {
-      images = [];
+      const images = [];
       const files = await fs.readdir(filesDirectory);
 
       files.forEach((file) => {

@@ -23,6 +23,31 @@ export default function Category({ categoryName, products, categories }) {
     setSelectedType(typeObj);
   }, [selectedGenre]);
 
+  useEffect(() => {
+    const options = [];
+
+    const parameters = [
+      { whoKind: selectedGenre },
+      /* { whoType: selectedType }, */
+      { occasions: selectedOccasion },
+      { parties: selectedParty }
+    ];
+
+    // Filter parameters that are not All
+    const filteredParameters = parameters.filter(
+      (item) => item[Object.keys(item)] != "Tout"
+    );
+
+    // Push each filtered parameters in option array
+    filteredParameters.forEach((param) => {
+      options.push(`${Object.keys(param)}=${param[Object.keys(param)]}`);
+    });
+
+    const optionsReq = `?${options.join("&")}`;
+
+    console.log(optionsReq);
+  }, [selectedGenre, selectedOccasion, selectedParty]);
+
   return (
     <Layout pageTitle={`Cadeau pour ${categoryName} - Mes cadeaux originaux`}>
       <div className="flex -mb-10">
@@ -242,7 +267,7 @@ export async function getServerSideProps({ query }) {
       "http://localhost:4000/categories/?ordered=true"
     );
 
-    const categories = dataCategories.data[0];
+    const categories = dataCategories.data;
 
     return {
       props: {
