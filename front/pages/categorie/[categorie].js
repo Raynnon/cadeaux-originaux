@@ -7,6 +7,7 @@ import axios from "axios";
 const slugify = require("slugify");
 
 export default function Category({ categoryName, products, categories }) {
+  const [filteredProducts, setFilteredProducts] = useState(products);
   const [selectedGenre, setSelectedGenre] = useState("Tout");
   const [selectedType, setSelectedType] = useState({});
   const [prices, setPrices] = useState({ "€": true, "€€": true, "€€€": true });
@@ -23,12 +24,22 @@ export default function Category({ categoryName, products, categories }) {
     setSelectedType(typeObj);
   }, [selectedGenre]);
 
-  useEffect(() => {
+  useEffect(async () => {
     const options = [];
+    const filterParameters = (obj) => {
+      const filter = Object.keys(obj).filter((key) => {
+        if (obj[key]) {
+          return key;
+        }
+      });
+
+      return filter.join(",");
+    };
 
     const parameters = [
       { whoKind: selectedGenre },
-      /* { whoType: selectedType }, */
+      { price: filterParameters(prices) },
+      { whoType: filterParameters(selectedType) },
       { occasions: selectedOccasion },
       { parties: selectedParty }
     ];
@@ -43,10 +54,12 @@ export default function Category({ categoryName, products, categories }) {
       options.push(`${Object.keys(param)}=${param[Object.keys(param)]}`);
     });
 
-    const optionsReq = `?${options.join("&")}`;
-
-    console.log(optionsReq);
-  }, [selectedGenre, selectedOccasion, selectedParty]);
+    const optionsReq = options.length ? `?${options.join("&")}` : ``;
+    const dataProducts = await axios.get(
+      `http://localhost:4000/products${optionsReq}`
+    );
+    setFilteredProducts(dataProducts.data);
+  }, [selectedGenre, selectedOccasion, selectedParty, prices, selectedType]);
 
   return (
     <Layout pageTitle={`Cadeau pour ${categoryName} - Mes cadeaux originaux`}>
@@ -202,7 +215,7 @@ export default function Category({ categoryName, products, categories }) {
           </p>
           {/*PRODUCTS */}
           <div className="flex flex-wrap justify-between mb-10">
-            {products.map((product, index) => {
+            {filteredProducts.map((product, index) => {
               return (
                 <Link
                   key={index}

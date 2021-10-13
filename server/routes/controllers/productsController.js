@@ -2,7 +2,7 @@ const imageToDataAdder = require("../crud/tools/imageToDataAdder");
 
 const read = async (model, params) => {
   const options = {};
-  const optionParameters = [
+  const simpleOptionParameters = [
     "_id",
     "whoKind",
     "whoType",
@@ -11,13 +11,17 @@ const read = async (model, params) => {
     "price"
   ];
 
+  /* const arrOptionParameters = ["whoType", "price"];
+  console.log(params); */
+
   const addOptions = (optionParam) => {
     if (params[optionParam]) {
+      console.log(params[optionParam].test(/,/));
       options[optionParam] = params[optionParam];
     }
   };
 
-  optionParameters.forEach((item) => {
+  simpleOptionParameters.forEach((item) => {
     addOptions(item);
   });
 
