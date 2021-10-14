@@ -11,18 +11,16 @@ const read = async (model, params) => {
     "price"
   ];
 
-  /* const arrOptionParameters = ["whoType", "price"];
-  console.log(params); */
-
-  const addOptions = (optionParam) => {
+  simpleOptionParameters.forEach((optionParam) => {
     if (params[optionParam]) {
-      console.log(params[optionParam].test(/,/));
-      options[optionParam] = params[optionParam];
-    }
-  };
+      if (params[optionParam].includes(",")) {
+        const paramsArray = params[optionParam].split(",");
 
-  simpleOptionParameters.forEach((item) => {
-    addOptions(item);
+        options[optionParam] = { $in: paramsArray };
+      } else {
+        options[optionParam] = params[optionParam];
+      }
+    }
   });
 
   const data = await model.find(options).lean().exec();
