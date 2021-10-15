@@ -31,7 +31,7 @@ module.exports = {
     router.put(`/${name}/:id`, uploadFile(), async (req, res) => {
       try {
         await updateOneItem(req, model);
-
+        console.log("TEST");
         res.send();
       } catch (e) {
         console.log(e);

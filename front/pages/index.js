@@ -57,7 +57,7 @@ export default function Home() {
                 </h1>
                 <Link href="/">
                   <a>
-                    <button className="w-44 px-5 py-3 lg:ml-32 mt-10 rounded-lg text-white bg-orange-500 text-3xl">
+                    <button className="w-44 px-5 py-3 lg:ml-32 mt-10 rounded-lg text-white bg-orange-500 text-3xl hover:bg-orange-600">
                       Découvrir
                     </button>
                   </a>

@@ -4,10 +4,11 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import ProductsSuggestion from "../../components/subcomponents/ProductsSuggestion";
 import axios from "axios";
+import loading from "../../public/images/loading.gif";
 
 export default function Product({ productID }) {
   const [product, setProduct] = useState({});
-  const [mainImage, setMainImage] = useState("");
+  const [mainImage, setMainImage] = useState(loading);
 
   useEffect(async () => {
     const productData = await axios.get(
@@ -15,7 +16,12 @@ export default function Product({ productID }) {
     );
 
     setProduct(productData.data[0]);
+    setMainImage(productData.data[0].images[0]);
   }, []);
+
+  const addVisit = (e) => {
+    
+  }
 
   return (
     <Layout pageTitle={`${product.name} - Mes cadeaux originaux`}>
@@ -64,8 +70,8 @@ export default function Product({ productID }) {
             {product.urlAmazon ? (
               <Link href={product.urlAmazon}>
                 <a>
-                  <button className="w-44 py-3 mt-10 rounded-lg text-white bg-orange-500 text-2xl">
-                    En Savoir plus
+                  <button className="w-44 py-3 mt-10 rounded-lg text-white bg-orange-500 text-2xl hover:bg-orange-600">
+                    Acheter
                   </button>
                 </a>
               </Link>
