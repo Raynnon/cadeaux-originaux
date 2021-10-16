@@ -4,15 +4,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axios from "axios";
-const slugify = require("slugify");
+import slugify from "slugify";
 
-export default function Category({ categoryName, products, categories }) {
-  const [filteredProducts, setFilteredProducts] = useState(products);
+import filterProducts from "../../components/subcomponents/filterProducts";
+
+export default function Category({ categoryName, categories }) {
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("Tout");
   const [selectedType, setSelectedType] = useState({});
   const [prices, setPrices] = useState({ "€": true, "€€": true, "€€€": true });
   const [selectedOccasion, setSelectedOccasion] = useState("Tout");
   const [selectedParty, setSelectedParty] = useState("Tout");
+
+  useEffect(async () => {
+    const dataProducts = await axios.get(`http://localhost:4000/products`);
+
+    setFilteredProducts(dataProducts.data);
+  }, []);
 
   useEffect(() => {
     const typeObj = {};
@@ -25,40 +33,15 @@ export default function Category({ categoryName, products, categories }) {
   }, [selectedGenre]);
 
   useEffect(async () => {
-    const options = [];
-    const filterParameters = (obj) => {
-      const filter = Object.keys(obj).filter((key) => {
-        if (obj[key]) {
-          return key;
-        }
-      });
-
-      return filter.join(",");
-    };
-
-    const parameters = [
-      { whoKind: selectedGenre },
-      { price: filterParameters(prices) },
-      { whoType: filterParameters(selectedType) },
-      { occasions: selectedOccasion },
-      { parties: selectedParty }
-    ];
-
-    // Filter parameters that are not All
-    const filteredParameters = parameters.filter(
-      (item) => item[Object.keys(item)] != "Tout"
+    setFilteredProducts(
+      await filterProducts(
+        selectedGenre,
+        prices,
+        selectedType,
+        selectedOccasion,
+        selectedParty
+      )
     );
-
-    // Push each filtered parameters in option array
-    filteredParameters.forEach((param) => {
-      options.push(`${Object.keys(param)}=${param[Object.keys(param)]}`);
-    });
-
-    const optionsReq = options.length ? `?${options.join("&")}` : ``;
-    const dataProducts = await axios.get(
-      `http://localhost:4000/products${optionsReq}`
-    );
-    setFilteredProducts(dataProducts.data);
   }, [selectedGenre, selectedOccasion, selectedParty, prices, selectedType]);
 
   return (
@@ -215,48 +198,50 @@ export default function Category({ categoryName, products, categories }) {
           </p>
           {/*PRODUCTS */}
           <div className="flex flex-wrap justify-between mb-10">
-            {filteredProducts.map((product, index) => {
-              return (
-                <Link
-                  key={index}
-                  href={{
-                    pathname: `/produit/${slugify(product.name)}`,
-                    query: {
-                      productId: product._id
-                    }
-                  }}
-                >
-                  <a className="xl:w-1/4">
-                    <div className="flex flex-col border-2 border-coolGray-100 hover:bg-coolGray-100 rounded-lg p-5 mx-1 mt-5 group">
-                      {product.images ? (
-                        <div>
-                          <Image
-                            src={product.images[0]}
-                            width={225}
-                            height={225}
-                            layout="responsive"
-                            className="rounded-lg"
-                          />
-                        </div>
-                      ) : null}
+            {filteredProducts.length
+              ? filteredProducts.map((product, index) => {
+                  return (
+                    <Link
+                      key={index}
+                      href={{
+                        pathname: `/produit/${slugify(product.name)}`,
+                        query: {
+                          productId: product._id
+                        }
+                      }}
+                    >
+                      <a className="xl:w-1/4">
+                        <div className="flex flex-col border-2 border-coolGray-100 hover:bg-coolGray-100 rounded-lg p-5 mx-1 mt-5 group">
+                          {product.images ? (
+                            <div>
+                              <Image
+                                src={product.images[0]}
+                                width={225}
+                                height={225}
+                                layout="responsive"
+                                className="rounded-lg"
+                              />
+                            </div>
+                          ) : null}
 
-                      <h2 className="text-xl font-semibold text-center mt-3">
-                        {product.name}
-                      </h2>
-                      <div className="flex justify-around items-center mt-3">
-                        <div>
-                          <p className="font-semibold">Prix</p>
-                          <p className="text-center">{product.price}</p>
+                          <h2 className="text-xl font-semibold text-center mt-3">
+                            {product.name}
+                          </h2>
+                          <div className="flex justify-around items-center mt-3">
+                            <div>
+                              <p className="font-semibold">Prix</p>
+                              <p className="text-center">{product.price}</p>
+                            </div>
+                            <button className="border border-coolGray-300 group-hover:bg-orange-500 group-hover:border-transparent group-hover:text-white rounded-lg p-1 h-9 font-semibold">
+                              En savoir plus
+                            </button>
+                          </div>
                         </div>
-                        <button className="border border-coolGray-300 group-hover:bg-orange-500 group-hover:border-transparent group-hover:text-white rounded-lg p-1 h-9 font-semibold">
-                          En savoir plus
-                        </button>
-                      </div>
-                    </div>
-                  </a>
-                </Link>
-              );
-            })}
+                      </a>
+                    </Link>
+                  );
+                })
+              : null}
           </div>
         </main>
       </div>
@@ -273,9 +258,19 @@ export default function Category({ categoryName, products, categories }) {
 
 export async function getServerSideProps({ query }) {
   try {
-    const dataProducts = await axios.get("http://localhost:4000/products");
-    const products = dataProducts.data;
+    // GET PRODUCTS
+    let productParams = "";
+    if (query.categoryName === "Meilleurs Cadeaux") {
+      productParams += "?sortBy=visits";
+    }
 
+    /* const dataProducts = await axios.get(
+      `http://localhost:4000/products${productParams}`
+    ); */
+
+    /* const products = dataProducts.data; */
+
+    // GET CATEGORIES
     const dataCategories = await axios.get(
       "http://localhost:4000/categories/?ordered=true"
     );
@@ -285,7 +280,7 @@ export async function getServerSideProps({ query }) {
     return {
       props: {
         categoryName: query.categoryName,
-        products,
+        /* products, */
         categories
       }
     };

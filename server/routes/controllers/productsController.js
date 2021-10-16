@@ -24,9 +24,17 @@ const read = async (model, params) => {
     }
   });
 
-  const data = await model.find(options).lean().exec();
+  let sort = "";
 
-  return imageToDataAdder(data);
+  if (params.sortBy) {
+    if (params.sortBy === "visits") {
+      sort = { visits: -1 };
+    }
+  }
+
+  const data = await model.find(options).sort(sort).lean().exec();
+
+  return await imageToDataAdder(data);
 };
 
 const updateOne = async (req, model) => {

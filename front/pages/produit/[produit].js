@@ -19,9 +19,21 @@ export default function Product({ productID }) {
     setMainImage(productData.data[0].images[0]);
   }, []);
 
-  const addVisit = (e) => {
-    
-  }
+  // By clicking on "Acheter" button, product visits are increased in db
+  const addVisit = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("visits", "true");
+
+      await axios({
+        method: "put",
+        url: `http://localhost:4000/products/${productID}`,
+        data: formData
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <Layout pageTitle={`${product.name} - Mes cadeaux originaux`}>
@@ -68,9 +80,12 @@ export default function Product({ productID }) {
             <h1 className="mb-5 text-4xl font-semibold">{product.name}</h1>
             <p className="text-justify leading-loose">{product.description}</p>
             {product.urlAmazon ? (
-              <Link href={product.urlAmazon}>
+              <Link href="#" /* {product.urlAmazon} */>
                 <a>
-                  <button className="w-44 py-3 mt-10 rounded-lg text-white bg-orange-500 text-2xl hover:bg-orange-600">
+                  <button
+                    className="w-44 py-3 mt-10 rounded-lg text-white bg-orange-500 text-2xl hover:bg-orange-600"
+                    onClick={addVisit}
+                  >
                     Acheter
                   </button>
                 </a>
