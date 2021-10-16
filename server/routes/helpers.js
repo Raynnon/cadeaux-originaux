@@ -1,7 +1,6 @@
 const uploadFile = require("../middlewares/uploadFile");
 const addItem = require("./crud/addItem");
 const deleteItem = require("./crud/deleteItem");
-const updateOneItem = require("./crud/updateOneItem");
 
 module.exports = {
   crud(router, name, model, controller) {
@@ -30,8 +29,8 @@ module.exports = {
     // EDIT BY ID
     router.put(`/${name}/:id`, uploadFile(), async (req, res) => {
       try {
-        await updateOneItem(req, model);
-        console.log("TEST");
+        res.send(await controller.updateOne(req, model));
+
         res.send();
       } catch (e) {
         console.log(e);

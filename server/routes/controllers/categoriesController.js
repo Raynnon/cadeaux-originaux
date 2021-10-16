@@ -1,4 +1,5 @@
 const imageToDataAdder = require("../crud/tools/imageToDataAdder");
+const updateOneItem = require("../crud/updateOneItem");
 
 const read = async (model, params) => {
   const options = {};
@@ -33,4 +34,8 @@ const read = async (model, params) => {
   }
 };
 
-module.exports = { read };
+const updateOne = async (req, model) => {
+  return await updateOneItem(req, model);
+};
+
+module.exports = { read, updateOne };
