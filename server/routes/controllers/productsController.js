@@ -27,8 +27,10 @@ const read = async (model, params) => {
   let sort = "";
 
   if (params.sortBy) {
-    if (params.sortBy === "visits") {
+    if (params.sortBy === "Meilleures ventes") {
       sort = { visits: -1 };
+    } else {
+      sort = { editedAt: -1 };
     }
   }
 

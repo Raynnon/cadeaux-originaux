@@ -10,6 +10,7 @@ import filterProducts from "../../components/subcomponents/filterProducts";
 
 export default function Category({ categoryName, categories }) {
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [selectedSortBy, setSelectSortBy] = useState("Nouveau");
   const [selectedGenre, setSelectedGenre] = useState("Tout");
   const [selectedType, setSelectedType] = useState({});
   const [prices, setPrices] = useState({ "€": true, "€€": true, "€€€": true });
@@ -39,11 +40,19 @@ export default function Category({ categoryName, categories }) {
         prices,
         selectedType,
         selectedOccasion,
-        selectedParty
+        selectedParty,
+        selectedSortBy
       )
     );
-  }, [selectedGenre, selectedOccasion, selectedParty, prices, selectedType]);
-
+  }, [
+    selectedGenre,
+    selectedOccasion,
+    selectedParty,
+    prices,
+    selectedType,
+    selectedSortBy
+  ]);
+  console.log(filteredProducts);
   return (
     <Layout pageTitle={`Cadeau pour ${categoryName} - Mes cadeaux originaux`}>
       <div className="flex -mb-10">
@@ -53,6 +62,21 @@ export default function Category({ categoryName, categories }) {
             <h3 className="py-5 text-2xl font-semibold">Filtres</h3>
           </div>
           <form className="lg:pr-5 lg:pl-32 border-2 border-transparent border-t-coolGray-100 pt-4">
+            <ul onChange={(e) => setSelectSortBy(e.target.value)}>
+              <label htmlFor="sort">
+                <h4>Classer par:</h4>
+              </label>
+              <select
+                id="sorts"
+                className="block w-full bg-white border border-gray-100 hover:border-gray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
+                onChange={(e) => {
+                  setSelectSortBy(e.target.value);
+                }}
+              >
+                <option selected>Nouveau</option>
+                <option>Meilleures ventes</option>
+              </select>
+            </ul>
             <h4>Genre</h4>
             <ul onChange={(e) => setSelectedGenre(e.target.value)}>
               {categories.Genre.map((genre, index) => {
@@ -258,18 +282,6 @@ export default function Category({ categoryName, categories }) {
 
 export async function getServerSideProps({ query }) {
   try {
-    // GET PRODUCTS
-    let productParams = "";
-    if (query.categoryName === "Meilleurs Cadeaux") {
-      productParams += "?sortBy=visits";
-    }
-
-    /* const dataProducts = await axios.get(
-      `http://localhost:4000/products${productParams}`
-    ); */
-
-    /* const products = dataProducts.data; */
-
     // GET CATEGORIES
     const dataCategories = await axios.get(
       "http://localhost:4000/categories/?ordered=true"
@@ -280,7 +292,6 @@ export async function getServerSideProps({ query }) {
     return {
       props: {
         categoryName: query.categoryName,
-        /* products, */
         categories
       }
     };

@@ -5,10 +5,12 @@ const filteredProducts = async (
   prices,
   selectedType,
   selectedOccasion,
-  selectedParty
+  selectedParty,
+  selectedSortBy
 ) => {
   const options = [];
-  const filterParameters = (obj) => {
+  //transform parameters with multiple values to string
+  const chechboxParamToString = (obj) => {
     const filter = Object.keys(obj).filter((key) => {
       if (obj[key]) {
         return key;
@@ -20,10 +22,11 @@ const filteredProducts = async (
 
   const parameters = [
     { whoKind: selectedGenre },
-    { price: filterParameters(prices) },
-    { whoType: filterParameters(selectedType) },
+    { price: chechboxParamToString(prices) },
+    { whoType: chechboxParamToString(selectedType) },
     { occasions: selectedOccasion },
-    { parties: selectedParty }
+    { parties: selectedParty },
+    { sortBy: selectedSortBy }
   ];
 
   // Filter parameters that are not All
