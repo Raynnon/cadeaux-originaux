@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import Layout from "../../components/Layout";
+import Pagination from "../../components/subcomponents/Pagination";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -16,6 +17,9 @@ export default function Category({ categoryName, categories }) {
   const [prices, setPrices] = useState({ "€": true, "€€": true, "€€€": true });
   const [selectedOccasion, setSelectedOccasion] = useState("Tout");
   const [selectedParty, setSelectedParty] = useState("Tout");
+
+  const [currentPage, selectCurrentPage] = useState(1);
+  const productPerPage = 16;
 
   useEffect(async () => {
     const dataProducts = await axios.get(`http://localhost:4000/products`);
@@ -34,16 +38,16 @@ export default function Category({ categoryName, categories }) {
   }, [selectedGenre]);
 
   useEffect(async () => {
-    setFilteredProducts(
-      await filterProducts(
-        selectedGenre,
-        prices,
-        selectedType,
-        selectedOccasion,
-        selectedParty,
-        selectedSortBy
-      )
+    const products = await filterProducts(
+      selectedGenre,
+      prices,
+      selectedType,
+      selectedOccasion,
+      selectedParty,
+      selectedSortBy
     );
+
+    setFilteredProducts(products);
   }, [
     selectedGenre,
     selectedOccasion,
@@ -52,7 +56,6 @@ export default function Category({ categoryName, categories }) {
     selectedType,
     selectedSortBy
   ]);
-  console.log(filteredProducts);
   return (
     <Layout pageTitle={`Cadeau pour ${categoryName} - Mes cadeaux originaux`}>
       <div className="flex -mb-10">
@@ -220,6 +223,15 @@ export default function Category({ categoryName, categories }) {
             placerat tellus, ut auctor sem. Nullam nec purus turpis. Sed
             elementum risus sem, nec egestas erat pellentesque vitae.
           </p>
+
+          {/* PAGINATION */}
+          <Pagination
+            numberOfProducts={filteredProducts.length}
+            currentPage={currentPage}
+            productPerPage={productPerPage}
+            //updateCurrentPage=
+          />
+
           {/*PRODUCTS */}
           <div className="flex flex-wrap justify-between mb-10">
             {filteredProducts.length
