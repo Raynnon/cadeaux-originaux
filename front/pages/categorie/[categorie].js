@@ -19,7 +19,7 @@ export default function Category({ categoryName, categories }) {
   const [selectedParty, setSelectedParty] = useState("Tout");
 
   const [currentPage, selectCurrentPage] = useState(1);
-  const productPerPage = 16;
+  const productsPerPage = 16;
 
   useEffect(async () => {
     const dataProducts = await axios.get(`http://localhost:4000/products`);
@@ -44,7 +44,9 @@ export default function Category({ categoryName, categories }) {
       selectedType,
       selectedOccasion,
       selectedParty,
-      selectedSortBy
+      selectedSortBy,
+      currentPage,
+      productsPerPage
     );
 
     setFilteredProducts(products);
@@ -54,8 +56,15 @@ export default function Category({ categoryName, categories }) {
     selectedParty,
     prices,
     selectedType,
-    selectedSortBy
+    selectedSortBy,
+    currentPage,
+    productsPerPage
   ]);
+
+  const onUpdateCurrentPage = (page) => {
+    selectCurrentPage(Number(page));
+  };
+
   return (
     <Layout pageTitle={`Cadeau pour ${categoryName} - Mes cadeaux originaux`}>
       <div className="flex -mb-10">
@@ -228,8 +237,8 @@ export default function Category({ categoryName, categories }) {
           <Pagination
             numberOfProducts={filteredProducts.length}
             currentPage={currentPage}
-            productPerPage={productPerPage}
-            //updateCurrentPage=
+            productsPerPage={productsPerPage}
+            updateCurrentPage={onUpdateCurrentPage}
           />
 
           {/*PRODUCTS */}

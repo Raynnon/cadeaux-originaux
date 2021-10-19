@@ -6,7 +6,9 @@ const filteredProducts = async (
   selectedType,
   selectedOccasion,
   selectedParty,
-  selectedSortBy
+  selectedSortBy,
+  currentPage,
+  productsPerPage
 ) => {
   const options = [];
   //transform parameters with multiple values to string
@@ -26,7 +28,9 @@ const filteredProducts = async (
     { whoType: chechboxParamToString(selectedType) },
     { occasions: selectedOccasion },
     { parties: selectedParty },
-    { sortBy: selectedSortBy }
+    { sortBy: selectedSortBy },
+    { currentPage },
+    { productsPerPage }
   ];
 
   // Filter parameters that are not All

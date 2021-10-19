@@ -3,6 +3,7 @@ const updateOneItem = require("../crud/updateOneItem");
 
 const read = async (model, params) => {
   const options = {};
+
   const simpleOptionParameters = [
     "_id",
     "whoKind",
@@ -26,6 +27,7 @@ const read = async (model, params) => {
 
   let sort = "";
 
+  // SORT
   if (params.sortBy) {
     if (params.sortBy === "Meilleures ventes") {
       sort = { visits: -1 };
@@ -34,7 +36,13 @@ const read = async (model, params) => {
     }
   }
 
-  const data = await model.find(options).sort(sort).lean().exec();
+  // PRODUCTS PER PAGE
+  if (params.currentPage && params.productsPerPage) {
+    console.log("TEST");
+  }
+  console.log(options);
+
+  const data = await model.find(options).sort(sort).lean().limit().exec();
 
   return await imageToDataAdder(data);
 };
