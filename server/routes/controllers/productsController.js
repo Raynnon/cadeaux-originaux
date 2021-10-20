@@ -37,12 +37,20 @@ const read = async (model, params) => {
   }
 
   // PRODUCTS PER PAGE
-  if (params.currentPage && params.productsPerPage) {
-    console.log("TEST");
-  }
-  console.log(options);
+  let skip = 0;
 
-  const data = await model.find(options).sort(sort).lean().limit().exec();
+  if (params.currentPage && params.productsPerPage) {
+    //skipping products depending on the number of pages
+    skip = (params.currentPage - 1) * params.productsPerPage;
+  }
+
+  const data = await model
+    .find(options)
+    .skip(skip)
+    .sort(sort)
+    .lean()
+    .limit(Number(params.productsPerPage))
+    .exec();
 
   return await imageToDataAdder(data);
 };

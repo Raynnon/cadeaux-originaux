@@ -301,8 +301,13 @@ export default function Category({ categoryName, categories }) {
   );
 }
 
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps({ req }) {
   try {
+    // ASSIGN THE PAGE NAME
+    let pageName = decodeURI(req.url.replace(/.*categorie(.?)/g, ""));
+    const formatedPageName =
+      pageName.charAt(0).toUpperCase() + pageName.slice(1).replace(/-/g, " ");
+
     // GET CATEGORIES
     const dataCategories = await axios.get(
       "http://localhost:4000/categories/?ordered=true"
@@ -312,7 +317,7 @@ export async function getServerSideProps({ query }) {
 
     return {
       props: {
-        categoryName: query.categoryName,
+        categoryName: formatedPageName,
         categories
       }
     };

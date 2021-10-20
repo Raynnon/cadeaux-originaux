@@ -30,7 +30,7 @@ export default function Pagination({
   };
 
   const displayNumberOfPages = () => {
-    const pageNumberArr = [...Array(/* maxPages */ 10).keys()];
+    const pageNumberArr = [...Array(maxPages).keys()];
 
     return pageNumberArr.map((page, index) => {
       let classToAdd = "";
