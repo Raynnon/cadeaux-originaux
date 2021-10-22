@@ -1,15 +1,19 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import Layout from "../../components/Layout";
 import Pagination from "../../components/subcomponents/Pagination";
+import GenreMenu from "../../components/subcomponents/categories/GenreMenu";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import slugify from "slugify";
+import { useRouter } from "next/router";
 
 import filterProducts from "../../components/subcomponents/filterProducts";
 
-export default function Category({ categoryName, categories }) {
+export default function Category({ categories }) {
+  const [categoryName, setCategoryName] = useState("category");
+
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedSortBy, setSelectSortBy] = useState("Nouveau");
   const [selectedGenre, setSelectedGenre] = useState("Tout");
@@ -21,23 +25,9 @@ export default function Category({ categoryName, categories }) {
   const [currentPage, selectCurrentPage] = useState(1);
   const productsPerPage = 16;
 
-  useEffect(async () => {
-    const dataProducts = await axios.get(`http://localhost:4000/products`);
+  const router = useRouter();
 
-    setFilteredProducts(dataProducts.data);
-  }, []);
-
-  useEffect(() => {
-    const typeObj = {};
-
-    categories.Type.forEach((item) => {
-      typeObj[item.name] = true;
-    });
-
-    setSelectedType(typeObj);
-  }, [selectedGenre]);
-
-  useEffect(async () => {
+  const getProducts = async () => {
     const products = await filterProducts(
       selectedGenre,
       prices,
@@ -50,6 +40,30 @@ export default function Category({ categoryName, categories }) {
     );
 
     setFilteredProducts(products);
+  };
+
+  useEffect(async () => {
+    // ASSIGN THE PAGE NAME
+    const { category } = router.query;
+
+    const formatedCategoryName =
+      category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, " ");
+
+    setCategoryName(formatedCategoryName);
+  }, [router]);
+
+  useEffect(() => {
+    const typeObj = {};
+
+    categories.Type.forEach((item) => {
+      typeObj[item.name] = true;
+    });
+
+    setSelectedType(typeObj);
+  }, [selectedGenre]);
+
+  useEffect(async () => {
+    await getProducts();
   }, [
     selectedGenre,
     selectedOccasion,
@@ -90,76 +104,7 @@ export default function Category({ categoryName, categories }) {
               </select>
             </ul>
             <h4>Genre</h4>
-            <ul onChange={(e) => setSelectedGenre(e.target.value)}>
-              {categories.Genre.map((genre, index) => {
-                return (
-                  <li key={index} className="flex-grow text-left pr-2">
-                    <label className="inline-flex items-center">
-                      <input type="radio" name="genre" value={genre.name} />
-                      <span className="ml-2">{genre.name}</span>
-                    </label>
-                  </li>
-                );
-              })}
-              <li className="flex-grow text-left pr-2">
-                <label className="inline-flex items-center">
-                  <input
-                    type="radio"
-                    name="genre"
-                    value="Tout"
-                    defaultChecked
-                  />
-                  <span className="ml-2">Tout</span>
-                </label>
-              </li>
-            </ul>
-            {selectedGenre !== "Animal" ? (
-              <div>
-                <h4>Type</h4>
-                <ul
-                  onChange={(e) => {
-                    const updatedTypeStatus = {};
-                    updatedTypeStatus[e.target.value] =
-                      !selectedType[e.target.value];
-
-                    setSelectedType({ ...selectedType, ...updatedTypeStatus });
-                  }}
-                >
-                  {categories.Type.map((type, index) => {
-                    if (type.parent.includes(selectedGenre)) {
-                      return (
-                        <li key={index} className="flex-grow text-left pr-2">
-                          <label className="inline-flex items-center">
-                            <input
-                              type="checkbox"
-                              name="Type"
-                              value={type.name}
-                              defaultChecked
-                            />
-                            <span className="ml-2">{type.name}</span>
-                          </label>
-                        </li>
-                      );
-                    } else if (selectedGenre === "Tout") {
-                      return (
-                        <li key={index} className="flex-grow text-left pr-2">
-                          <label className="inline-flex items-center">
-                            <input
-                              type="checkbox"
-                              name="Type"
-                              value={type.name}
-                              defaultChecked
-                            />
-                            <span className="ml-2">{type.name}</span>
-                          </label>
-                        </li>
-                      );
-                    }
-                  })}
-                </ul>
-              </div>
-            ) : null}
-
+            <GenreMenu categories={categories} />
             <h4>Prix</h4>
             <ul
               onChange={(e) => {
@@ -303,11 +248,6 @@ export default function Category({ categoryName, categories }) {
 
 export async function getServerSideProps({ req }) {
   try {
-    // ASSIGN THE PAGE NAME
-    let pageName = decodeURI(req.url.replace(/.*categorie(.?)/g, ""));
-    const formatedPageName =
-      pageName.charAt(0).toUpperCase() + pageName.slice(1).replace(/-/g, " ");
-
     // GET CATEGORIES
     const dataCategories = await axios.get(
       "http://localhost:4000/categories/?ordered=true"
@@ -317,7 +257,6 @@ export async function getServerSideProps({ req }) {
 
     return {
       props: {
-        categoryName: formatedPageName,
         categories
       }
     };

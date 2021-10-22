@@ -13,8 +13,7 @@ export default function Header({ categories }) {
                 <Link
                   key={index}
                   href={{
-                    pathname: `/categorie/${category.name
-                      .toLowerCase()
+                    pathname: `/category/${category.name
                       .split(/[ ,]+/)
                       .join("-")}`
                   }}
@@ -47,7 +46,7 @@ export default function Header({ categories }) {
           <li className="dropdown group mx-5 py-5 text-sm border-b-4 border-transparent hover:border-orange-500  md:text-lg ">
             <Link
               href={{
-                pathname: `/categorie/nouveau`
+                pathname: `/category/Nouveau`
               }}
             >
               <a className="dropdown text-coolGray-500 group-hover:text-coolGray-900">
@@ -58,7 +57,7 @@ export default function Header({ categories }) {
           <li className="dropdown group mx-5 py-5 text-sm border-b-4 border-transparent hover:border-orange-500  md:text-lg ">
             <Link
               href={{
-                pathname: `/categorie/meilleurs-cadeaux`
+                pathname: `/category/Meilleurs-cadeaux`
               }}
             >
               <a className="dropdown text-coolGray-500 group-hover:text-coolGray-900">
