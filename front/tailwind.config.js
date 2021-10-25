@@ -13,7 +13,7 @@ module.exports = {
     }
   },
   variants: {
-    extend: { visibility: ["group-hover"] }
+    extend: { visibility: ["group-hover"], display: ["group-hover"] }
   },
   plugins: []
 };

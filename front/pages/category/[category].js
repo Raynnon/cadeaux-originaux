@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import Layout from "../../components/Layout";
-import Pagination from "../../components/subcomponents/Pagination";
-import GenreMenu from "../../components/subcomponents/categories/GenreMenu";
+import Pagination from "../../components/categories/Pagination";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -9,13 +8,22 @@ import axios from "axios";
 import slugify from "slugify";
 import { useRouter } from "next/router";
 
-import filterProducts from "../../components/subcomponents/filterProducts";
+import filterProducts from "../../components/categories/filterProducts";
 
 export default function Category({ categories }) {
   const [categoryName, setCategoryName] = useState("category");
 
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [selectedSortBy, setSelectSortBy] = useState("Nouveau");
+
+  const [filtersToShow, setFiltersToShow] = useState({
+    sortation: true,
+    genre: true,
+    type: true,
+    price: true,
+    occasion: true,
+    party: true
+  });
+  const [selectedSortBy, setSelectedSortBy] = useState("Nouveau");
   const [selectedGenre, setSelectedGenre] = useState("Tout");
   const [selectedType, setSelectedType] = useState({});
   const [prices, setPrices] = useState({ "€": true, "€€": true, "€€€": true });
@@ -43,12 +51,64 @@ export default function Category({ categories }) {
   };
 
   useEffect(async () => {
-    // ASSIGN THE PAGE NAME
     const { category } = router.query;
-
     const formatedCategoryName =
       category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, " ");
+    // ASSIGN FILTERS TO SHOW
+    if (
+      formatedCategoryName === "Nouveau" ||
+      category === "Meilleurs-cadeaux"
+    ) {
+      if (formatedCategoryName === "Meilleurs cadeaux") {
+        setSelectedSortBy("Meilleures ventes");
+      } else {
+        setSelectedSortBy("Nouveau");
+      }
+      setFiltersToShow({
+        sortation: false,
+        genre: true,
+        type: true,
+        price: true,
+        occasion: true,
+        party: true
+      });
+    } else {
+      let currentCategory = "";
 
+      Object.keys(categories).forEach((key) => {
+        categories[key].forEach((item) => {
+          if (item.name === formatedCategoryName) {
+            currentCategory = key;
+          }
+        });
+      });
+
+      const selectFiltersToShow = {
+        sortation: true,
+        genre: true,
+        type: true,
+        price: true,
+        occasion: true,
+        party: true
+      };
+
+      if (currentCategory === "Genre") {
+        setSelectedGenre(formatedCategoryName);
+        selectFiltersToShow.genre = false;
+
+        console.log(selectFiltersToShow);
+      } else if (currentCategory === "Type") {
+        console.log(currentCategory);
+      } else if (currentCategory === "Occasion") {
+        console.log(currentCategory);
+      } else if (currentCategory === "Fête") {
+        console.log(currentCategory);
+      }
+
+      setFiltersToShow(selectFiltersToShow);
+    }
+
+    // ASSIGN THE PAGE NAME
     setCategoryName(formatedCategoryName);
   }, [router]);
 
@@ -62,6 +122,7 @@ export default function Category({ categories }) {
     setSelectedType(typeObj);
   }, [selectedGenre]);
 
+  // GET PRODUCTS ON FILTER CHANGE
   useEffect(async () => {
     await getProducts();
   }, [
@@ -83,28 +144,101 @@ export default function Category({ categories }) {
     <Layout pageTitle={`Cadeau pour ${categoryName} - Mes cadeaux originaux`}>
       <div className="flex -mb-10">
         {/* FILTER */}
-        <aside className="hidden md:block w-96 mb-5">
-          <div className="lg:px-32">
-            <h3 className="py-5 text-2xl font-semibold">Filtres</h3>
-          </div>
-          <form className="lg:pr-5 lg:pl-32 border-2 border-transparent border-t-coolGray-100 pt-4">
-            <ul onChange={(e) => setSelectSortBy(e.target.value)}>
-              <label htmlFor="sort">
-                <h4>Classer par:</h4>
-              </label>
-              <select
-                id="sorts"
-                className="block w-full bg-white border border-gray-100 hover:border-gray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
+        <aside className="hidden md:block mb-5 pt-4 xl:pl-32 pr-1 lg:pl-5 xl:pl-32">
+          <form className="xl:w-52">
+            {filtersToShow.sortation ? (
+              <ul
                 onChange={(e) => {
-                  setSelectSortBy(e.target.value);
+                  setSelectedSortBy(e.target.value);
                 }}
               >
-                <option selected>Nouveau</option>
-                <option>Meilleures ventes</option>
-              </select>
-            </ul>
+                <label htmlFor="sort">
+                  <h4>Classer par:</h4>
+                </label>
+                <select
+                  id="sorts"
+                  className="block w-full bg-white border border-gray-100 hover:border-gray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
+                  onChange={(e) => {
+                    setSelectSortBy(e.target.value);
+                  }}
+                >
+                  <option selected>Nouveau</option>
+                  <option>Meilleures ventes</option>
+                </select>
+              </ul>
+            ) : null}
+
             <h4>Genre</h4>
-            <GenreMenu categories={categories} />
+            <ul onChange={(e) => setSelectedGenre(e.target.value)}>
+              {categories.Genre.map((genre, index) => {
+                return (
+                  <li key={index} className="flex-grow text-left pr-2">
+                    <label className="inline-flex items-center">
+                      <input type="radio" name="genre" value={genre.name} />
+                      <span className="ml-2">{genre.name}</span>
+                    </label>
+                  </li>
+                );
+              })}{" "}
+              <li className="flex-grow text-left pr-2">
+                <label className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="genre"
+                    value="Tout"
+                    defaultChecked
+                  />
+                  <span className="ml-2">Tout</span>
+                </label>
+              </li>
+            </ul>
+            {selectedGenre !== "Animal" ? (
+              <div>
+                <h4>Type</h4>
+                <ul
+                  onChange={(e) => {
+                    const updatedTypeStatus = {};
+                    updatedTypeStatus[e.target.value] =
+                      !selectedType[e.target.value];
+
+                    setSelectedType({ ...selectedType, ...updatedTypeStatus });
+                  }}
+                >
+                  {categories.Type.map((type, index) => {
+                    if (type.parent.includes(selectedGenre)) {
+                      return (
+                        <li key={index} className="flex-grow text-left pr-2">
+                          <label className="inline-flex items-center">
+                            <input
+                              type="checkbox"
+                              name="Type"
+                              value={type.name}
+                              defaultChecked
+                            />
+                            <span className="ml-2">{type.name}</span>
+                          </label>
+                        </li>
+                      );
+                    } else if (selectedGenre === "Tout") {
+                      return (
+                        <li key={index} className="flex-grow text-left pr-2">
+                          <label className="inline-flex items-center">
+                            <input
+                              type="checkbox"
+                              name="Type"
+                              value={type.name}
+                              defaultChecked
+                            />
+                            <span className="ml-2">{type.name}</span>
+                          </label>
+                        </li>
+                      );
+                    }
+                  })}
+                </ul>
+              </div>
+            ) : null}
+
             <h4>Prix</h4>
             <ul
               onChange={(e) => {
@@ -164,9 +298,9 @@ export default function Category({ categories }) {
             </select>
           </form>
         </aside>
-        <main className="xl:px-20 border-2 border-transparent border-l-coolGray-100">
-          <h1 className="mx-1 xl:mx-0 mt-10 text-4xl font-semibold">{`${categoryName}`}</h1>
-          <p className="mx-1 xl:mx-0 my-5 text-justify">
+        <main className="mt-6 lg:px-5 xl:pr-20 border-2 border-transparent border-l-coolGray-100">
+          <h1 className="text-4xl font-semibold">{`${categoryName}`}</h1>
+          <p className="my-5 text-justify">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
             in fringilla libero, eget gravida sem. Integer viverra a nulla nec
             ultrices. Donec volutpat ligula et sagittis iaculis. Pellentesque
@@ -246,7 +380,7 @@ export default function Category({ categories }) {
   );
 }
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps({ query }) {
   try {
     // GET CATEGORIES
     const dataCategories = await axios.get(
