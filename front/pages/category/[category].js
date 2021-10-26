@@ -16,7 +16,7 @@ export default function Category({ categories }) {
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   const [filtersToShow, setFiltersToShow] = useState({
-    sortation: true,
+    sortatable: true,
     genre: true,
     type: true,
     price: true,
@@ -50,7 +50,7 @@ export default function Category({ categories }) {
     setFilteredProducts(products);
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     const { category } = router.query;
     const formatedCategoryName =
       category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, " ");
@@ -65,7 +65,7 @@ export default function Category({ categories }) {
         setSelectedSortBy("Nouveau");
       }
       setFiltersToShow({
-        sortation: false,
+        sortatable: false,
         genre: true,
         type: true,
         price: true,
@@ -73,39 +73,50 @@ export default function Category({ categories }) {
         party: true
       });
     } else {
-      let currentCategory = "";
+      let currentTopCategory = "";
 
       Object.keys(categories).forEach((key) => {
         categories[key].forEach((item) => {
           if (item.name === formatedCategoryName) {
-            currentCategory = key;
+            currentTopCategory = key;
           }
         });
       });
 
-      const selectFiltersToShow = {
-        sortation: true,
-        genre: true,
-        type: true,
-        price: true,
-        occasion: true,
-        party: true
-      };
-
-      if (currentCategory === "Genre") {
+      if (currentTopCategory === "Genre") {
         setSelectedGenre(formatedCategoryName);
-        selectFiltersToShow.genre = false;
-
-        console.log(selectFiltersToShow);
-      } else if (currentCategory === "Type") {
-        console.log(currentCategory);
-      } else if (currentCategory === "Occasion") {
-        console.log(currentCategory);
-      } else if (currentCategory === "Fête") {
-        console.log(currentCategory);
+        setFiltersToShow({
+          sortatable: true,
+          genre: false,
+          type: true,
+          price: true,
+          occasion: true,
+          party: true
+        });
+      } else if (currentTopCategory === "Type") {
+      } else if (currentTopCategory === "Occasion") {
+        setSelectedOccasion(formatedCategoryName);
+        setSelectedParty("Tout");
+        setFiltersToShow({
+          sortatable: true,
+          genre: true,
+          type: true,
+          price: true,
+          occasion: false,
+          party: false
+        });
+      } else if (currentTopCategory === "Fête") {
+        setSelectedOccasion("Tout");
+        setSelectedParty(formatedCategoryName);
+        setFiltersToShow({
+          sortatable: true,
+          genre: true,
+          type: true,
+          price: true,
+          occasion: false,
+          party: false
+        });
       }
-
-      setFiltersToShow(selectFiltersToShow);
     }
 
     // ASSIGN THE PAGE NAME
@@ -146,7 +157,7 @@ export default function Category({ categories }) {
         {/* FILTER */}
         <aside className="hidden md:block mb-5 pt-4 xl:pl-32 pr-1 lg:pl-5 xl:pl-32">
           <form className="xl:w-52">
-            {filtersToShow.sortation ? (
+            {filtersToShow.sortatable ? (
               <ul
                 onChange={(e) => {
                   setSelectedSortBy(e.target.value);
@@ -161,37 +172,43 @@ export default function Category({ categories }) {
                   onChange={(e) => {
                     setSelectSortBy(e.target.value);
                   }}
+                  defaultValue=""
                 >
-                  <option selected>Nouveau</option>
+                  <option value="">Nouveau</option>
                   <option>Meilleures ventes</option>
                 </select>
               </ul>
             ) : null}
 
-            <h4>Genre</h4>
-            <ul onChange={(e) => setSelectedGenre(e.target.value)}>
-              {categories.Genre.map((genre, index) => {
-                return (
-                  <li key={index} className="flex-grow text-left pr-2">
+            {filtersToShow.genre ? (
+              <div>
+                <h4>Genre</h4>
+                <ul onChange={(e) => setSelectedGenre(e.target.value)}>
+                  {categories.Genre.map((genre, index) => {
+                    return (
+                      <li key={index} className="flex-grow text-left pr-2">
+                        <label className="inline-flex items-center">
+                          <input type="radio" name="genre" value={genre.name} />
+                          <span className="ml-2">{genre.name}</span>
+                        </label>
+                      </li>
+                    );
+                  })}{" "}
+                  <li className="flex-grow text-left pr-2">
                     <label className="inline-flex items-center">
-                      <input type="radio" name="genre" value={genre.name} />
-                      <span className="ml-2">{genre.name}</span>
+                      <input
+                        type="radio"
+                        name="genre"
+                        value="Tout"
+                        defaultChecked
+                      />
+                      <span className="ml-2">Tout</span>
                     </label>
                   </li>
-                );
-              })}{" "}
-              <li className="flex-grow text-left pr-2">
-                <label className="inline-flex items-center">
-                  <input
-                    type="radio"
-                    name="genre"
-                    value="Tout"
-                    defaultChecked
-                  />
-                  <span className="ml-2">Tout</span>
-                </label>
-              </li>
-            </ul>
+                </ul>
+              </div>
+            ) : null}
+
             {selectedGenre !== "Animal" ? (
               <div>
                 <h4>Type</h4>
@@ -264,38 +281,43 @@ export default function Category({ categories }) {
                 );
               })}
             </ul>
+            {filtersToShow.occasion ? (
+              <div>
+                <h4>Occasion</h4>
+                <select
+                  id="occasion"
+                  className="block w-full bg-white border border-gray-100 hover:border-gray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
+                  onChange={(e) => {
+                    setSelectedOccasion(e.target.value);
+                  }}
+                  defaultValue=""
+                >
+                  {categories.Occasion.map((occasion, index) => {
+                    return <option key={index}>{occasion.name}</option>;
+                  })}
+                  <option value="">Tout</option>
+                </select>
+              </div>
+            ) : null}
 
-            <label htmlFor="occasion">
-              <h4>Occasion</h4>
-            </label>
-            <select
-              id="occasion"
-              className="block w-full bg-white border border-gray-100 hover:border-gray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
-              onChange={(e) => {
-                setSelectedOccasion(e.target.value);
-              }}
-            >
-              {categories.Occasion.map((occasion, index) => {
-                return <option key={index}>{occasion.name}</option>;
-              })}
-              <option selected>Tout</option>
-            </select>
-
-            <label htmlFor="occasion">
-              <h4>Fête</h4>
-            </label>
-            <select
-              id="fetes"
-              className="block w-full bg-white border border-gray-100 hover:border-gray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
-              onChange={(e) => {
-                setSelectedParty(e.target.value);
-              }}
-            >
-              {categories.Fête.map((party, index) => {
-                return <option key={index}>{party.name}</option>;
-              })}
-              <option selected>Tout</option>
-            </select>
+            {filtersToShow.party ? (
+              <div>
+                <h4>Fête</h4>
+                <select
+                  id="fetes"
+                  className="block w-full bg-white border border-gray-100 hover:border-gray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
+                  onChange={(e) => {
+                    setSelectedParty(e.target.value);
+                  }}
+                  defaultValue=""
+                >
+                  {categories.Fête.map((party, index) => {
+                    return <option key={index}>{party.name}</option>;
+                  })}
+                  <option value="">Tout</option>
+                </select>
+              </div>
+            ) : null}
           </form>
         </aside>
         <main className="mt-6 lg:px-5 xl:pr-20 border-2 border-transparent border-l-coolGray-100">

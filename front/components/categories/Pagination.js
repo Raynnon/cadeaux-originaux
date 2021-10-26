@@ -5,7 +5,7 @@ export default function Pagination({
   numberOfProducts,
   currentPage,
   productsPerPage,
-  updateCurrentPage,
+  updateCurrentPage
 }) {
   const [indexFirstProduct, setIndexFirstProduct] = useState(1);
   const [indexLastProduct, setIndexLastProduct] = useState(16);
@@ -95,7 +95,7 @@ export default function Pagination({
               />
             </a>
             {displayNumberOfPages()}
-            <p className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+            <a className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
               <span className="sr-only">Next</span>
               <Image
                 alt="fleche-suivant"
@@ -106,7 +106,7 @@ export default function Pagination({
                 className="h-5 w-5"
                 aria-hidden="true"
               />
-            </p>
+            </a>
           </nav>
         </div>
       </div>
