@@ -51,7 +51,17 @@ export default function Category({ categories }) {
   };
 
   useEffect(() => {
+    //RESET FILTER VARIABLES TO DEFAULT
+    setSelectedSortBy("Nouveau");
+    setSelectedGenre("Tout");
+    setSelectedType({});
+    setPrices({ "€": true, "€€": true, "€€€": true });
+    setSelectedOccasion("Tout");
+    setSelectedParty("Tout");
+
+    // FORMATE THE CATEGORY NAME
     const { category } = router.query;
+
     const formatedCategoryName =
       category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, " ");
     // ASSIGN FILTERS TO SHOW
@@ -94,6 +104,25 @@ export default function Category({ categories }) {
           party: true
         });
       } else if (currentTopCategory === "Type") {
+        setSelectedGenre("Tout");
+        const updatedSelectedType = {};
+        Object.keys(selectedType).forEach((item) => {
+          if (item === formatedCategoryName) {
+            updatedSelectedType[item] = true;
+          } else {
+            updatedSelectedType[item] = false;
+          }
+        });
+
+        setSelectedType(updatedSelectedType);
+        setFiltersToShow({
+          sortatable: true,
+          genre: false,
+          type: false,
+          price: true,
+          occasion: true,
+          party: true
+        });
       } else if (currentTopCategory === "Occasion") {
         setSelectedOccasion(formatedCategoryName);
         setSelectedParty("Tout");
@@ -122,7 +151,6 @@ export default function Category({ categories }) {
     // ASSIGN THE PAGE NAME
     setCategoryName(formatedCategoryName);
   }, [router]);
-
   useEffect(() => {
     const typeObj = {};
 
@@ -170,7 +198,7 @@ export default function Category({ categories }) {
                   id="sorts"
                   className="block w-full bg-white border border-gray-100 hover:border-gray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
                   onChange={(e) => {
-                    setSelectSortBy(e.target.value);
+                    setSelectedSortBy(e.target.value);
                   }}
                   defaultValue=""
                 >
@@ -210,50 +238,55 @@ export default function Category({ categories }) {
             ) : null}
 
             {selectedGenre !== "Animal" ? (
-              <div>
-                <h4>Type</h4>
-                <ul
-                  onChange={(e) => {
-                    const updatedTypeStatus = {};
-                    updatedTypeStatus[e.target.value] =
-                      !selectedType[e.target.value];
+              filtersToShow.type ? (
+                <div>
+                  <h4>Type</h4>
+                  <ul
+                    onChange={(e) => {
+                      const updatedTypeStatus = {};
+                      updatedTypeStatus[e.target.value] =
+                        !selectedType[e.target.value];
 
-                    setSelectedType({ ...selectedType, ...updatedTypeStatus });
-                  }}
-                >
-                  {categories.Type.map((type, index) => {
-                    if (type.parent.includes(selectedGenre)) {
-                      return (
-                        <li key={index} className="flex-grow text-left pr-2">
-                          <label className="inline-flex items-center">
-                            <input
-                              type="checkbox"
-                              name="Type"
-                              value={type.name}
-                              defaultChecked
-                            />
-                            <span className="ml-2">{type.name}</span>
-                          </label>
-                        </li>
-                      );
-                    } else if (selectedGenre === "Tout") {
-                      return (
-                        <li key={index} className="flex-grow text-left pr-2">
-                          <label className="inline-flex items-center">
-                            <input
-                              type="checkbox"
-                              name="Type"
-                              value={type.name}
-                              defaultChecked
-                            />
-                            <span className="ml-2">{type.name}</span>
-                          </label>
-                        </li>
-                      );
-                    }
-                  })}
-                </ul>
-              </div>
+                      setSelectedType({
+                        ...selectedType,
+                        ...updatedTypeStatus
+                      });
+                    }}
+                  >
+                    {categories.Type.map((type, index) => {
+                      if (type.parent.includes(selectedGenre)) {
+                        return (
+                          <li key={index} className="flex-grow text-left pr-2">
+                            <label className="inline-flex items-center">
+                              <input
+                                type="checkbox"
+                                name="Type"
+                                value={type.name}
+                                defaultChecked
+                              />
+                              <span className="ml-2">{type.name}</span>
+                            </label>
+                          </li>
+                        );
+                      } else if (selectedGenre === "Tout") {
+                        return (
+                          <li key={index} className="flex-grow text-left pr-2">
+                            <label className="inline-flex items-center">
+                              <input
+                                type="checkbox"
+                                name="Type"
+                                value={type.name}
+                                defaultChecked
+                              />
+                              <span className="ml-2">{type.name}</span>
+                            </label>
+                          </li>
+                        );
+                      }
+                    })}
+                  </ul>
+                </div>
+              ) : null
             ) : null}
 
             <h4>Prix</h4>

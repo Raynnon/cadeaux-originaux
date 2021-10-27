@@ -9,27 +9,33 @@ export default function Home() {
   const categoriesShowcase = [
     {
       name: "Anniversaire",
-      image: "/images/categories-showcase/ballons-anniversaire.jpg"
+      image: "/images/categories-showcase/ballons-anniversaire.jpg",
+      link: "http://localhost:3000/category/Anniversaire"
     },
     {
       name: "Romantique",
-      image: "/images/categories-showcase/couple-s-embrasse.jpg"
+      image: "/images/categories-showcase/couple-s-embrasse.jpg",
+      link: "http://localhost:3000/category/Romantique"
     },
     {
       name: "Naissance",
-      image: "/images/categories-showcase/bebe-yeux-bleus.jpg"
+      image: "/images/categories-showcase/bebe-yeux-bleus.jpg",
+      link: "http://localhost:3000/category/B%C3%A9b%C3%A9"
     },
     {
       name: "Mariage",
-      image: "/images/categories-showcase/couple-mariage.jpg"
+      image: "/images/categories-showcase/couple-mariage.jpg",
+      link: "http://localhost:3000/category/Mariage"
     },
     {
       name: "Remerciement",
-      image: "/images/categories-showcase/carte-merci.jpg"
+      image: "/images/categories-showcase/carte-merci.jpg",
+      link: "http://localhost:3000/category/Remerciements"
     },
     {
       name: "Fun",
-      image: "/images/categories-showcase/mamie-sombrero.jpg"
+      image: "/images/categories-showcase/mamie-sombrero.jpg",
+      link: "http://localhost:3000/category/Cadeau-rigolo"
     }
   ];
 
@@ -71,7 +77,7 @@ export default function Home() {
                 return (
                   <div key={index} className="flex items-center justify-center">
                     <figure className="relative max-w-xs cursor-pointer">
-                      <Link href="/">
+                      <Link href={category.link}>
                         <a>
                           <Image
                             alt={category.name}
