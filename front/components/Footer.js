@@ -19,7 +19,7 @@ export default function Footer({ categories, prices }) {
                 </Link>
               </li>
               <li className="mt-10">
-                <h5>{"Prix".toUpperCase()}</h5>
+                {/* <h5>{"Prix".toUpperCase()}</h5>
                 <ul>
                   {prices.length
                     ? prices.map((price, index) => {
@@ -27,11 +27,10 @@ export default function Footer({ categories, prices }) {
                           <li key={index}>
                             <Link
                               href={{
-                                pathname: `/categorie/${price.name
-                                  .toLowerCase()
+                                pathname: `/category/${price.name
+
                                   .split(/[ ,]+/)
-                                  .join("-")}`,
-                                query: { categoryName: price.name }
+                                  .join("-")}`
                               }}
                             >
                               <a className="font-normal">{price.shortName}</a>
@@ -40,7 +39,7 @@ export default function Footer({ categories, prices }) {
                         );
                       })
                     : null}
-                </ul>
+                </ul> */}
               </li>
             </ul>
           </li>
@@ -56,11 +55,10 @@ export default function Footer({ categories, prices }) {
                             <li key={index}>
                               <Link
                                 href={{
-                                  pathname: `/categorie/${list.name
-                                    .toLowerCase()
+                                  pathname: `/category/${list.name
+
                                     .split(/[ ,]+/)
-                                    .join("-")}`,
-                                  query: { categoryName: list.name }
+                                    .join("-")}`
                                 }}
                               >
                                 <a>{list.name}</a>

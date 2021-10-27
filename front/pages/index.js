@@ -10,12 +10,12 @@ export default function Home() {
     {
       name: "Anniversaire",
       image: "/images/categories-showcase/ballons-anniversaire.jpg",
-      link: "http://localhost:3000/category/Anniversaire"
+      link: "/category/Anniversaire"
     },
     {
       name: "Romantique",
       image: "/images/categories-showcase/couple-s-embrasse.jpg",
-      link: "http://localhost:3000/category/Romantique"
+      link: "/category/Romantique"
     },
     {
       name: "Naissance",
@@ -25,17 +25,17 @@ export default function Home() {
     {
       name: "Mariage",
       image: "/images/categories-showcase/couple-mariage.jpg",
-      link: "http://localhost:3000/category/Mariage"
+      link: "/category/Mariage"
     },
     {
       name: "Remerciement",
       image: "/images/categories-showcase/carte-merci.jpg",
-      link: "http://localhost:3000/category/Remerciements"
+      link: "/category/Remerciements"
     },
     {
       name: "Fun",
       image: "/images/categories-showcase/mamie-sombrero.jpg",
-      link: "http://localhost:3000/category/Cadeau-rigolo"
+      link: "/category/Cadeau-rigolo"
     }
   ];
 
@@ -102,20 +102,15 @@ export default function Home() {
         <ProductsSuggestion type="new" />
         <ProductsSuggestion />
         <p className="px-1 py-5 mt-5 -mb-10 lg:px-32 bg-coolGray-100 leading-loose text-sm md:text-base md:leading-loose text-justify">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum
-          dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-          occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim id est laborum.
+          Mes cadeaux originaux est un site web qui vous donne des idées de
+          cadeaux. Vous trouverez des cadeaux d'anniversaire, de Noël,
+          romantiques etc. Il y en a pour tous les goûts! Que vous souhaitiez
+          offrir un cadeau à un homme, une femme, un enfant ou votre animal de
+          compagnie, vous trouverez toujours un cadeau original! Explorez les
+          différentes sections du site et vous trouverez forcément votre
+          bonheur. Il y en a pour tous les goût et toutes les bourses. Même avec
+          un petit budget c'est sûr que vous trouverez un cadeau sympas pour vos
+          proches. Vous cherchez une idée de cadeau? Vous êtes au bon endroit!
         </p>
       </main>
     </Layout>

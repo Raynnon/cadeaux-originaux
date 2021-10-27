@@ -104,7 +104,6 @@ export default function Category({ categories }) {
           party: true
         });
       } else if (currentTopCategory === "Type") {
-        setSelectedGenre("Tout");
         const updatedSelectedType = {};
         Object.keys(selectedType).forEach((item) => {
           if (item === formatedCategoryName) {
@@ -112,9 +111,12 @@ export default function Category({ categories }) {
           } else {
             updatedSelectedType[item] = false;
           }
+          console.log(1);
         });
+        console.log(2);
 
-        setSelectedType(updatedSelectedType);
+        setSelectedType({ ...selectedType, ...updatedSelectedType });
+        console.log(selectedType);
         setFiltersToShow({
           sortatable: true,
           genre: false,
@@ -151,6 +153,7 @@ export default function Category({ categories }) {
     // ASSIGN THE PAGE NAME
     setCategoryName(formatedCategoryName);
   }, [router]);
+
   useEffect(() => {
     const typeObj = {};
 

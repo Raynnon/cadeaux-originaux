@@ -1,5 +1,5 @@
-import Header from "./header/Header";
-import Footer from "./footer/Footer";
+import Header from "./Header";
+import Footer from "./Footer";
 import Head from "next/head";
 import { useState, useEffect } from "react";
 
