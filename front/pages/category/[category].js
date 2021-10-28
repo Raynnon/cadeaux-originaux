@@ -50,11 +50,21 @@ export default function Category({ categories }) {
     setFilteredProducts(products);
   };
 
+  const refreshTypes = () => {
+    const typeObj = {};
+
+    categories.Type.forEach((item) => {
+      typeObj[item.name] = true;
+    });
+
+    setSelectedType(typeObj);
+  };
+
   useEffect(() => {
     //RESET FILTER VARIABLES TO DEFAULT
     setSelectedSortBy("Nouveau");
     setSelectedGenre("Tout");
-    setSelectedType({});
+    refreshTypes();
     setPrices({ "€": true, "€€": true, "€€€": true });
     setSelectedOccasion("Tout");
     setSelectedParty("Tout");
@@ -104,6 +114,8 @@ export default function Category({ categories }) {
           party: true
         });
       } else if (currentTopCategory === "Type") {
+        setSelectedGenre("Tout");
+        console.log("SEL", selectedType);
         const updatedSelectedType = {};
         Object.keys(selectedType).forEach((item) => {
           if (item === formatedCategoryName) {
@@ -111,12 +123,9 @@ export default function Category({ categories }) {
           } else {
             updatedSelectedType[item] = false;
           }
-          console.log(1);
         });
-        console.log(2);
 
         setSelectedType({ ...selectedType, ...updatedSelectedType });
-        console.log(selectedType);
         setFiltersToShow({
           sortatable: true,
           genre: false,
@@ -153,16 +162,6 @@ export default function Category({ categories }) {
     // ASSIGN THE PAGE NAME
     setCategoryName(formatedCategoryName);
   }, [router]);
-
-  useEffect(() => {
-    const typeObj = {};
-
-    categories.Type.forEach((item) => {
-      typeObj[item.name] = true;
-    });
-
-    setSelectedType(typeObj);
-  }, [selectedGenre]);
 
   // GET PRODUCTS ON FILTER CHANGE
   useEffect(async () => {
@@ -260,28 +259,28 @@ export default function Category({ categories }) {
                       if (type.parent.includes(selectedGenre)) {
                         return (
                           <li key={index} className="flex-grow text-left pr-2">
+                            <input
+                              type="checkbox"
+                              name="Type"
+                              value={type.name}
+                              defaultChecked
+                            />
                             <label className="inline-flex items-center">
-                              <input
-                                type="checkbox"
-                                name="Type"
-                                value={type.name}
-                                defaultChecked
-                              />
-                              <span className="ml-2">{type.name}</span>
+                              {type.name}
                             </label>
                           </li>
                         );
                       } else if (selectedGenre === "Tout") {
                         return (
                           <li key={index} className="flex-grow text-left pr-2">
-                            <label className="inline-flex items-center">
-                              <input
-                                type="checkbox"
-                                name="Type"
-                                value={type.name}
-                                defaultChecked
-                              />
-                              <span className="ml-2">{type.name}</span>
+                            <input
+                              type="checkbox"
+                              name="Type"
+                              value={type.name}
+                              defaultChecked
+                            />
+                            <label className="inline-flex items-center ml-2">
+                              {type.name}
                             </label>
                           </li>
                         );
@@ -370,14 +369,6 @@ export default function Category({ categories }) {
             elementum risus sem, nec egestas erat pellentesque vitae.
           </p>
 
-          {/* PAGINATION */}
-          <Pagination
-            numberOfProducts={filteredProducts.length}
-            currentPage={currentPage}
-            productsPerPage={productsPerPage}
-            updateCurrentPage={onUpdateCurrentPage}
-          />
-
           {/*PRODUCTS */}
           <div className="flex flex-wrap justify-between mb-10">
             {filteredProducts.length
@@ -425,6 +416,13 @@ export default function Category({ categories }) {
                 })
               : null}
           </div>
+          {/* PAGINATION */}
+          <Pagination
+            numberOfProducts={filteredProducts.length}
+            currentPage={currentPage}
+            productsPerPage={productsPerPage}
+            updateCurrentPage={onUpdateCurrentPage}
+          />
         </main>
       </div>
       <style global jsx>{`
@@ -438,7 +436,7 @@ export default function Category({ categories }) {
   );
 }
 
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps() {
   try {
     // GET CATEGORIES
     const dataCategories = await axios.get(

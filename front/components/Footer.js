@@ -9,12 +9,12 @@ export default function Footer({ categories, prices }) {
           <li>
             <ul className="flex flex-col font-semibold">
               <li>
-                <Link href="/">
+                <Link href="/category/Nouveau">
                   <a>{"Nouveau".toUpperCase()}</a>
                 </Link>
               </li>
               <li>
-                <Link href="/">
+                <Link href="/category/Meilleurs-cadeaux">
                   <a>{"Meilleures ventes".toUpperCase()}</a>
                 </Link>
               </li>
@@ -76,8 +76,7 @@ export default function Footer({ categories, prices }) {
       </div>
 
       <p className="text-center mt-5 md:text-lg">
-        Mes cadeaux originaux © {new Date().getFullYear()} - Tous Droits
-        Réservés
+        Mes cadeaux originaux - {new Date().getFullYear()}
       </p>
       <style jsx>{`
         a:hover {
