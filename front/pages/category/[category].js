@@ -370,7 +370,7 @@ export default function Category({ categories }) {
           </p>
 
           {/*PRODUCTS */}
-          <div className="flex flex-wrap justify-between mb-10">
+          <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 justify-between mb-10">
             {filteredProducts.length
               ? filteredProducts.map((product, index) => {
                   return (
@@ -383,7 +383,7 @@ export default function Category({ categories }) {
                         }
                       }}
                     >
-                      <a className="xl:w-1/4">
+                      <a>
                         <div className="flex flex-col border-2 border-coolGray-100 hover:bg-coolGray-100 rounded-lg p-5 mx-1 mt-5 group">
                           {product.images ? (
                             <div>
@@ -396,11 +396,11 @@ export default function Category({ categories }) {
                               />
                             </div>
                           ) : null}
+                          <div className="flex items-center text-center text-xl font-semibold align-middle justify-center h-20">
+                            <h2>{product.name}</h2>
+                          </div>
 
-                          <h2 className="text-xl font-semibold text-center mt-3">
-                            {product.name}
-                          </h2>
-                          <div className="flex justify-around items-center mt-3">
+                          <div className="flex justify-around items-center">
                             <div>
                               <p className="font-semibold">Prix</p>
                               <p className="text-center">{product.price}</p>

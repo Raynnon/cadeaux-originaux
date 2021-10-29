@@ -55,7 +55,7 @@ export default function ProductsSuggestion({ type }) {
                       className="z-1 rounded-lg"
                     />
                   ) : null}
-                  <div className="flex items-center text-center font-small h-12 overflow-hidden align-middle justify-center">
+                  <div className="flex items-center text-center font-small h-16 align-middle justify-center">
                     <p>{product.name}</p>
                   </div>
                 </div>
