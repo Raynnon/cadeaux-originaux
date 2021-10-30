@@ -4,9 +4,15 @@ const updateOneItem = require("../crud/updateOneItem");
 const read = async (model, params) => {
   const options = {};
 
+  const optionAdder = (parameter) => {
+    options[parameter] = params[parameter];
+  };
   if (params._id) {
-    options._id = params._id;
+    optionAdder("_id");
+  } else if (params.name) {
+    optionAdder("name");
   }
+
   const data = await model.find(options).lean().exec();
 
   if (!params.ordered) {
