@@ -5,6 +5,14 @@ import { useState, useEffect } from "react";
 
 export default function Header({ categories }) {
   const [showMenu, setShowMenu] = useState(true);
+  const [smallDevice, setSmallDevice] = useState(false);
+
+  useEffect(() => {
+    if (window.innerWidth < 1024) {
+      setShowMenu(false);
+      setSmallDevice(true);
+    }
+  }, []);
 
   const menuItem = (item) => {
     return (
@@ -48,60 +56,62 @@ export default function Header({ categories }) {
           </Link>
         </div>
         <div className="block lg:hidden">
-          <button
-            className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400"
-            onClick={() => setShowMenu(!showMenu)}
-          >
-            <svg
-              className="fill-current h-3 w-3"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <title>Menu</title>
-              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-            </svg>
+          <button onClick={() => setShowMenu(!showMenu)}>
+            <Image
+              alt="icone-menu"
+              src="/icons/menu-icon.svg"
+              width={40}
+              height={40}
+              objectFit="responsive"
+              className="h-5 w-5"
+              aria-hidden="true"
+            />
           </button>
         </div>
-        <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-          <Link
-            href={{
-              pathname: `/category/Nouveau`
-            }}
-          >
-            <a className="block my-2 mx-3 lg:text-lg lg:mt-0 lg:inline-block text-coolGray-500 hover:text-coolGray-900">
-              Nouveau
-            </a>
-          </Link>
-          <Link
-            href={{
-              pathname: `/category/Meilleurs-cadeaux`
-            }}
-          >
-            <a className="block my-2 mx-3 lg:text-lg lg:mt-0 lg:inline-block text-coolGray-500 hover:text-coolGray-900 ">
-              Meilleures ventes
-            </a>
-          </Link>
-          <li className="block dropdown my-2 mx-3 group lg:text-lg lg:mt-0 lg:inline-block">
-            <p className="dropdown text-coolGray-500 group-hover:text-coolGray-900">
-              Pour qui?
-            </p>
+        {showMenu ? (
+          <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+            <Link
+              href={{
+                pathname: `/category/Nouveau`
+              }}
+            >
+              <a className="block my-2 mx-3 lg:text-lg lg:mt-0 lg:inline-block text-coolGray-500 hover:text-coolGray-900">
+                Nouveau
+              </a>
+            </Link>
+            <Link
+              href={{
+                pathname: `/category/Meilleurs-cadeaux`
+              }}
+            >
+              <a className="block my-2 mx-3 lg:text-lg lg:mt-0 lg:inline-block text-coolGray-500 hover:text-coolGray-900 ">
+                Meilleures ventes
+              </a>
+            </Link>
 
-            <ul className="invisible absolute border border-coolGray-100 pb-2 bg-white rounded-lg dropdown-menu shadow z-10 flex-row group-hover:visible">
-              {menuItem("Genre")}
-              {menuItem("Type")}
-            </ul>
-          </li>
-          <li className="block dropdown my-2 mx-3 group lg:text-lg lg:mt-0 lg:inline-bloc">
-            <p className="dropdown text-coolGray-500 group-hover:text-coolGray-900">
-              Événements
-            </p>
+            <li className="hidden dropdown my-2 mr-2 group lg:block lg:text-lg lg:mt-0 lg:inline-block">
+              <p className="dropdown text-coolGray-500 group-hover:text-coolGray-900">
+                Pour qui?
+              </p>
 
-            <ul className="invisible absolute border border-coolGray-100 pb-2 bg-white rounded-lg dropdown-menu shadow z-10 flex-row group-hover:visible">
-              {menuItem("Occasion")}
-              {menuItem("Fête")}
-            </ul>
-          </li>
-        </div>
+              <ul className="invisible absolute border border-coolGray-100 pb-2 bg-white rounded-lg dropdown-menu shadow z-10 flex-row group-hover:visible">
+                {menuItem("Genre")}
+                {menuItem("Type")}
+              </ul>
+            </li>
+
+            <li className="hidden dropdown my-2 group lg:block lg:text-lg lg:mt-0 lg:inline-block">
+              <p className="dropdown text-coolGray-500 group-hover:text-coolGray-900">
+                Événements
+              </p>
+
+              <ul className="invisible absolute border border-coolGray-100 pb-2 bg-white rounded-lg dropdown-menu shadow z-10 flex-row group-hover:visible">
+                {menuItem("Occasion")}
+                {menuItem("Fête")}
+              </ul>
+            </li>
+          </div>
+        ) : null}
       </nav>
     </header>
   );

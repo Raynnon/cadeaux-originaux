@@ -11,8 +11,7 @@ import { useRouter } from "next/router";
 import filterProducts from "../../components/categories/filterProducts";
 
 export default function Category({ categories }) {
-  const [categoryName, setCategoryName] = useState("category");
-
+  const [currentCategory, setCurrentCategory] = useState({});
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   const [filtersToShow, setFiltersToShow] = useState({
@@ -60,7 +59,7 @@ export default function Category({ categories }) {
     setSelectedType(typeObj);
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     //RESET FILTER VARIABLES TO DEFAULT
     setSelectedSortBy("Nouveau");
     setSelectedGenre("Tout");
@@ -74,12 +73,26 @@ export default function Category({ categories }) {
 
     const formatedCategoryName =
       category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, " ");
-    // ASSIGN FILTERS TO SHOW
+
     if (
       formatedCategoryName === "Nouveau" ||
-      category === "Meilleurs-cadeaux"
+      formatedCategoryName === "Meilleurs cadeaux"
     ) {
-      if (formatedCategoryName === "Meilleurs cadeaux") {
+      setCurrentCategory({ name: formatedCategoryName, description: "" });
+    } else {
+      const dataCurrentCategories = await axios.get(
+        `http://localhost:4000/categories/?name=${formatedCategoryName}`
+      );
+
+      const pageCategory = dataCurrentCategories.data[0];
+
+      setCurrentCategory(pageCategory);
+    }
+
+    const { name: categoryName } = currentCategory;
+    // ASSIGN FILTERS TO SHOW
+    if (categoryName === "Nouveau" || categoryName === "Meilleurs cadeaux") {
+      if (categoryName === "Meilleurs cadeaux") {
         setSelectedSortBy("Meilleures ventes");
       } else {
         setSelectedSortBy("Nouveau");
@@ -97,14 +110,14 @@ export default function Category({ categories }) {
 
       Object.keys(categories).forEach((key) => {
         categories[key].forEach((item) => {
-          if (item.name === formatedCategoryName) {
+          if (item.name === categoryName) {
             currentTopCategory = key;
           }
         });
       });
 
       if (currentTopCategory === "Genre") {
-        setSelectedGenre(formatedCategoryName);
+        setSelectedGenre(categoryName);
         setFiltersToShow({
           sortatable: true,
           genre: false,
@@ -115,10 +128,9 @@ export default function Category({ categories }) {
         });
       } else if (currentTopCategory === "Type") {
         setSelectedGenre("Tout");
-        console.log("SEL", selectedType);
         const updatedSelectedType = {};
         Object.keys(selectedType).forEach((item) => {
-          if (item === formatedCategoryName) {
+          if (item === categoryName) {
             updatedSelectedType[item] = true;
           } else {
             updatedSelectedType[item] = false;
@@ -135,7 +147,7 @@ export default function Category({ categories }) {
           party: true
         });
       } else if (currentTopCategory === "Occasion") {
-        setSelectedOccasion(formatedCategoryName);
+        setSelectedOccasion(categoryName);
         setSelectedParty("Tout");
         setFiltersToShow({
           sortatable: true,
@@ -147,7 +159,7 @@ export default function Category({ categories }) {
         });
       } else if (currentTopCategory === "Fête") {
         setSelectedOccasion("Tout");
-        setSelectedParty(formatedCategoryName);
+        setSelectedParty(categoryName);
         setFiltersToShow({
           sortatable: true,
           genre: true,
@@ -158,9 +170,6 @@ export default function Category({ categories }) {
         });
       }
     }
-
-    // ASSIGN THE PAGE NAME
-    setCategoryName(formatedCategoryName);
   }, [router]);
 
   // GET PRODUCTS ON FILTER CHANGE
@@ -182,7 +191,9 @@ export default function Category({ categories }) {
   };
 
   return (
-    <Layout pageTitle={`Cadeau pour ${categoryName} - Mes cadeaux originaux`}>
+    <Layout
+      pageTitle={`Cadeau pour ${currentCategory.name} - Mes cadeaux originaux`}
+    >
       <div className="flex -mb-10">
         {/* FILTER */}
         <aside className="hidden md:block mb-5 pt-4 xl:pl-32 pr-1 lg:pl-5 xl:pl-32">
@@ -356,18 +367,8 @@ export default function Category({ categories }) {
           </form>
         </aside>
         <main className="mt-6 lg:px-5 xl:pr-20 border-2 border-transparent border-l-coolGray-100">
-          <h1 className="text-4xl font-semibold">{`${categoryName}`}</h1>
-          <p className="my-5 text-justify">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-            in fringilla libero, eget gravida sem. Integer viverra a nulla nec
-            ultrices. Donec volutpat ligula et sagittis iaculis. Pellentesque
-            vitae elit consequat, hendrerit risus eu, congue sapien. Sed
-            pharetra vitae diam ut feugiat. In euismod velit at mi facilisis, in
-            commodo velit vestibulum. Duis feugiat enim in luctus dapibus. Morbi
-            sit amet mi non ante bibendum consequat nec id felis. Curabitur at
-            placerat tellus, ut auctor sem. Nullam nec purus turpis. Sed
-            elementum risus sem, nec egestas erat pellentesque vitae.
-          </p>
+          <h1 className="text-4xl font-semibold">{`${currentCategory.name}`}</h1>
+          <p className="my-5 text-justify">{currentCategory.description}</p>
 
           {/*PRODUCTS */}
           <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 justify-between mb-10">
