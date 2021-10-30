@@ -12,7 +12,7 @@ export default function Product({ productID }) {
 
   useEffect(async () => {
     const productData = await axios.get(
-      `http://localhost:4000/products/?_id=${productID}`
+      `${process.env.NEXT_PUBLIC_API_URL}products/?_id=${productID}`
     );
 
     setProduct(productData.data[0]);
@@ -27,7 +27,7 @@ export default function Product({ productID }) {
 
       await axios({
         method: "put",
-        url: `http://localhost:4000/products/${productID}`,
+        url: `${process.env.NEXT_PUBLIC_API_URL}products/${productID}`,
         data: formData
       });
     } catch (e) {

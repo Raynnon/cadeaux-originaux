@@ -81,7 +81,7 @@ export default function Category({ categories }) {
       setCurrentCategory({ name: formatedCategoryName, description: "" });
     } else {
       const dataCurrentCategories = await axios.get(
-        `http://localhost:4000/categories/?name=${formatedCategoryName}`
+        `${process.env.NEXT_PUBLIC_API_URL}categories/?name=${formatedCategoryName}`
       );
 
       const pageCategory = dataCurrentCategories.data[0];
@@ -441,7 +441,7 @@ export async function getServerSideProps() {
   try {
     // GET CATEGORIES
     const dataCategories = await axios.get(
-      "http://localhost:4000/categories/?ordered=true"
+      `${process.env.NEXT_PUBLIC_API_URL}categories/?ordered=true`
     );
 
     const categories = dataCategories.data;

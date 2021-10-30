@@ -20,7 +20,7 @@ export default function Home() {
     {
       name: "Naissance",
       image: "/images/categories-showcase/bebe-yeux-bleus.jpg",
-      link: "http://localhost:3000/category/B%C3%A9b%C3%A9"
+      link: "/category/B%C3%A9b%C3%A9"
     },
     {
       name: "Mariage",
