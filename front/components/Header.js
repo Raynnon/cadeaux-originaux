@@ -89,7 +89,7 @@ export default function Header({ categories }) {
               </a>
             </Link>
 
-            <li className="hidden dropdown my-2 mr-2 group lg:block lg:text-lg lg:mt-0 lg:inline-block">
+            <li className="hidden dropdown my-2 mx-3 group lg:block lg:text-lg lg:mt-0 lg:inline-block">
               <p className="dropdown text-coolGray-500 group-hover:text-coolGray-900">
                 Pour qui?
               </p>
@@ -100,7 +100,7 @@ export default function Header({ categories }) {
               </ul>
             </li>
 
-            <li className="hidden dropdown my-2 group lg:block lg:text-lg lg:mt-0 lg:inline-block">
+            <li className="hidden dropdown my-2 mx-3 group lg:block lg:text-lg lg:mt-0 lg:inline-block">
               <p className="dropdown text-coolGray-500 group-hover:text-coolGray-900">
                 Événements
               </p>

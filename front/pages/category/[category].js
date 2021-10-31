@@ -11,17 +11,13 @@ import { useRouter } from "next/router";
 import filterProducts from "../../components/categories/filterProducts";
 
 export default function Category({ categories }) {
-  const [currentCategory, setCurrentCategory] = useState({});
-  const [filteredProducts, setFilteredProducts] = useState([]);
-
-  const [filtersToShow, setFiltersToShow] = useState({
-    sortatable: true,
-    genre: true,
-    type: true,
-    price: true,
-    occasion: true,
-    party: true
+  const [currentCategory, setCurrentCategory] = useState({
+    _id: "",
+    parent: [""],
+    name: ""
   });
+
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedSortBy, setSelectedSortBy] = useState("Nouveau");
   const [selectedGenre, setSelectedGenre] = useState("Tout");
   const [selectedType, setSelectedType] = useState({});
@@ -56,17 +52,17 @@ export default function Category({ categories }) {
       typeObj[item.name] = true;
     });
 
-    setSelectedType(typeObj);
+    setSelectedType({ ...selectedType, ...typeObj });
   };
 
   useEffect(async () => {
     //RESET FILTER VARIABLES TO DEFAULT
     setSelectedSortBy("Nouveau");
     setSelectedGenre("Tout");
-    refreshTypes();
     setPrices({ "€": true, "€€": true, "€€€": true });
     setSelectedOccasion("Tout");
     setSelectedParty("Tout");
+    refreshTypes();
 
     // FORMATE THE CATEGORY NAME
     const { category } = router.query;
@@ -78,7 +74,11 @@ export default function Category({ categories }) {
       formatedCategoryName === "Nouveau" ||
       formatedCategoryName === "Meilleurs cadeaux"
     ) {
-      setCurrentCategory({ name: formatedCategoryName, description: "" });
+      setCurrentCategory({
+        name: formatedCategoryName,
+        description: "",
+        parent: [""]
+      });
     } else {
       const dataCurrentCategories = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}categories/?name=${formatedCategoryName}`
@@ -90,43 +90,16 @@ export default function Category({ categories }) {
     }
 
     const { name: categoryName } = currentCategory;
+
     // ASSIGN FILTERS TO SHOW
     if (categoryName === "Nouveau" || categoryName === "Meilleurs cadeaux") {
       if (categoryName === "Meilleurs cadeaux") {
         setSelectedSortBy("Meilleures ventes");
-      } else {
-        setSelectedSortBy("Nouveau");
       }
-      setFiltersToShow({
-        sortatable: false,
-        genre: true,
-        type: true,
-        price: true,
-        occasion: true,
-        party: true
-      });
     } else {
-      let currentTopCategory = "";
-
-      Object.keys(categories).forEach((key) => {
-        categories[key].forEach((item) => {
-          if (item.name === categoryName) {
-            currentTopCategory = key;
-          }
-        });
-      });
-
-      if (currentTopCategory === "Genre") {
+      if (currentCategory.parent[0] === "Genre") {
         setSelectedGenre(categoryName);
-        setFiltersToShow({
-          sortatable: true,
-          genre: false,
-          type: true,
-          price: true,
-          occasion: true,
-          party: true
-        });
-      } else if (currentTopCategory === "Type") {
+      } else if (currentCategory.parent[0] === "Type") {
         setSelectedGenre("Tout");
         const updatedSelectedType = {};
         Object.keys(selectedType).forEach((item) => {
@@ -138,36 +111,12 @@ export default function Category({ categories }) {
         });
 
         setSelectedType({ ...selectedType, ...updatedSelectedType });
-        setFiltersToShow({
-          sortatable: true,
-          genre: false,
-          type: false,
-          price: true,
-          occasion: true,
-          party: true
-        });
-      } else if (currentTopCategory === "Occasion") {
+      } else if (currentCategory.parent[0] === "Occasion") {
         setSelectedOccasion(categoryName);
         setSelectedParty("Tout");
-        setFiltersToShow({
-          sortatable: true,
-          genre: true,
-          type: true,
-          price: true,
-          occasion: false,
-          party: false
-        });
-      } else if (currentTopCategory === "Fête") {
+      } else if (currentCategory.parent[0] === "Fête") {
         setSelectedOccasion("Tout");
         setSelectedParty(categoryName);
-        setFiltersToShow({
-          sortatable: true,
-          genre: true,
-          type: true,
-          price: true,
-          occasion: false,
-          party: false
-        });
       }
     }
   }, [router]);
@@ -198,7 +147,8 @@ export default function Category({ categories }) {
         {/* FILTER */}
         <aside className="hidden md:block mb-5 pt-4 xl:pl-32 pr-1 lg:pl-5 xl:pl-32">
           <form className="xl:w-52">
-            {filtersToShow.sortatable ? (
+            {currentCategory.name === "Nouveau" ||
+            currentCategory.name === "Meilleurs cadeaux" ? null : (
               <ul
                 onChange={(e) => {
                   setSelectedSortBy(e.target.value);
@@ -219,9 +169,9 @@ export default function Category({ categories }) {
                   <option>Meilleures ventes</option>
                 </select>
               </ul>
-            ) : null}
+            )}
 
-            {filtersToShow.genre ? (
+            {currentCategory.parent[0] === "Genre" ? null : (
               <div>
                 <h4>Genre</h4>
                 <ul onChange={(e) => setSelectedGenre(e.target.value)}>
@@ -248,10 +198,10 @@ export default function Category({ categories }) {
                   </li>
                 </ul>
               </div>
-            ) : null}
+            )}
 
             {selectedGenre !== "Animal" ? (
-              filtersToShow.type ? (
+              currentCategory.parent[0] === "Type" ? null : (
                 <div>
                   <h4>Type</h4>
                   <ul
@@ -299,7 +249,7 @@ export default function Category({ categories }) {
                     })}
                   </ul>
                 </div>
-              ) : null
+              )
             ) : null}
 
             <h4>Prix</h4>
@@ -327,7 +277,8 @@ export default function Category({ categories }) {
                 );
               })}
             </ul>
-            {filtersToShow.occasion ? (
+            {currentCategory.parent[0] === "Fête" ||
+            currentCategory.parent[0] === "Occasion" ? null : (
               <div>
                 <h4>Occasion</h4>
                 <select
@@ -344,9 +295,10 @@ export default function Category({ categories }) {
                   <option value="">Tout</option>
                 </select>
               </div>
-            ) : null}
+            )}
 
-            {filtersToShow.party ? (
+            {currentCategory.parent[0] === "Fête" ||
+            currentCategory.parent[0] === "Occasion" ? null : (
               <div>
                 <h4>Fête</h4>
                 <select
@@ -363,7 +315,7 @@ export default function Category({ categories }) {
                   <option value="">Tout</option>
                 </select>
               </div>
-            ) : null}
+            )}
           </form>
         </aside>
         <main className="mt-6 lg:px-5 xl:pr-20 border-2 border-transparent border-l-coolGray-100">
