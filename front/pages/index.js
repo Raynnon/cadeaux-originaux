@@ -40,7 +40,10 @@ export default function Home() {
   ];
 
   return (
-    <Layout pageTitle="Mes cadeaux originaux - Trouver des idées de cadeau">
+    <Layout
+      pageTitle="Mes cadeaux originaux - Trouver des idées de cadeau"
+      description="Mes cadeaux originaux est un site web vous permettant de trouver un cadeau en fonction de la personne ou de l'évènement. Cadeaux d'anniversaire, pour femme..."
+    >
       <main>
         {/* BANNER */}
         <div className="relative pt-10">

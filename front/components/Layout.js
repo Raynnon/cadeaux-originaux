@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 import axios from "axios";
 
-export default function Layout({ children, pageTitle }) {
+export default function Layout({ children, pageTitle, description }) {
   const [categories, setCategories] = useState([]);
   const [prices, setPrices] = useState([]);
 
@@ -34,6 +34,7 @@ export default function Layout({ children, pageTitle }) {
     <div className="text-coolGray-900">
       <Head>
         <title>{pageTitle}</title>
+        <meta name="description" content={description} />
       </Head>
       <Header categories={categories} />
       <main>{children}</main>

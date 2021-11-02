@@ -6,31 +6,36 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import slugify from "slugify";
-import { useRouter } from "next/router";
 
 import filterProducts from "../../components/categories/filterProducts";
 
-export default function Category({ categories }) {
-  const [currentCategory, setCurrentCategory] = useState({
-    _id: "",
-    parent: [""],
-    name: ""
-  });
-
+export default function Category({
+  categories,
+  currentCategory,
+  defaultSelectedSortBy,
+  defaultSelectedGenre,
+  defaultSelectedType,
+  defaultPrices,
+  defaultSelectedOccasion,
+  defaultSelectedParty,
+  defaultCurrentPage,
+  defaultProductsPerPage
+}) {
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [selectedSortBy, setSelectedSortBy] = useState("Nouveau");
-  const [selectedGenre, setSelectedGenre] = useState("Tout");
-  const [selectedType, setSelectedType] = useState({});
-  const [prices, setPrices] = useState({ "€": true, "€€": true, "€€€": true });
-  const [selectedOccasion, setSelectedOccasion] = useState("Tout");
-  const [selectedParty, setSelectedParty] = useState("Tout");
+  const [selectedSortBy, setSelectedSortBy] = useState(defaultSelectedSortBy);
+  const [selectedGenre, setSelectedGenre] = useState(defaultSelectedGenre);
+  const [selectedType, setSelectedType] = useState(defaultSelectedType);
+  const [prices, setPrices] = useState(defaultPrices);
+  const [selectedOccasion, setSelectedOccasion] = useState(
+    defaultSelectedOccasion
+  );
+  const [selectedParty, setSelectedParty] = useState(defaultSelectedParty);
 
-  const [currentPage, selectCurrentPage] = useState(1);
-  const productsPerPage = 16;
+  const [currentPage, selectCurrentPage] = useState(defaultCurrentPage);
+  const productsPerPage = defaultProductsPerPage;
 
-  const router = useRouter();
-
-  const getProducts = async () => {
+  // GET PRODUCTS ON FILTER CHANGE
+  useEffect(async () => {
     const products = await filterProducts(
       selectedGenre,
       prices,
@@ -43,87 +48,6 @@ export default function Category({ categories }) {
     );
 
     setFilteredProducts(products);
-  };
-
-  const refreshTypes = () => {
-    const typeObj = {};
-
-    categories.Type.forEach((item) => {
-      typeObj[item.name] = true;
-    });
-
-    setSelectedType({ ...selectedType, ...typeObj });
-  };
-
-  useEffect(async () => {
-    //RESET FILTER VARIABLES TO DEFAULT
-    setSelectedSortBy("Nouveau");
-    setSelectedGenre("Tout");
-    setPrices({ "€": true, "€€": true, "€€€": true });
-    setSelectedOccasion("Tout");
-    setSelectedParty("Tout");
-    refreshTypes();
-
-    // FORMATE THE CATEGORY NAME
-    const { category } = router.query;
-
-    const formatedCategoryName =
-      category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, " ");
-
-    if (
-      formatedCategoryName === "Nouveau" ||
-      formatedCategoryName === "Meilleurs cadeaux"
-    ) {
-      setCurrentCategory({
-        name: formatedCategoryName,
-        description: "",
-        parent: [""]
-      });
-    } else {
-      const dataCurrentCategories = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}categories/?name=${formatedCategoryName}`
-      );
-
-      const pageCategory = dataCurrentCategories.data[0];
-
-      setCurrentCategory(pageCategory);
-    }
-
-    const { name: categoryName } = currentCategory;
-
-    // ASSIGN FILTERS TO SHOW
-    if (categoryName === "Nouveau" || categoryName === "Meilleurs cadeaux") {
-      if (categoryName === "Meilleurs cadeaux") {
-        setSelectedSortBy("Meilleures ventes");
-      }
-    } else {
-      if (currentCategory.parent[0] === "Genre") {
-        setSelectedGenre(categoryName);
-      } else if (currentCategory.parent[0] === "Type") {
-        setSelectedGenre("Tout");
-        const updatedSelectedType = {};
-        Object.keys(selectedType).forEach((item) => {
-          if (item === categoryName) {
-            updatedSelectedType[item] = true;
-          } else {
-            updatedSelectedType[item] = false;
-          }
-        });
-
-        setSelectedType({ ...selectedType, ...updatedSelectedType });
-      } else if (currentCategory.parent[0] === "Occasion") {
-        setSelectedOccasion(categoryName);
-        setSelectedParty("Tout");
-      } else if (currentCategory.parent[0] === "Fête") {
-        setSelectedOccasion("Tout");
-        setSelectedParty(categoryName);
-      }
-    }
-  }, [router]);
-
-  // GET PRODUCTS ON FILTER CHANGE
-  useEffect(async () => {
-    await getProducts();
   }, [
     selectedGenre,
     selectedOccasion,
@@ -139,9 +63,20 @@ export default function Category({ categories }) {
     selectCurrentPage(Number(page));
   };
 
+  const pageTitle = (catName) => {
+    if (catName === "Nouveau") {
+      return "Nouveaux cadeaux - Mes cadeaux originaux";
+    } else if (catName === "Meilleurs cadeaux") {
+      return "Meilleurs cadeaux - Mes cadeaux originaux";
+    } else {
+      return `Cadeau pour ${catName} - Mes cadeaux originaux`;
+    }
+  };
+
   return (
     <Layout
-      pageTitle={`Cadeau pour ${currentCategory.name} - Mes cadeaux originaux`}
+      pageTitle={pageTitle(currentCategory.name)}
+      description={currentCategory.description}
     >
       <div className="flex -mb-10">
         {/* FILTER */}
@@ -296,26 +231,6 @@ export default function Category({ categories }) {
                 </select>
               </div>
             )}
-
-            {currentCategory.parent[0] === "Fête" ||
-            currentCategory.parent[0] === "Occasion" ? null : (
-              <div>
-                <h4>Fête</h4>
-                <select
-                  id="fetes"
-                  className="block w-full bg-white border border-gray-100 hover:border-gray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
-                  onChange={(e) => {
-                    setSelectedParty(e.target.value);
-                  }}
-                  defaultValue=""
-                >
-                  {categories.Fête.map((party, index) => {
-                    return <option key={index}>{party.name}</option>;
-                  })}
-                  <option value="">Tout</option>
-                </select>
-              </div>
-            )}
           </form>
         </aside>
         <main className="mt-6 lg:px-5 xl:pr-20 border-2 border-transparent border-l-coolGray-100">
@@ -389,8 +304,39 @@ export default function Category({ categories }) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ query }) {
   try {
+    const { category } = query;
+
+    const formatedCategoryName =
+      category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, " ");
+
+    let currentCategory = {};
+
+    if (formatedCategoryName === "Nouveau") {
+      currentCategory = {
+        name: formatedCategoryName,
+        description:
+          "Trouvez tous nos nouveaux cadeaux mis en ligne. Si vous cherchez un cadeau vraiment original alors n'hésitez pas à parcourir cette liste d'articles récents.",
+        parent: [""]
+      };
+    } else if (formatedCategoryName === "Meilleurs cadeaux") {
+      currentCategory = {
+        name: formatedCategoryName,
+        description:
+          "Retrouvez nos articles les plus vendus sur cette page. En choisissant parmi nos meilleurs cadeaux, vous vous assurez de faire plaisir à ceux qui les recevront!",
+        parent: [""]
+      };
+    } else {
+      const dataCurrentCategories = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}categories/?name=${formatedCategoryName}`
+      );
+
+      const pageCategory = dataCurrentCategories.data[0];
+
+      currentCategory = pageCategory;
+    }
+
     // GET CATEGORIES
     const dataCategories = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}categories/?ordered=true`
@@ -398,9 +344,66 @@ export async function getServerSideProps() {
 
     const categories = dataCategories.data;
 
+    // INITIATE DEFAULT FILTERS
+    let defaultSelectedSortBy = "Nouveau";
+    let defaultSelectedGenre = "Tout";
+    let defaultSelectedType = {};
+    let defaultPrices = {
+      "€": true,
+      "€€": true,
+      "€€€": true
+    };
+    let defaultSelectedOccasion = "Tout";
+    let defaultSelectedParty = "Tout";
+
+    let defaultCurrentPage = 1;
+    let defaultProductsPerPage = 16;
+
+    // SET FILTERS IN ACCORDANCE TO THE PAGE
+    const { name: categoryName } = currentCategory;
+
+    if (categoryName === "Nouveau" || categoryName === "Meilleurs cadeaux") {
+      if (categoryName === "Meilleurs cadeaux") {
+        defaultSelectedSortBy = "Meilleures ventes";
+      }
+    } else {
+      if (currentCategory.parent[0] === "Type") {
+        categories.Type.forEach((item) => {
+          if (item.name === categoryName) {
+            defaultSelectedType[item.name] = true;
+          } else {
+            defaultSelectedType[item.name] = false;
+          }
+        });
+      } else {
+        // INITIATE SELECTED TYPES
+        categories.Type.forEach((item) => {
+          defaultSelectedType[item.name] = true;
+        });
+
+        if (currentCategory.parent[0] === "Genre") {
+          defaultSelectedGenre = categoryName;
+        } else if (currentCategory.parent[0] === "Occasion") {
+          defaultSelectedOccasion = categoryName;
+        } else if (currentCategory.parent[0] === "Fête") {
+          defaultSelectedParty = categoryName;
+        }
+      }
+    }
+
     return {
       props: {
-        categories
+        categories,
+        currentCategory,
+        defaultSelectedSortBy,
+        defaultSelectedGenre,
+        defaultSelectedType,
+        defaultPrices,
+        defaultSelectedOccasion,
+        defaultSelectedParty,
+        defaultCurrentPage,
+        defaultProductsPerPage,
+        key: query.category
       }
     };
   } catch (e) {
