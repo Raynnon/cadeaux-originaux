@@ -1,23 +1,18 @@
 import Layout from "../../components/Layout";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ProductsSuggestion from "../../components/subcomponents/ProductsSuggestion";
 import axios from "axios";
-import loading from "../../public/images/loading.gif";
+import { split } from "sentence-splitter";
 
-export default function Product({ productID }) {
-  const [product, setProduct] = useState({});
-  const [mainImage, setMainImage] = useState(loading);
-
-  useEffect(async () => {
-    const productData = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}products/?_id=${productID}`
-    );
-
-    setProduct(productData.data[0]);
-    setMainImage(productData.data[0].images[0]);
-  }, []);
+export default function Product({
+  product,
+  defaultMainImage,
+  productID,
+  metaDescription
+}) {
+  const [mainImage, setMainImage] = useState(defaultMainImage);
 
   // By clicking on "Acheter" button, product visits are increased in db
   const addVisit = async () => {
@@ -36,7 +31,10 @@ export default function Product({ productID }) {
   };
 
   return (
-    <Layout pageTitle={`${product.name} - Mes cadeaux originaux`}>
+    <Layout
+      pageTitle={`${product.name} - Mes cadeaux originaux`}
+      description={metaDescription}
+    >
       <main className="mt-10 px-10 xl:px-32 ">
         <div className="flex flex-col lg:flex-row justify-between">
           <div className="flex lg:flex-col xl:flex-row justify-center lg:justify-start xl:justify-between items-center xl:items-center lg:pr-20 mb-10">
@@ -139,8 +137,48 @@ export default function Product({ productID }) {
 
 export async function getServerSideProps({ query }) {
   try {
+    const productData = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}products/?_id=${query.productId}`
+    );
+
+    const product = productData.data[0];
+    const defaultMainImage = productData.data[0].images[0];
+
+    // SPLIT SENTENCES OF THE PRODUCT DESCRIPTION
+    let sentencesAndSyntax = split(product.description);
+    const sentences = sentencesAndSyntax.filter(
+      (item) => item.type === "Sentence"
+    );
+
+    // Description Limit is max size of metadescription - "Acheter {product name}"
+    const descriptionLimit = 155 - 7 - product.name.length;
+    let metaDescription = "";
+    let sentencesAdded = 0;
+
+    while (
+      metaDescription.length + sentences[sentencesAdded].raw.length <
+      descriptionLimit
+    ) {
+      metaDescription += sentences[sentencesAdded].raw;
+      sentencesAdded++;
+    }
+
+    if (sentencesAdded === 0) {
+      metaDescription += sentences[0].raw;
+    }
+
+    if (metaDescription.length < descriptionLimit) {
+      metaDescription += ` Acheter ${product.name.toLowerCase()}`;
+    }
+
     return {
-      props: { productID: query.productId }
+      props: {
+        product,
+        defaultMainImage,
+        productID: query.productId,
+        metaDescription,
+        key: query.productId
+      }
     };
   } catch (e) {
     console.error(e);

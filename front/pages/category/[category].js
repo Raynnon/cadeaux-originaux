@@ -17,7 +17,7 @@ export default function Category({
   defaultSelectedType,
   defaultPrices,
   defaultSelectedOccasion,
-  defaultSelectedParty,
+  selectedParty,
   defaultCurrentPage,
   defaultProductsPerPage
 }) {
@@ -29,8 +29,6 @@ export default function Category({
   const [selectedOccasion, setSelectedOccasion] = useState(
     defaultSelectedOccasion
   );
-  const [selectedParty, setSelectedParty] = useState(defaultSelectedParty);
-
   const [currentPage, selectCurrentPage] = useState(defaultCurrentPage);
   const productsPerPage = defaultProductsPerPage;
 
@@ -354,7 +352,7 @@ export async function getServerSideProps({ query }) {
       "€€€": true
     };
     let defaultSelectedOccasion = "Tout";
-    let defaultSelectedParty = "Tout";
+    let selectedParty = "Tout";
 
     let defaultCurrentPage = 1;
     let defaultProductsPerPage = 16;
@@ -386,7 +384,7 @@ export async function getServerSideProps({ query }) {
         } else if (currentCategory.parent[0] === "Occasion") {
           defaultSelectedOccasion = categoryName;
         } else if (currentCategory.parent[0] === "Fête") {
-          defaultSelectedParty = categoryName;
+          selectedParty = categoryName;
         }
       }
     }
@@ -400,7 +398,7 @@ export async function getServerSideProps({ query }) {
         defaultSelectedType,
         defaultPrices,
         defaultSelectedOccasion,
-        defaultSelectedParty,
+        selectedParty,
         defaultCurrentPage,
         defaultProductsPerPage,
         key: query.category
