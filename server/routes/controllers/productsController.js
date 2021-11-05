@@ -25,34 +25,40 @@ const read = async (model, params) => {
     }
   });
 
-  let sort = "";
+  if (params.count === "true") {
+    const documentsCounter = await model.countDocuments(options);
 
-  // SORT
-  if (params.sortBy) {
-    if (params.sortBy === "Meilleures ventes") {
-      sort = { visits: -1 };
-    } else {
-      sort = { editedAt: -1 };
+    return { numberOfProducts: documentsCounter };
+  } else {
+    // SORT
+    let sort = "";
+
+    if (params.sortBy) {
+      if (params.sortBy === "Meilleures ventes") {
+        sort = { visits: -1 };
+      } else {
+        sort = { editedAt: -1 };
+      }
     }
+
+    // PRODUCTS PER PAGE
+    let skip = 0;
+
+    if (params.currentPage && params.productsPerPage) {
+      //skipping products depending on the number of pages
+      skip = (params.currentPage - 1) * params.productsPerPage;
+    }
+
+    const data = await model
+      .find(options)
+      .skip(skip)
+      .sort(sort)
+      .lean()
+      .limit(Number(params.productsPerPage))
+      .exec();
+
+    return await imageToDataAdder(data);
   }
-
-  // PRODUCTS PER PAGE
-  let skip = 0;
-
-  if (params.currentPage && params.productsPerPage) {
-    //skipping products depending on the number of pages
-    skip = (params.currentPage - 1) * params.productsPerPage;
-  }
-
-  const data = await model
-    .find(options)
-    .skip(skip)
-    .sort(sort)
-    .lean()
-    .limit(Number(params.productsPerPage))
-    .exec();
-
-  return await imageToDataAdder(data);
 };
 
 const updateOne = async (req, model) => {

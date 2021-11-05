@@ -22,6 +22,7 @@ export default function Category({
   defaultProductsPerPage
 }) {
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [numberOfProducts, setNumberOfProducts] = useState(0);
   const [selectedSortBy, setSelectedSortBy] = useState(defaultSelectedSortBy);
   const [selectedGenre, setSelectedGenre] = useState(defaultSelectedGenre);
   const [selectedType, setSelectedType] = useState(defaultSelectedType);
@@ -46,6 +47,18 @@ export default function Category({
     );
 
     setFilteredProducts(products);
+
+    //SETUP MAX PRODUCTS FOR PAGINATION
+    const maxProducts = await filterProducts(
+      selectedGenre,
+      prices,
+      selectedType,
+      selectedOccasion,
+      selectedParty,
+      numberOfProducts
+    );
+
+    setNumberOfProducts(maxProducts.numberOfProducts);
   }, [
     selectedGenre,
     selectedOccasion,
@@ -284,7 +297,7 @@ export default function Category({
           </div>
           {/* PAGINATION */}
           <Pagination
-            numberOfProducts={filteredProducts.length}
+            numberOfProducts={numberOfProducts}
             currentPage={currentPage}
             productsPerPage={productsPerPage}
             updateCurrentPage={onUpdateCurrentPage}

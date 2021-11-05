@@ -22,6 +22,13 @@ const filteredProducts = async (
     return filter.join(",");
   };
 
+  // If there is no specified page so we retun the count of documents
+  let count = false;
+
+  if (!currentPage && !productsPerPage) {
+    count = true;
+  }
+
   const parameters = [
     { whoKind: selectedGenre },
     { price: chechboxParamToString(prices) },
@@ -30,7 +37,8 @@ const filteredProducts = async (
     { parties: selectedParty },
     { sortBy: selectedSortBy },
     { currentPage },
-    { productsPerPage }
+    { productsPerPage },
+    { count }
   ];
 
   // Filter parameters that are not All

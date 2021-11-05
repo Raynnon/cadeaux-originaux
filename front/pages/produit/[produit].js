@@ -31,10 +31,7 @@ export default function Product({
   };
 
   return (
-    <Layout
-      pageTitle={`${product.name} - Mes cadeaux originaux`}
-      description={metaDescription}
-    >
+    <Layout pageTitle={product.name} description={metaDescription}>
       <main className="mt-10 px-10 xl:px-32 ">
         <div className="flex flex-col lg:flex-row justify-between">
           <div className="flex lg:flex-col xl:flex-row justify-center lg:justify-start xl:justify-between items-center xl:items-center lg:pr-20 mb-10">
@@ -45,6 +42,7 @@ export default function Product({
                   src={mainImage}
                   width={580}
                   height={580}
+                  quality={100}
                   objectFit="responsive"
                   className="rounded-lg"
                 />
