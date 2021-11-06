@@ -248,8 +248,15 @@ export default function Category({
           <h1 className="text-4xl font-semibold">{`${currentCategory.name}`}</h1>
           <p className="my-5 text-justify">{currentCategory.description}</p>
 
+          <Pagination
+            numberOfProducts={numberOfProducts}
+            currentPage={currentPage}
+            productsPerPage={productsPerPage}
+            updateCurrentPage={onUpdateCurrentPage}
+          />
+
           {/*PRODUCTS */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 justify-between mb-10">
+          <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 justify-between mb-10 min-w-full">
             {filteredProducts.length
               ? filteredProducts.map((product, index) => {
                   return (
@@ -295,12 +302,12 @@ export default function Category({
                 })
               : null}
           </div>
-          {/* PAGINATION */}
           <Pagination
             numberOfProducts={numberOfProducts}
             currentPage={currentPage}
             productsPerPage={productsPerPage}
             updateCurrentPage={onUpdateCurrentPage}
+            details={true}
           />
         </main>
       </div>
