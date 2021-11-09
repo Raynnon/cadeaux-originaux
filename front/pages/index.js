@@ -74,7 +74,7 @@ export default function Home() {
           </div>
         </div>
         {/* CATEGORIES */}
-        <div className="px-1 items-center grid grid-flow-col grid-cols-3 grid-rows-2 gap-1 text-center py-5 xl:px-56 bg-coolGray-100">
+        <div className="px-1 items-center grid grid-flow-col grid-cols-2 grid-rows-3 gap-1 text-center py-5 sm:grid-cols-3 sm:grid-rows-2 xl:px-56 bg-coolGray-100">
           {categoriesShowcase.length
             ? categoriesShowcase.map((category, index) => {
                 return (
@@ -102,7 +102,7 @@ export default function Home() {
               })
             : null}
         </div>
-        {/*  px-1 items-center grid grid-flow-col grid-cols-3 grid-rows-2 gap-1 text-center py-5 xl:px-56 bg-coolGray-100 */}
+
         <div className="px-8 xl:px-32">
           <ProductsSuggestion type="new" />
           <ProductsSuggestion />
