@@ -22,7 +22,7 @@ export default function Product({
 
       await axios({
         method: "put",
-        url: `${process.env.NEXT_PUBLIC_API_URL}products/${productID}`,
+        url: `${process.env.NEXT_PUBLIC_API_URL}/products/${productID}`,
         data: formData
       });
     } catch (e) {
@@ -136,7 +136,7 @@ export default function Product({
 export async function getServerSideProps({ query }) {
   try {
     const productData = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}products/?_id=${query.productId}`
+      `${process.env.NEXT_PUBLIC_API_URL}/products/?_id=${query.productId}`
     );
 
     const product = productData.data[0];

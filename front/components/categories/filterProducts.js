@@ -53,7 +53,7 @@ const filteredProducts = async (
 
   const optionsReq = options.length ? `?${options.join("&")}` : ``;
   const dataProducts = await axios.get(
-    `http://localhost:4000/products${optionsReq}`
+    `${process.env.NEXT_PUBLIC_API_URL}/products${optionsReq}`
   );
 
   return dataProducts.data;

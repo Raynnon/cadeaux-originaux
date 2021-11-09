@@ -347,7 +347,7 @@ export async function getServerSideProps({ query }) {
       };
     } else {
       const dataCurrentCategories = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}categories/?name=${formatedCategoryName}`
+        `${process.env.NEXT_PUBLIC_API_URL}/categories/?name=${formatedCategoryName}`
       );
 
       const pageCategory = dataCurrentCategories.data[0];
@@ -357,7 +357,7 @@ export async function getServerSideProps({ query }) {
 
     // GET CATEGORIES
     const dataCategories = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}categories/?ordered=true`
+      `${process.env.NEXT_PUBLIC_API_URL}/categories/?ordered=true`
     );
 
     const categories = dataCategories.data;

@@ -12,7 +12,7 @@ export default function Layout({ children, pageTitle, description }) {
   useEffect(async () => {
     try {
       const categoriesReq = await axios(
-        `${process.env.NEXT_PUBLIC_API_URL}categories/?ordered=true`
+        `${process.env.NEXT_PUBLIC_API_URL}/categories/?ordered=true`
       );
 
       const categoriesData = categoriesReq.data;

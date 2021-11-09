@@ -1,5 +1,5 @@
 module.exports = {
   images: {
-    domains: ["picsum.photos", "localhost"]
+    domains: ["picsum.photos", "localhost", "api.mescadeauxoriginaux.com"]
   }
 };
