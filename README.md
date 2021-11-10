@@ -31,12 +31,8 @@ This is the API Folder
 
 #### `npm run dev`
 
-Runs the api in the development mode.
+Runs the api in the development mode.\
 
 #### `npm start`
 
 To run app in prod
-
-### Edit .env
-
-Use the .env.example to create the .env
