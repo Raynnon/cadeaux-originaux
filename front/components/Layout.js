@@ -46,7 +46,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <meta name="description" content={description} />
       </Head>
       <Header categories={categories} />
-      <main>
+      <body>
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
@@ -58,7 +58,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </noscript>
         {/* End Google Tag Manager (noscript) */}
         {children}
-      </main>
+      </body>
       <Footer categories={categories} prices={prices} />
     </div>
   );
