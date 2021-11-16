@@ -45,7 +45,7 @@ export default function ProductsSuggestion({ type }) {
             >
               <a>
                 <div className="rounded-lg flex flex-col shadow-md h-46 hover:bg-coolGray-100">
-                  {product.images.length ? (
+                  {product.images ? (
                     <Image
                       alt={product.name}
                       src={product.images[0]}
