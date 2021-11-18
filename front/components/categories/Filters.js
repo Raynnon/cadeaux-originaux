@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function Filters({ categories }) {
   const [selectedSortBy, setSelectSortBy] = useState("Nouveau");
@@ -8,6 +7,7 @@ export default function Filters({ categories }) {
   const [prices, setPrices] = useState({ "€": true, "€€": true, "€€€": true });
   const [selectedOccasion, setSelectedOccasion] = useState("Tout");
   const [selectedParty, setSelectedParty] = useState("Tout");
+
   return (
     <aside className="hidden md:block w-96 mb-5">
       <div className="lg:px-32">

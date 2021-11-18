@@ -350,9 +350,7 @@ export async function getServerSideProps({ query }) {
         `${process.env.NEXT_PUBLIC_API_URL}/categories/?name=${formatedCategoryName}`
       );
 
-      const pageCategory = dataCurrentCategories.data[0];
-
-      currentCategory = pageCategory;
+      currentCategory = dataCurrentCategories.data[0];
     }
 
     // GET CATEGORIES
@@ -385,7 +383,7 @@ export async function getServerSideProps({ query }) {
         defaultSelectedSortBy = "Meilleures ventes";
       }
     } else {
-      if (currentCategory.parent[0] === "Type") {
+      if (currentCategory.parent.includes("Type")) {
         categories.Type.forEach((item) => {
           if (item.name === categoryName) {
             defaultSelectedType[item.name] = true;
@@ -399,11 +397,11 @@ export async function getServerSideProps({ query }) {
           defaultSelectedType[item.name] = true;
         });
 
-        if (currentCategory.parent[0] === "Genre") {
+        if (currentCategory.parent.includes("Genre")) {
           defaultSelectedGenre = categoryName;
-        } else if (currentCategory.parent[0] === "Occasion") {
+        } else if (currentCategory.parent.includes("Occasion")) {
           defaultSelectedOccasion = categoryName;
-        } else if (currentCategory.parent[0] === "Fête") {
+        } else if (currentCategory.parent.includes("Fête")) {
           selectedParty = categoryName;
         }
       }

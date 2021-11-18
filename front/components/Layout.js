@@ -1,6 +1,8 @@
-import Header from "./Header";
-import Footer from "./Footer";
 import Head from "next/head";
+import Header from "./Header";
+import Homepage from "./Homepage";
+import Footer from "./Footer";
+
 import { useState, useEffect } from "react";
 
 import axios from "axios";
@@ -31,7 +33,7 @@ export default function Layout({ children, pageTitle, description }) {
   }, []);
 
   return (
-    <div className="text-coolGray-900">
+    <>
       <Head>
         {/* Global Site Tag (gtag.js) - Google Analytics */}
         <script
@@ -41,19 +43,19 @@ export default function Layout({ children, pageTitle, description }) {
         <script
           dangerouslySetInnerHTML={{
             __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');
-          `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');
+      `
           }}
         />
         <title>{pageTitle}</title>
         <meta name="description" content={description} />
       </Head>
       <Header categories={categories} />
-      <body>{children}</body>
+      {children}
       <Footer categories={categories} prices={prices} />
-    </div>
+    </>
   );
 }

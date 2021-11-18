@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import Image from "next/image";
 import Link from "next/link";
-import Layout from "../components/Layout";
-import SearchBox from "../components/subcomponents/Searchbox";
-import ProductsSuggestion from "../components/subcomponents/ProductsSuggestion";
+import Layout from "./Layout";
+import SearchBox from "./subcomponents/Searchbox";
+import ProductsSuggestion from "./subcomponents/ProductsSuggestion";
 
 export default function Home() {
   const categoriesShowcase = [

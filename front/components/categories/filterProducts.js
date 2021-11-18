@@ -10,7 +10,6 @@ const filteredProducts = async (
   currentPage,
   productsPerPage
 ) => {
-  const options = [];
   //transform parameters with multiple values to string
   const chechboxParamToString = (obj) => {
     const filter = Object.keys(obj).filter((key) => {
@@ -47,8 +46,8 @@ const filteredProducts = async (
   );
 
   // Push each filtered parameters in option array
-  filteredParameters.forEach((param) => {
-    options.push(`${Object.keys(param)}=${param[Object.keys(param)]}`);
+  const options = filteredParameters.map((param) => {
+    return `${Object.keys(param)}=${param[Object.keys(param)]}`;
   });
 
   const optionsReq = options.length ? `?${options.join("&")}` : ``;
