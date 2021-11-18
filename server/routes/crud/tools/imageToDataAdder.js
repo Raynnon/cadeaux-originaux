@@ -5,11 +5,9 @@ const imageToDataAdder = async (data) => {
     filesDirectory = "./public/" + item.imagesFolder;
 
     if (fs.existsSync(filesDirectory)) {
-      const images = [];
       const files = await fs.readdir(filesDirectory);
-
-      files.forEach((file) => {
-        images.push(process.env.APP_URL + item.imagesFolder + "/" + file);
+      const images = files.map((file) => {
+        return process.env.APP_URL + item.imagesFolder + "/" + file;
       });
 
       const updatedItem = Object.assign(item, { images });
