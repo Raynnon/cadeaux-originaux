@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Header from "./Header";
-import Homepage from "./Homepage";
 import Footer from "./Footer";
 
 import { useState, useEffect } from "react";
@@ -54,7 +53,7 @@ export default function Layout({ children, pageTitle, description }) {
         <meta name="description" content={description} />
       </Head>
       <Header categories={categories} />
-      {children}
+      <main>{children}</main>
       <Footer categories={categories} prices={prices} />
     </>
   );
