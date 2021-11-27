@@ -30,6 +30,13 @@ function MIUITheme() {
   };
 
   const components = {
+    MuiTypography: {
+      styleOverrides: {
+        h1: {
+          fontSize: "3rem"
+        }
+      }
+    },
     MuiListItemButton: {
       styleOverrides: {
         root: {
