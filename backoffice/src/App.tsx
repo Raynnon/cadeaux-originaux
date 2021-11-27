@@ -4,21 +4,32 @@ import SideMenu from "./containers/side-menu/SideMenu";
 import { Typography, Container, SvgIcon } from "@mui/material";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import FormatListBulletedRoundedIcon from "@mui/icons-material/FormatListBulletedRounded";
+import AddProduct from "./component/main/AddProduct";
 
 function App() {
-  const [selectedMenuItemIndex, setSelectedMenuItemIndex] = useState(0);
+  const [selectedMenuItem, setSelectedMenuItem] = useState({
+    name: "Products list",
+    icon: FormatListBulletedRoundedIcon,
+    compo: <AddProduct />
+  });
+
   interface MenuItems {
     name: string;
     icon: typeof SvgIcon;
+    compo: JSX.Element;
   }
 
   const menuItems: MenuItems[] = [
-    { name: "Products list", icon: FormatListBulletedRoundedIcon },
-    { name: "Add product", icon: AddCircleRoundedIcon }
+    {
+      name: "Products list",
+      icon: FormatListBulletedRoundedIcon,
+      compo: <AddProduct />
+    },
+    { name: "Add product", icon: AddCircleRoundedIcon, compo: <AddProduct /> }
   ];
 
-  const handleSelectedItem = (menuItem: number) => {
-    setSelectedMenuItemIndex(menuItem);
+  const handleSelectedItem = (menuItemIndex: number) => {
+    setSelectedMenuItem(menuItems[menuItemIndex]);
   };
 
   return (
@@ -29,14 +40,13 @@ function App() {
     >
       <SideMenu
         menuItems={menuItems}
-        OnSelectedItemChange={(menuItem: number) =>
-          handleSelectedItem(menuItem)
+        OnSelectedItemChange={(menuItemIndex: number) =>
+          handleSelectedItem(menuItemIndex)
         }
       />
       <Container component={"main"} maxWidth={false}>
-        <Typography variant="h1">
-          {menuItems[selectedMenuItemIndex].name}
-        </Typography>
+        <Typography variant="h1">{selectedMenuItem.name}</Typography>
+        {selectedMenuItem.compo}
       </Container>
     </Container>
   );

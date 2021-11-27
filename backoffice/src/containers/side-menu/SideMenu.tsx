@@ -13,6 +13,7 @@ import Grid from "@mui/material/Grid";
 interface MenuItems {
   name: string;
   icon: typeof SvgIcon;
+  AddProduct?: JSX.Element;
 }
 
 interface SideMenuProps {
