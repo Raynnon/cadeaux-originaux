@@ -2,19 +2,17 @@ import { createTheme } from "@mui/material/styles";
 
 function MIUITheme() {
   const palette = {
-    type: "dark",
     primary: {
       main: "#3f51b5"
     },
     secondary: {
       main: "#fbfafa"
     },
-    tertiary: {
-      main: "#f50057"
-    },
     background: {
       default: "#EEE",
-      paper: "#112027"
+      paper: "#112027",
+      primary: "red",
+      secondary: "red"
     },
     text: {
       primary: "#1e1e1e",
@@ -26,6 +24,9 @@ function MIUITheme() {
     },
     shape: {
       borderRadius: 4
+    },
+    input: {
+      background: "red"
     }
   };
 

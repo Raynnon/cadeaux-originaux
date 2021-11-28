@@ -28,7 +28,7 @@ function SideMenu(props: SideMenuProps) {
 
   const handleSelectedItem = (index: number): number => {
     setSelectedIndex(index);
-
+  
     return index;
   };
 
