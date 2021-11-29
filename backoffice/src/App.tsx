@@ -4,7 +4,7 @@ import SideMenu from "./containers/side-menu/SideMenu";
 import { Typography, Container, SvgIcon } from "@mui/material";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import FormatListBulletedRoundedIcon from "@mui/icons-material/FormatListBulletedRounded";
-import AddProduct from "./component/main/AddProduct";
+import AddProduct from "./component/styles/AddProduct";
 
 interface MenuItems {
   name: string;

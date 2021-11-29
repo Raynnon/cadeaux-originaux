@@ -8,7 +8,6 @@ import MenuList from "@mui/material/MenuList";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import Grid from "@mui/material/Grid";
 
 interface MenuItems {
   name: string;
@@ -28,7 +27,7 @@ function SideMenu(props: SideMenuProps) {
 
   const handleSelectedItem = (index: number): number => {
     setSelectedIndex(index);
-  
+
     return index;
   };
 
@@ -39,12 +38,22 @@ function SideMenu(props: SideMenuProps) {
   return (
     <Paper
       elevation={3}
-      sx={{ height: "100vh", width: 320, maxWidth: "100%", borderRadius: 0 }}
+      sx={{
+        height: "100vh",
+        width: 320,
+        maxWidth: "100%",
+        borderRadius: 0
+      }}
     >
-      <Box sx={{ padding: "10px 30px", color: "text.secondary" }}>
-        <Grid container={true} justifyContent="center">
-          <img src={logoMesCadeauxOriginaux} alt="logo-mescadeauxoriginaux" />
-        </Grid>
+      <Box
+        sx={{
+          padding: "10px 30px",
+          color: "text.secondary",
+          justifyContent: "true"
+        }}
+      >
+        <img src={logoMesCadeauxOriginaux} alt="logo-mescadeauxoriginaux" />
+
         <Box>
           <MenuList>
             {menuItems.map((item, index) => {
@@ -52,14 +61,25 @@ function SideMenu(props: SideMenuProps) {
                 <ListItemButton
                   selected={selectedIndex === index}
                   onClick={() => handleSelectedItem(index)}
-                  className="ListItemButton"
-                  sx={{ borderRadius: 1, margin: "10px 0" }}
+                  sx={{
+                    borderRadius: 1,
+                    margin: "10px 0",
+                    "&:hover": {
+                      backgroundColor: "rgba(255, 255, 255, 0.2)"
+                    },
+                    "&.Mui-selected": {
+                      backgroundColor: "#00acc1",
+                      "&:hover": {
+                        backgroundColor: "#00acc1"
+                      }
+                    }
+                  }}
                   key={index}
                 >
                   <ListItemIcon>
                     <item.icon color="secondary" />
                   </ListItemIcon>
-                  <ListItemText color="text.secondary">
+                  <ListItemText sx={{ color: "white" }}>
                     {item.name}
                   </ListItemText>
                 </ListItemButton>

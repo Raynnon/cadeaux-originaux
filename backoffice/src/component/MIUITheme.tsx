@@ -1,62 +1,38 @@
 import { createTheme } from "@mui/material/styles";
+import { indigo, lightBlue } from "@mui/material/colors";
 
 function MIUITheme() {
   const palette = {
-    primary: {
-      main: "#3f51b5"
-    },
+    primary: indigo,
     secondary: {
       main: "#fbfafa"
     },
+    info: lightBlue,
     background: {
-      default: "#EEE",
-      paper: "#112027",
-      primary: "red",
-      secondary: "red"
+      default: "#eee",
+      paper: "#112027"
     },
     text: {
       primary: "#1e1e1e",
-      secondary: "#fbfafa",
-      disabled: "#ececec"
-    },
-    icon: {
-      color: "#fbfafa"
+      /* secondary: "#fbfafa", */
+      disabled: "#000"
     },
     shape: {
       borderRadius: 4
-    },
-    input: {
-      background: "red"
     }
   };
 
-  const components = {
-    MuiTypography: {
-      styleOverrides: {
-        h1: {
-          fontSize: "3rem"
-        }
-      }
-    },
-    MuiListItemButton: {
-      styleOverrides: {
-        root: {
-          "&.Mui-selected": {
-            backgroundColor: "#00acc1"
-          },
-          "&.Mui-selected:hover": {
-            backgroundColor: "#00acc1"
-          },
-          "&:hover": {
-            backgroundColor: "rgba(255, 255, 255, 0.2)"
-          }
-        }
-      }
+  const typography = {
+    h1: {
+      fontSize: "3rem"
     }
   };
+
+  const components = {};
 
   const theme = createTheme({
     palette,
+    typography,
     components
   });
 
