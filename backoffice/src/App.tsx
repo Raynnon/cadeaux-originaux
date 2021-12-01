@@ -4,7 +4,6 @@ import { Typography, Container, SvgIcon } from "@mui/material";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import FormatListBulletedRoundedIcon from "@mui/icons-material/FormatListBulletedRounded";
 import AddProduct from "./component/AddProduct";
-import ProductsList from "./component/ProductsList";
 
 interface MenuItems {
   name: string;
@@ -25,7 +24,7 @@ function App() {
       {
         name: "Products list",
         icon: FormatListBulletedRoundedIcon,
-        compo: <ProductsList />
+        compo: <AddProduct />
       },
       { name: "Add product", icon: AddCircleRoundedIcon, compo: <AddProduct /> }
     ];
