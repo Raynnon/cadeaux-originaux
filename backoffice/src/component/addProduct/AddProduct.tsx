@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-
 import axios from "axios";
+
+import CategoryCheckBox from "./CategoryCheckBox";
 
 import {
   FormGroup,
@@ -14,8 +15,7 @@ import {
   IconButton,
   Grid,
   Paper,
-  Typography,
-  Checkbox
+  Typography
 } from "@mui/material";
 
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -29,6 +29,7 @@ interface Category {
 }
 
 function AddProduct() {
+  const [isMount, setIsMount] = useState(false);
   const [genres, setGenres] = useState<Category[]>([]);
   const [types, setTypes] = useState<Category[]>([]);
   const [occasions, setOccasions] = useState<Category[]>([]);
@@ -36,12 +37,11 @@ function AddProduct() {
   const prices: string[] = ["€", "€€", "€€€"];
 
   useEffect(() => {
+    setIsMount(true);
     const fetchCategories = async () => {
       const categoriesData = await axios.get(
         "http://localhost:4000/categories/?ordered=true"
       );
-
-      console.log("data", categoriesData);
 
       setGenres(categoriesData.data.Genre);
       setTypes(categoriesData.data.Type);
@@ -49,8 +49,14 @@ function AddProduct() {
       setOccasions(categoriesData.data.Fête);
     };
 
-    fetchCategories();
-  }, []);
+    if (isMount) {
+      fetchCategories();
+    }
+
+    return () => {
+      setIsMount(false);
+    };
+  }, [isMount]);
 
   return (
     <Grid
@@ -60,7 +66,7 @@ function AddProduct() {
         marginTop: "10px"
       }}
     >
-      <Grid item xs={6}>
+      <Grid item xs={7}>
         <Paper
           elevation={3}
           sx={{
@@ -172,7 +178,7 @@ function AddProduct() {
       </Grid>
 
       {/* CATEGORIES*/}
-      <Grid item xs={6}>
+      <Grid item xs={5}>
         <Paper
           elevation={3}
           sx={{
@@ -182,91 +188,11 @@ function AddProduct() {
           }}
         >
           <Typography variant="h2">Categories</Typography>
-          <Box>
-            <Box sx={{ marginTop: "30px" }}>
-              <FormLabel component="legend">Genres</FormLabel>
-              <RadioGroup row aria-label="genre" name="row-radio-buttons-group">
-                {genres
-                  ? genres.map((genre, index) => {
-                      return (
-                        <Box key={index}>
-                          <FormControlLabel
-                            value={genre.name}
-                            control={<Checkbox color="info" />}
-                            label={genre.name}
-                          />
-                        </Box>
-                      );
-                    })
-                  : null}
-              </RadioGroup>
-            </Box>
 
-            <Box sx={{ marginTop: "30px" }}>
-              <FormLabel component="legend">Types</FormLabel>
-              <RadioGroup row aria-label="type" name="row-radio-buttons-group">
-                {types
-                  ? types.map((type, index) => {
-                      return (
-                        <Box key={index}>
-                          <FormControlLabel
-                            value={type.name}
-                            control={<Checkbox color="info" />}
-                            label={type.name}
-                          />
-                        </Box>
-                      );
-                    })
-                  : null}
-              </RadioGroup>
-            </Box>
-
-            <Box sx={{ marginTop: "30px" }}>
-              <FormLabel component="legend">Occasions</FormLabel>
-              <RadioGroup
-                row
-                aria-label="occasions"
-                name="row-radio-buttons-group"
-              >
-                {occasions
-                  ? occasions.map((occasion, index) => {
-                      return (
-                        <Box key={index}>
-                          <FormControlLabel
-                            value={occasion.name}
-                            control={<Checkbox color="info" />}
-                            label={occasion.name}
-                          />
-                        </Box>
-                      );
-                    })
-                  : null}
-              </RadioGroup>
-            </Box>
-
-            <Box sx={{ marginTop: "30px" }}>
-              <FormLabel component="legend">Fêtes</FormLabel>
-              <RadioGroup
-                row
-                aria-label="parties"
-                name="row-radio-buttons-group"
-              >
-                {parties
-                  ? parties.map((party, index) => {
-                      return (
-                        <Box key={index}>
-                          <FormControlLabel
-                            value={party.name}
-                            control={<Checkbox color="info" />}
-                            label={party.name}
-                          />
-                        </Box>
-                      );
-                    })
-                  : null}
-              </RadioGroup>
-            </Box>
-          </Box>
+          <CategoryCheckBox cat={genres} name={"Genres"} />
+          <CategoryCheckBox cat={types} name={"Types"} />
+          <CategoryCheckBox cat={occasions} name={"Occasions"} />
+          <CategoryCheckBox cat={parties} name={"Parties"} />
         </Paper>
       </Grid>
     </Grid>

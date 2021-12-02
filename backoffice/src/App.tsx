@@ -3,7 +3,7 @@ import SideMenu from "./containers/side-menu/SideMenu";
 import { Typography, Container, SvgIcon } from "@mui/material";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import FormatListBulletedRoundedIcon from "@mui/icons-material/FormatListBulletedRounded";
-import AddProduct from "./component/AddProduct";
+import AddProduct from "./component/addProduct/AddProduct";
 
 interface MenuItems {
   name: string;
@@ -13,7 +13,7 @@ interface MenuItems {
 
 function App() {
   const [menuItems, setMenuItems] = useState<MenuItems[]>([]);
-  const [selectedMenuItem, setSelectedMenuItem] = useState({
+  const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItems>({
     name: "Products list",
     icon: FormatListBulletedRoundedIcon,
     compo: <AddProduct />
