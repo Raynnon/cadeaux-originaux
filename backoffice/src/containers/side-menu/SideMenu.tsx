@@ -52,39 +52,45 @@ function SideMenu(props: SideMenuProps) {
           justifyContent: "true"
         }}
       >
-        <img src={logoMesCadeauxOriginaux} alt="logo-mescadeauxoriginaux" />
+        <img
+          data-testid="logo-img"
+          src={logoMesCadeauxOriginaux}
+          alt="logo-mescadeauxoriginaux"
+        />
 
         <Box>
           <MenuList>
-            {menuItems.map((item, index) => {
-              return (
-                <ListItemButton
-                  selected={selectedIndex === index}
-                  onClick={() => handleSelectedItem(index)}
-                  sx={{
-                    borderRadius: 1,
-                    margin: "10px 0",
-                    "&:hover": {
-                      backgroundColor: "rgba(255, 255, 255, 0.2)"
-                    },
-                    "&.Mui-selected": {
-                      backgroundColor: "#00acc1",
-                      "&:hover": {
-                        backgroundColor: "#00acc1"
-                      }
-                    }
-                  }}
-                  key={index}
-                >
-                  <ListItemIcon>
-                    <item.icon color="secondary" />
-                  </ListItemIcon>
-                  <ListItemText sx={{ color: "white" }}>
-                    {item.name}
-                  </ListItemText>
-                </ListItemButton>
-              );
-            })}
+            {menuItems
+              ? menuItems.map((item, index) => {
+                  return (
+                    <ListItemButton
+                      selected={selectedIndex === index}
+                      onClick={() => handleSelectedItem(index)}
+                      sx={{
+                        borderRadius: 1,
+                        margin: "10px 0",
+                        "&:hover": {
+                          backgroundColor: "rgba(255, 255, 255, 0.2)"
+                        },
+                        "&.Mui-selected": {
+                          backgroundColor: "#00acc1",
+                          "&:hover": {
+                            backgroundColor: "#00acc1"
+                          }
+                        }
+                      }}
+                      key={index}
+                    >
+                      <ListItemIcon>
+                        <item.icon color="secondary" />
+                      </ListItemIcon>
+                      <ListItemText sx={{ color: "white" }}>
+                        {item.name}
+                      </ListItemText>
+                    </ListItemButton>
+                  );
+                })
+              : null}
           </MenuList>
         </Box>
       </Box>
