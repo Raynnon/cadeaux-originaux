@@ -10,6 +10,7 @@ import { SvgIcon } from "@mui/material";
 import logoMesCadeauxOriginaux from "./logo-cadeaux-originaux-small-white.png";
 
 let getByTestId: any;
+let getAllByTestId: any;
 
 interface MenuItems {
   name: string;
@@ -32,10 +33,44 @@ beforeEach(() => {
   );
 
   getByTestId = component.getByTestId;
+  getAllByTestId = component.getAllByTestId;
 });
+
+//GENERAL TESTS
 
 test("top image correctly displays", () => {
   const imgEl = getByTestId("logo-img");
 
   expect(imgEl.src).toBe(`http://localhost/${logoMesCadeauxOriginaux}`);
+});
+
+//MENU ITEM
+describe("Menu item", () => {
+  test("Menu item has an icon", () => {
+    const iconEl = getAllByTestId("menu-item-icon");
+
+    iconEl.forEach((item: any) => {
+      expect(item).toBeTruthy();
+    });
+  });
+
+  test("Menu item has a text", () => {
+    const textEl = getAllByTestId("menu-item-text");
+
+    expect(textEl).toBeTruthy();
+  });
+
+  test("After clicking on a button it is selected", () => {
+    const menuItemEl = getAllByTestId("menu-item");
+
+    const menuItemElSelected = menuItemEl.filter((item: any) => {
+      return !item.className.includes("Mui-selected");
+    });
+
+    menuItemElSelected.forEach((item) => {
+      fireEvent.click(item);
+
+      expect(item.className.includes("Mui-selected")).toBeTruthy();
+    });
+  });
 });

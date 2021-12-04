@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import logoMesCadeauxOriginaux from "./logo-cadeaux-originaux-small-white.png";
 import { SvgIcon } from "@mui/material";
 
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import MenuList from "@mui/material/MenuList";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemIcon from "@mui/material/ListItemIcon";
+import {
+  Box,
+  Paper,
+  MenuList,
+  ListItemButton,
+  ListItemText,
+  ListItemIcon
+} from "@mui/material/";
 
 interface MenuItems {
   name: string;
@@ -64,11 +66,13 @@ function SideMenu(props: SideMenuProps) {
               ? menuItems.map((item, index) => {
                   return (
                     <ListItemButton
+                      data-testid="menu-item"
                       selected={selectedIndex === index}
                       onClick={() => handleSelectedItem(index)}
                       sx={{
                         borderRadius: 1,
                         margin: "10px 0",
+                        backgroundColor: "#112027",
                         "&:hover": {
                           backgroundColor: "rgba(255, 255, 255, 0.2)"
                         },
@@ -82,9 +86,15 @@ function SideMenu(props: SideMenuProps) {
                       key={index}
                     >
                       <ListItemIcon>
-                        <item.icon color="secondary" />
+                        <item.icon
+                          data-testid="menu-item-icon"
+                          color="secondary"
+                        />
                       </ListItemIcon>
-                      <ListItemText sx={{ color: "white" }}>
+                      <ListItemText
+                        data-testid="menu-item-text"
+                        sx={{ color: "white" }}
+                      >
                         {item.name}
                       </ListItemText>
                     </ListItemButton>
