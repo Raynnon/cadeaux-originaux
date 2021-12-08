@@ -1,6 +1,10 @@
-import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../app/store";
+import { changeSelectedItemId } from "../../features/menuSlice";
+
+import menuItemsComponents from "../../app/MenuComponents";
+
 import logoMesCadeauxOriginaux from "./logo-cadeaux-originaux-small-white.png";
-import { SvgIcon } from "@mui/material";
 
 import {
   Box,
@@ -11,100 +15,83 @@ import {
   ListItemIcon
 } from "@mui/material/";
 
-interface MenuItems {
-  name: string;
-  icon: typeof SvgIcon;
-  AddProduct?: JSX.Element;
-}
+function SideMenu() {
+  const selectedMenuItemId: number = useSelector(
+    (state: RootState) => state.menu.selectedMenuItemId
+  );
 
-interface SideMenuProps {
-  menuItems: MenuItems[];
-  OnSelectedItemChange: any;
-}
+  const menuItems = useSelector((state: RootState) => state.menu.menuItems);
 
-function SideMenu(props: SideMenuProps) {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
-  const menuItems: MenuItems[] = props.menuItems;
-
-  const handleSelectedItem = (index: number): number => {
-    setSelectedIndex(index);
-
-    return index;
-  };
-
-  useEffect(() => {
-    props.OnSelectedItemChange(selectedIndex);
-  }, [props, selectedIndex]);
+  const dispatch = useDispatch();
 
   return (
-    <Paper
-      elevation={3}
-      sx={{
-        height: "100vh",
-        width: 320,
-        maxWidth: "100%",
-        borderRadius: 0
-      }}
-    >
-      <Box
+    <>
+      <Paper
+        elevation={3}
         sx={{
-          padding: "10px 30px",
-          color: "text.secondary",
-          justifyContent: "true"
+          height: "100vh",
+          width: 320,
+          maxWidth: "100%",
+          borderRadius: 0
         }}
       >
-        <img
-          data-testid="logo-img"
-          src={logoMesCadeauxOriginaux}
-          alt="logo-mescadeauxoriginaux"
-        />
+        <Box
+          sx={{
+            padding: "10px 30px",
+            color: "text.secondary",
+            justifyContent: "true"
+          }}
+        >
+          <img
+            data-testid="logo-img"
+            src={logoMesCadeauxOriginaux}
+            alt="logo-mescadeauxoriginaux"
+          />
 
-        <Box>
-          <MenuList>
-            {menuItems
-              ? menuItems.map((item, index) => {
-                  return (
-                    <ListItemButton
-                      data-testid="menu-item"
-                      selected={selectedIndex === index}
-                      onClick={() => handleSelectedItem(index)}
-                      sx={{
-                        borderRadius: 1,
-                        margin: "10px 0",
-                        backgroundColor: "#112027",
+          <Box>
+            <MenuList>
+              {menuItemsComponents.map((item, index) => {
+                return (
+                  <ListItemButton
+                    data-testid="menu-item"
+                    selected={selectedMenuItemId === index}
+                    onClick={() => dispatch(changeSelectedItemId(index))}
+                    sx={{
+                      borderRadius: 1,
+                      margin: "10px 0",
+                      backgroundColor: "#112027",
+                      "&:hover": {
+                        backgroundColor: "rgba(255, 255, 255, 0.2)"
+                      },
+                      "&.Mui-selected": {
+                        backgroundColor: "#00acc1",
                         "&:hover": {
-                          backgroundColor: "rgba(255, 255, 255, 0.2)"
-                        },
-                        "&.Mui-selected": {
-                          backgroundColor: "#00acc1",
-                          "&:hover": {
-                            backgroundColor: "#00acc1"
-                          }
+                          backgroundColor: "#00acc1"
                         }
-                      }}
-                      key={index}
+                      }
+                    }}
+                    key={index}
+                  >
+                    <ListItemIcon>
+                      <item.icon
+                        data-testid="menu-item-icon"
+                        color="secondary"
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      data-testid="menu-item-text"
+                      sx={{ color: "white" }}
                     >
-                      <ListItemIcon>
-                        <item.icon
-                          data-testid="menu-item-icon"
-                          color="secondary"
-                        />
-                      </ListItemIcon>
-                      <ListItemText
-                        data-testid="menu-item-text"
-                        sx={{ color: "white" }}
-                      >
-                        {item.name}
-                      </ListItemText>
-                    </ListItemButton>
-                  );
-                })
-              : null}
-          </MenuList>
+                      {menuItems[index].name}
+                    </ListItemText>
+                  </ListItemButton>
+                );
+              })}
+            </MenuList>
+          </Box>
         </Box>
-      </Box>
-    </Paper>
+      </Paper>
+    </>
   );
 }
 

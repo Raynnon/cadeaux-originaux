@@ -12,25 +12,8 @@ import logoMesCadeauxOriginaux from "./logo-cadeaux-originaux-small-white.png";
 let getByTestId: any;
 let getAllByTestId: any;
 
-interface MenuItems {
-  name: string;
-  icon: typeof SvgIcon;
-  compo: JSX.Element;
-}
-
 beforeEach(() => {
-  const items: MenuItems[] = [
-    {
-      name: "Products list",
-      icon: FormatListBulletedRoundedIcon,
-      compo: <AddProduct />
-    },
-    { name: "Add product", icon: AddCircleRoundedIcon, compo: <AddProduct /> }
-  ];
-
-  const component = render(
-    <SideMenu menuItems={items} OnSelectedItemChange={() => {}} />
-  );
+  const component = render(<SideMenu />);
 
   getByTestId = component.getByTestId;
   getAllByTestId = component.getAllByTestId;
