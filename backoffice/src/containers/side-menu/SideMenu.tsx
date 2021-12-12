@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../app/store";
-import { changeSelectedItemId } from "../../features/menuSlice";
+import { changeSelectedItemId } from "../../app/store/slices/menuSlice";
 
 import menuItemsComponents from "../../app/MenuComponents";
 
