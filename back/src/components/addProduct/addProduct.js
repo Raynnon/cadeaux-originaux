@@ -5,6 +5,8 @@ import axios from "axios";
 
 import CategoryCheckBox from "./CategoryCheckbox";
 
+import { Button } from "@mui/material";
+
 import {
   FormGroup,
   TextField,
@@ -70,16 +72,13 @@ function AddProduct() {
       }}
     >
       <Grid item xs={7}>
-        <Paper
-          elevation={3}
+        <Box
           sx={{
-            backgroundColor: "#FFF",
-            borderRadius: 5,
             padding: "30px 50px"
           }}
         >
           {/* PRODUCT NAME */}
-          <Typography variant="h2">Détails du produit</Typography>
+          <Typography variant="h2">DÉTAILS DU PRODUIT</Typography>
           <FormGroup>
             <TextField
               required
@@ -177,7 +176,7 @@ function AddProduct() {
               variant="standard"
             />
           </FormGroup>
-        </Paper>
+        </Box>
       </Grid>
 
       {/* CATEGORIES*/}
@@ -185,12 +184,14 @@ function AddProduct() {
         <Paper
           elevation={3}
           sx={{
-            backgroundColor: "#FFF",
+            backgroundImage:
+              "linear-gradient(45deg, #191c26 33.33%, #161924 33.33%, #161924 50%, #191c26 50%, #191c26 83.33%, #161924 83.33%, #161924 100%)",
+            backgroundSize: "42.43px 42.43px",
             borderRadius: 5,
-            padding: "30px 50px"
+            padding: "50px"
           }}
         >
-          <Typography variant="h2">Categories</Typography>
+          <Typography variant="h2">CATÉGORIES</Typography>
 
           <CategoryCheckBox cat={genres} name={"Genres"} />
           <CategoryCheckBox cat={types} name={"Types"} />
@@ -198,6 +199,18 @@ function AddProduct() {
           <CategoryCheckBox cat={parties} name={"Parties"} />
         </Paper>
       </Grid>
+      <Box
+        sx={{
+          marginTop: "30px",
+          width: "100%",
+          display: "flex",
+          justifyContent: "center"
+        }}
+      >
+        <Button variant="contained" color="info" sx={{ color: "white" }}>
+          Ajouter produit
+        </Button>
+      </Box>
     </Grid>
   );
 }

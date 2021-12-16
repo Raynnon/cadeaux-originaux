@@ -4,10 +4,10 @@ const initialState = {
   selectedMenuItemId: 0,
   menuItems: [
     {
-      name: "Products list",
+      name: "PRODUCTS LIST",
       compoId: 0
     },
-    { name: "Add product", compoId: 1 }
+    { name: "ADD PRODUCT", compoId: 1 }
   ]
 };
 

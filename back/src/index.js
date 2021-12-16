@@ -5,7 +5,7 @@ import App from "./App";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
 
-/* import CssBaseline from "@mui/material/CssBaseline"; */
+import CssBaseline from "@mui/material/CssBaseline";
 import MIUITheme from "./styles/MIUITheme";
 import { ThemeProvider } from "@mui/material/styles";
 
@@ -15,6 +15,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={MIUITheme()}>
+        <CssBaseline />
         <App />
       </ThemeProvider>
     </Provider>

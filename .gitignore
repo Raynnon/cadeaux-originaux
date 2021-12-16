@@ -30,3 +30,5 @@ yarn-error.log*
 /server/public/images/products/
 front/pages/sitemap/sitemap.js
 
+docker-compose.yaml
+

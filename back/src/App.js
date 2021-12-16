@@ -18,7 +18,7 @@ function App() {
       sx={{ display: "flex", flexDirection: "row" }}
     >
       <SideMenu />
-      <Container component={"main"} maxWidth={false}>
+      <Container component={"main"} maxWidth={false} sx={{ marginTop: "10px" }}>
         <Typography variant="h1">
           {menuItems[selectedMenuItemId].name}
         </Typography>

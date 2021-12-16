@@ -31,7 +31,9 @@ function SideMenu() {
           height: "100vh",
           width: 320,
           maxWidth: "100%",
-          borderRadius: 0
+          borderRadius: 0,
+          background:
+            "linear-gradient(0deg, rgba(18,21,27,1) 0%, rgba(35,44,57,1) 50%, rgba(48,61,80,1) 100%)"
         }}
       >
         <Box
@@ -58,14 +60,13 @@ function SideMenu() {
                     sx={{
                       borderRadius: 1,
                       margin: "10px 0",
-                      backgroundColor: "#112027",
                       "&:hover": {
                         backgroundColor: "rgba(255, 255, 255, 0.2)"
                       },
                       "&.Mui-selected": {
-                        backgroundColor: "#00acc1",
+                        backgroundColor: "#03a9f4",
                         "&:hover": {
-                          backgroundColor: "#00acc1"
+                          backgroundColor: "#03a9f4"
                         }
                       }
                     }}
