@@ -1,12 +1,3 @@
-import React from "react";
-import { store } from "../app/store";
-import SideMenu from "./SideMenu";
-import { Provider } from "react-redux";
-
-import { render, fireEvent, screen } from "@testing-library/react";
-
-/* import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
-import FormatListBulletedRoundedIcon from "@mui/icons-material/FormatListBulletedRounded";
 import { SvgIcon } from "@mui/material"; */
 import logoMesCadeauxOriginaux from "./logo-cadeaux-originaux-small-white.png";
 
@@ -15,6 +6,9 @@ let getAllByTestId;
 
 beforeAll(() => {
   const component = render(
+//GENERAL TESTS
+test("top image correctly displays", () => {
+  render(
     <Provider store={store}>
       <SideMenu />
     </Provider>
@@ -27,6 +21,7 @@ beforeAll(() => {
 //GENERAL TESTS
 test("top image correctly displays", () => {
   const imgEl = getByTestId("logo-img");
+  const imgEl = screen.getByTestId("logo-img");
 
   expect(imgEl.src).toBe(`http://localhost/${logoMesCadeauxOriginaux}`);
 });
@@ -35,6 +30,13 @@ test("top image correctly displays", () => {
 describe("Menu item", () => {
   test("Menu item has an icon", () => {
     const iconEl = getAllByTestId("menu-item-icon");
+    render(
+      <Provider store={store}>
+        <SideMenu />
+      </Provider>
+    );
+
+    const iconEl = screen.getAllByTestId("menu-item-icon");
 
     iconEl.forEach((item) => {
       expect(item).toBeTruthy();
@@ -43,6 +45,12 @@ describe("Menu item", () => {
 
  /*  test("Menu item has a text", () => {
     render(<SideMenu />);
+  test("Menu item has a text", () => {
+    render(
+      <Provider store={store}>
+        <SideMenu />
+      </Provider>
+    );
     const textEl = screen.getAllByTestId("menu-item-text");
 
     expect(textEl).toBeTruthy();
@@ -50,16 +58,19 @@ describe("Menu item", () => {
 
   test("After clicking on a button it is selected", () => {
     render(<SideMenu />);
+    render(
+      <Provider store={store}>
+        <SideMenu />
+      </Provider>
+    );
+
     const menuItemEl = screen.getAllByTestId("menu-item");
 
     const menuItemElSelected = menuItemEl.filter((item) => {
-      return !item.className.includes("Mui-selected");
-    });
-
-    menuItemElSelected.forEach((item) => {
-      fireEvent.click(item);
+@@ -61,5 +67,5 @@ describe("Menu item", () => {
 
       expect(item.className.includes("Mui-selected")).toBeTruthy();
     });
   }); */
+  });
 });
