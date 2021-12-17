@@ -1,11 +1,9 @@
-import { SvgIcon } from "@mui/material"; */
+import { render, fireEvent, screen } from "@testing-library/react";
 import logoMesCadeauxOriginaux from "./logo-cadeaux-originaux-small-white.png";
+import { store } from "../app/store";
+import { Provider } from "react-redux";
+import SideMenu from "./SideMenu";
 
-let getByTestId;
-let getAllByTestId;
-
-beforeAll(() => {
-  const component = render(
 //GENERAL TESTS
 test("top image correctly displays", () => {
   render(
@@ -14,13 +12,6 @@ test("top image correctly displays", () => {
     </Provider>
   );
 
-  getByTestId = component.getByTestId;
-  getAllByTestId = component.getByTestId;
-});
-
-//GENERAL TESTS
-test("top image correctly displays", () => {
-  const imgEl = getByTestId("logo-img");
   const imgEl = screen.getByTestId("logo-img");
 
   expect(imgEl.src).toBe(`http://localhost/${logoMesCadeauxOriginaux}`);
@@ -29,7 +20,6 @@ test("top image correctly displays", () => {
 //MENU ITEM
 describe("Menu item", () => {
   test("Menu item has an icon", () => {
-    const iconEl = getAllByTestId("menu-item-icon");
     render(
       <Provider store={store}>
         <SideMenu />
@@ -43,8 +33,6 @@ describe("Menu item", () => {
     });
   });
 
- /*  test("Menu item has a text", () => {
-    render(<SideMenu />);
   test("Menu item has a text", () => {
     render(
       <Provider store={store}>
@@ -57,20 +45,21 @@ describe("Menu item", () => {
   });
 
   test("After clicking on a button it is selected", () => {
-    render(<SideMenu />);
     render(
       <Provider store={store}>
         <SideMenu />
       </Provider>
     );
-
     const menuItemEl = screen.getAllByTestId("menu-item");
 
     const menuItemElSelected = menuItemEl.filter((item) => {
-@@ -61,5 +67,5 @@ describe("Menu item", () => {
+      return !item.className.includes("Mui-selected");
+    });
+
+    menuItemElSelected.forEach((item) => {
+      fireEvent.click(item);
 
       expect(item.className.includes("Mui-selected")).toBeTruthy();
     });
-  }); */
   });
 });
