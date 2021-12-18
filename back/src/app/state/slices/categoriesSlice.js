@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  categories: { Fête: [], Genre: [], Occasion: [], Type: [] },
+  categories: {},
   loading: false
 };
 
@@ -10,7 +10,7 @@ export const fetchCategories = createAsyncThunk(
   "categories/fetchCategories",
   async () => {
     const response = await axios.get(
-      "http://localhost:4000/categories/?ordered=true"
+      `${process.env.REACT_APP_API_URL}/categories/?ordered=true`
     );
 
     return response.data;
@@ -27,7 +27,7 @@ export const categoriesSlice = createSlice({
     },
     [fetchCategories.fulfilled]: (state, payload) => {
       state.loading = false;
-      state.categories = payload;
+      state.categories = payload.payload;
     },
     [fetchCategories.rejected]: (state) => {
       state.loading = false;

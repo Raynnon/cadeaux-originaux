@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { fetchCategories } from "../../app/state/slices/categoriesSlice";
 import axios from "axios";
 
@@ -25,42 +25,12 @@ import {
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 function AddProduct() {
-  const [isMount, setIsMount] = useState(false);
-  const [genres, setGenres] = useState([]);
-  const [types, setTypes] = useState([]);
-  const [occasions, setOccasions] = useState([]);
-  const [parties, setParties] = useState([]);
   const prices = ["€", "€€", "€€€"];
 
-  const dispatch = useDispatch();
-
   const selectedMenuItem = useSelector((state) => state.menu.selectedMenuItem);
-
-  useEffect(() => {
-    dispatch(fetchCategories);
-  }, [dispatch]);
-
-  useEffect(() => {
-    setIsMount(true);
-    const fetchCategories = async () => {
-      const categoriesData = await axios.get(
-        "http://localhost:4020/categories/?ordered=true"
-      );
-
-      setGenres(categoriesData.data.Genre);
-      setTypes(categoriesData.data.Type);
-      setParties(categoriesData.data.Occasion);
-      setOccasions(categoriesData.data.Fête);
-    };
-
-    if (isMount) {
-      fetchCategories();
-    }
-
-    return () => {
-      setIsMount(false);
-    };
-  }, [isMount]);
+  const { Genre, Type, Occasion, Fête } = useSelector(
+    (state) => state.categories.categories
+  );
 
   return (
     <Container component={"main"} maxWidth={false} sx={{ marginTop: "10px" }}>
@@ -201,10 +171,10 @@ function AddProduct() {
           >
             <Typography variant="h2">CATÉGORIES</Typography>
 
-            <CategoryCheckBox cat={genres} name={"Genres"} />
-            <CategoryCheckBox cat={types} name={"Types"} />
-            <CategoryCheckBox cat={occasions} name={"Occasions"} />
-            <CategoryCheckBox cat={parties} name={"Parties"} />
+            <CategoryCheckBox cat={Genre} name={"Genres"} />
+            <CategoryCheckBox cat={Type} name={"Types"} />
+            <CategoryCheckBox cat={Occasion} name={"Occasions"} />
+            <CategoryCheckBox cat={Fête} name={"Parties"} />
           </Paper>
         </Grid>
         <Box
