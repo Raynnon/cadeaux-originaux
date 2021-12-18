@@ -1,7 +1,4 @@
-import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { fetchCategories } from "../../app/state/slices/categoriesSlice";
-import axios from "axios";
 
 import CategoryCheckBox from "./CategoryCheckbox";
 
