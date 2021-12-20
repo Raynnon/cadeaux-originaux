@@ -8,15 +8,27 @@ const read = async (model, params) => {
   let skip = 0;
 
   if (params) {
-    Object.keys(params).forEach((param) => {
-      if (params[param].includes(",")) {
-        const paramsArray = params[param].split(",");
+    const simpleOptionParameters = [
+      "_id",
+      "whoKind",
+      "whoType",
+      "occasions",
+      "parties",
+      "price",
+      "images"
+    ];
 
-        options[param] = { $in: paramsArray };
-      } else {
-        param === "images" && params.images === "true"
-          ? (imagesFolder = "imagesFolder")
-          : (options[param] = params[param]);
+    simpleOptionParameters.forEach((optionParam) => {
+      if (params[optionParam]) {
+        if (params[optionParam].includes(",")) {
+          const paramsArray = params[optionParam].split(",");
+
+          options[optionParam] = { $in: paramsArray };
+        } else {
+          optionParam === "images" && params.images === "true"
+            ? (imagesFolder = "imagesFolder")
+            : (options[optionParam] = params[optionParam]);
+        }
       }
     });
 
