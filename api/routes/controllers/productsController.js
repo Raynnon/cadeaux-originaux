@@ -3,54 +3,46 @@ const updateOneItem = require("../crud/updateOneItem");
 
 const read = async (model, params) => {
   const options = {};
+  let imagesFolder = "";
+  let sort = "";
+  let skip = 0;
 
-  const simpleOptionParameters = [
-    "_id",
-    "whoKind",
-    "whoType",
-    "occasions",
-    "parties",
-    "price"
-  ];
+  if (params) {
+    Object.keys(params).forEach((param) => {
+      if (params[param].includes(",")) {
+        const paramsArray = params[param].split(",");
 
-  simpleOptionParameters.forEach((optionParam) => {
-    if (params[optionParam]) {
-      if (params[optionParam].includes(",")) {
-        const paramsArray = params[optionParam].split(",");
-
-        options[optionParam] = { $in: paramsArray };
+        options[param] = { $in: paramsArray };
       } else {
-        options[optionParam] = params[optionParam];
+        param === "images" && params.images === "true"
+          ? (imagesFolder = "imagesFolder")
+          : (options[param] = params[param]);
       }
-    }
-  });
+    });
 
-  if (params.count === "true") {
-    const documentsCounter = await model.countDocuments(options);
+    if (params.count === "true") {
+      const documentsCounter = await model.countDocuments(options);
 
-    return { numberOfProducts: documentsCounter };
-  } else {
-    // SORT
-    let sort = "";
-
-    if (params.sortBy) {
-      if (params.sortBy === "Meilleures ventes") {
-        sort = { visits: -1 };
-      } else {
-        sort = { editedAt: -1 };
+      return { numberOfProducts: documentsCounter };
+    } else {
+      // SORT
+      if (params.sortBy) {
+        if (params.sortBy === "Meilleures ventes") {
+          sort = { visits: -1 };
+        } else {
+          sort = { editedAt: -1 };
+        }
       }
-    }
 
-    // PRODUCTS PER PAGE
-    let skip = 0;
-
-    if (params.currentPage && params.productsPerPage) {
-      //skipping products depending on the number of pages
-      skip = (params.currentPage - 1) * params.productsPerPage;
+      // PRODUCTS PER PAGE
+      if (params.currentPage && params.productsPerPage) {
+        //skipping products depending on the number of pages
+        skip = (params.currentPage - 1) * params.productsPerPage;
+      }
     }
 
     const data = await model
-      .find(options)
+      .find(options, imagesFolder)
       .skip(skip)
       .sort(sort)
       .lean()

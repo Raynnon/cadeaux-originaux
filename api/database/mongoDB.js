@@ -11,3 +11,13 @@ mongoose.connect(url, {
   useFindAndModify: false,
   useCreateIndex: true
 });
+
+/* if (process.env.DEVELOPMENT_MOD) {
+  db.runCommand({
+    copydb: 1,
+    fromhost: "myhost",
+    username: "azureuser",
+    fromdb: "test",
+    todb: "test"
+  });
+} */

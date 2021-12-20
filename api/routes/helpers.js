@@ -5,6 +5,7 @@ const deleteItem = require("./crud/deleteItem");
 module.exports = {
   crud(router, name, model, controller) {
     /* READ */
+
     router.get(`/${name}`, async (req, res) => {
       try {
         res.send(await controller.read(model, req.query));
