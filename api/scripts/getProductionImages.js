@@ -2,7 +2,7 @@ const axios = require("axios");
 const download = require("image-downloader");
 
 const dotenv = require("dotenv");
-var fs = require("fs");
+const fs = require("fs");
 
 dotenv.config();
 
