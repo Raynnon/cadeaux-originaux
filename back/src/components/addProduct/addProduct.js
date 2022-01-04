@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
 
 import CategoryCheckBox from "./CategoryCheckbox";
@@ -20,14 +21,48 @@ import {
 } from "@mui/material";
 
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
 
 function AddProduct() {
+  //Product variables
+  const [productName, setProductName] = useState("");
+  const [productPrice, setProductPrice] = useState("");
+  const [productDescription, setProductDescription] = useState("");
+  const [productStrongPoints, setProductStrongPoints] = useState([""]);
+  const [strongPointLength, setStrongPointLength] = useState(1);
+  const [productImages, setProductImages] = useState([""]);
+  const [imagesLength, setImagesLength] = useState(1);
+  const [productUrl, setProductUrl] = useState("");
+
+  //categories variables
+  const [whoType, setWhoType] = useState([""]);
+  const [whoKind, setWhoKind] = useState([""]);
+  const [occasions, setOccasions] = useState([""]);
+  const [parties, setParties] = useState([""]);
+
   const prices = ["€", "€€", "€€€"];
 
   const selectedMenuItem = useSelector((state) => state.menu.selectedMenuItem);
   const { Genre, Type, Occasion, Fête } = useSelector(
     (state) => state.categories.categories
   );
+
+  const sendAddProductForm = () => {
+    const form = new FormData();
+    form.append("name", productName);
+    form.append("price", productPrice);
+    form.append("description", productDescription);
+    form.append("strongPoints[0]", productStrongPoints[0]);
+    form.append("whoType[0]", productName);
+    form.append("whoType[0]", productName);
+    form.append("whoKind[0]", productName);
+    form.append("whoType[0]", productName);
+    form.append("occasions[0]", productName);
+    form.append("parties[0]", productName);
+    form.append("image", productImages[0]);
+    form.append("image", productImages[1]);
+    form.append("urlAmazon", productUrl);
+  };
 
   return (
     <Container component={"main"} maxWidth={false} sx={{ marginTop: "10px" }}>
@@ -55,6 +90,7 @@ function AddProduct() {
                 variant="filled"
                 color="info"
                 sx={{ width: "230px", marginTop: "30px" }}
+                onChange={(e) => setProductName(e.target.value)}
               />
 
               {/* PRICE */}
@@ -73,6 +109,7 @@ function AddProduct() {
                           value={price}
                           control={<Radio color="info" />}
                           label={price}
+                          onChange={(e) => setProductPrice(e.target.value)}
                         />
                       </Box>
                     );
@@ -89,39 +126,64 @@ function AddProduct() {
                 rows={4}
                 color="info"
                 sx={{ marginTop: "30px", width: "520px" }}
+                onChange={(e) => setProductDescription(e.target.value)}
               />
 
               {/* POINTS FORTS */}
               <Box sx={{ marginTop: "30px" }}>
                 <FormLabel component="legend">Points forts</FormLabel>
                 <Box style={{ display: "flex", flexDirection: "column" }}>
-                  <Box>
-                    <TextField
-                      required
-                      id="name"
-                      color="info"
-                      sx={{ width: "360px" }}
-                      variant="filled"
-                      label="Point fort"
-                    />
-                    <IconButton aria-label="delete" size="large" color="info">
-                      <AddCircleIcon />
-                    </IconButton>
-                  </Box>
+                  {[...Array(strongPointLength)].map((e, index) => {
+                    return (
+                      <Box key={index}>
+                        <TextField
+                          required
+                          id="name"
+                          color="info"
+                          sx={{ width: "360px", marginBottom: "10px" }}
+                          variant="filled"
+                          label="Point fort"
+                          onChange={(e) => {
+                            const newStrongPoints = [...productStrongPoints];
 
-                  <Box>
-                    <TextField
-                      required
-                      id="name"
-                      color="info"
-                      sx={{ marginTop: "5px", width: "360px" }}
-                      variant="filled"
-                      label="Point fort"
-                    />
-                    <IconButton aria-label="delete" size="large" color="info">
-                      <AddCircleIcon />
-                    </IconButton>
-                  </Box>
+                            newStrongPoints[index] = e.target.value;
+                            setProductStrongPoints(newStrongPoints);
+                          }}
+                        />
+
+                        {strongPointLength > 1 ? (
+                          <IconButton
+                            aria-label="delete"
+                            size="large"
+                            color="error"
+                            onClick={() => {
+                              const newStrongPoints = [...productStrongPoints];
+
+                              newStrongPoints.splice(index, 1);
+
+                              setProductStrongPoints(newStrongPoints);
+                              setStrongPointLength(strongPointLength - 1);
+                            }}
+                          >
+                            <RemoveCircleRoundedIcon />
+                          </IconButton>
+                        ) : null}
+
+                        {index === strongPointLength - 1 ? (
+                          <IconButton
+                            aria-label="delete"
+                            size="large"
+                            color="info"
+                            onClick={() =>
+                              setStrongPointLength(strongPointLength + 1)
+                            }
+                          >
+                            <AddCircleIcon />
+                          </IconButton>
+                        ) : null}
+                      </Box>
+                    );
+                  })}
                 </Box>
               </Box>
 
@@ -133,12 +195,41 @@ function AddProduct() {
                   flexDirection: "column"
                 }}
               >
-                <label htmlFor="contained-button-file">
-                  <Input id="image1" type="file" color="info" />
-                </label>
-                <label htmlFor="contained-button-file">
-                  <Input id="image2" type="file" color="info" />
-                </label>
+                {[...Array(imagesLength)].map((e, index) => {
+                  return (
+                    <label htmlFor="contained-button-file" key={index}>
+                      <Input
+                        id="image1"
+                        type="file"
+                        color="info"
+                        onChange={(e) => {
+                          const newImages = [...productImages];
+
+                          newImages[index] = e.target.value;
+                          setProductImages(newImages);
+                          setImagesLength(imagesLength + 1);
+                        }}
+                      />
+                      {imagesLength > 1 ? (
+                        <IconButton
+                          aria-label="delete"
+                          size="large"
+                          color="error"
+                          onClick={() => {
+                            const newImages = [...productImages];
+
+                            newImages.splice(index, 1);
+
+                            setProductImages(newImages);
+                            setImagesLength(imagesLength - 1);
+                          }}
+                        >
+                          <RemoveCircleRoundedIcon />
+                        </IconButton>
+                      ) : null}
+                    </label>
+                  );
+                })}
               </Box>
 
               {/* URL */}
@@ -149,6 +240,7 @@ function AddProduct() {
                 color="info"
                 sx={{ marginTop: "30px", width: "460px" }}
                 variant="filled"
+                onChange={(e) => setProductUrl(e.target.value)}
               />
             </FormGroup>
           </Box>
