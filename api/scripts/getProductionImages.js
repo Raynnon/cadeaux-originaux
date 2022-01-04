@@ -6,10 +6,8 @@ const fs = require("fs");
 
 dotenv.config();
 
-const getProductionImages = async () => {
-  const productsImages = await axios.get(
-    `${process.env.PRODUCTION_URL}/products?images=true`
-  );
+const getProductionImages = async (imagesRoute) => {
+  const productsImages = await axios.get(imagesRoute);
 
   productsImages.data.forEach((product) => {
     const dir = product.imagesFolder;

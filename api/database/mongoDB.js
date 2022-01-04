@@ -2,13 +2,20 @@ const mongoose = require("mongoose");
 const getProductionImages = require("../scripts/getProductionImages");
 const dotenv = require("dotenv");
 const fs = require("fs");
-const { exec } = require("child_process");
-const { createCipheriv } = require("crypto");
-const { stdout, stderr } = require("process");
+const { dumpDB, restoreDB } = require("./copyDatabase.js");
 
 dotenv.config();
 
-const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}${process.env.DB_DATABASE}?retryWrites=true&w=majority`;
+const {
+  DB_USER,
+  DB_PASSWORD,
+  DB_HOST,
+  DB_NAME,
+  PRODUCTION_DB_NAME,
+  PRODUCTION_URL
+} = process.env;
+
+const url = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}${DB_NAME}?retryWrites=true&w=majority`;
 
 mongoose.connect(url, {
   useNewUrlParser: true,
@@ -18,31 +25,16 @@ mongoose.connect(url, {
 });
 
 if (process.env.DEVELOPMENT_MOD) {
-  getProductionImages();
+  getProductionImages(`${PRODUCTION_URL}/products?images=true`);
 
-  if (!fs.existsSync("./database/backup/")) {
-    try {
-      // DUMP DATABASE
-      const uriProd = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}${process.env.PRODUCTION_DB_DATABASE}`;
-      const dumpDatabaseCmd = `mongodump --uri ${uriProd} --out ./database/backup/`;
-
-      exec(dumpDatabaseCmd, (error, stdout, stderr) => {
-        if (error) {
-          console.log(error);
-        } else {
-        }
-      });
-    } catch (e) {
-      console.log(e);
+  const copyDB = async () => {
+    if (!fs.existsSync("./database/backup/")) {
+      //DUMP PROD DATABASE
+      await dumpDB(DB_USER, DB_PASSWORD, DB_HOST, PRODUCTION_DB_NAME);
     }
-  }
-  //COPY PROD DATABASE IN DEV DATABASE
-  const uriDev = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}${process.env.DB_DATABASE}`;
-  const restoreDatabaseCmd = `mongorestore --uri ${uriDev} ./database/backup/cadeauxoriginaux`;
+    //COPY PROD DATABASE IN DEV DATABASE
+    await restoreDB(DB_USER, DB_PASSWORD, DB_HOST, DB_NAME);
+  };
 
-  exec(restoreDatabaseCmd, (error, stdout, stderr) => {
-    if (error) {
-      console.log(error);
-    }
-  });
+  copyDB();
 }
