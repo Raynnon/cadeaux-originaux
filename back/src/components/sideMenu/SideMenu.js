@@ -12,7 +12,7 @@ function SideMenu() {
       <Paper
         elevation={3}
         sx={{
-          height: "100vh",
+          minHeight: "100vh",
           width: 320,
           maxWidth: "100%",
           borderRadius: 0,

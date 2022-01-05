@@ -28,17 +28,17 @@ function AddProduct() {
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productDescription, setProductDescription] = useState("");
-  const [productStrongPoints, setProductStrongPoints] = useState([""]);
+  const [productStrongPoints, setProductStrongPoints] = useState([]);
   const [strongPointLength, setStrongPointLength] = useState(1);
-  const [productImages, setProductImages] = useState([""]);
+  const [productImages, setProductImages] = useState([]);
   const [imagesLength, setImagesLength] = useState(1);
   const [productUrl, setProductUrl] = useState("");
 
   //categories variables
-  const [whoType, setWhoType] = useState([""]);
-  const [whoKind, setWhoKind] = useState([""]);
-  const [occasions, setOccasions] = useState([""]);
-  const [parties, setParties] = useState([""]);
+  const [whoType, setWhoType] = useState([]);
+  const [whoKind, setWhoKind] = useState([]);
+  const [occasions, setOccasions] = useState([]);
+  const [parties, setParties] = useState([]);
 
   const prices = ["€", "€€", "€€€"];
 
@@ -63,6 +63,19 @@ function AddProduct() {
     form.append("image", productImages[1]);
     form.append("urlAmazon", productUrl);
   };
+
+  const ImageName = ({ index }) => {
+    if (productImages[index]) {
+      const nameArr = productImages[index].split("\\");
+      const name = nameArr[nameArr.length - 1];
+
+      return <p style={{ display: "inline", marginLeft: "10px" }}>{name}</p>;
+    }
+
+    return null;
+  };
+
+  const submitForm = () => {};
 
   return (
     <Container component={"main"} maxWidth={false} sx={{ marginTop: "10px" }}>
@@ -131,8 +144,15 @@ function AddProduct() {
 
               {/* POINTS FORTS */}
               <Box sx={{ marginTop: "30px" }}>
-                <FormLabel component="legend">Points forts</FormLabel>
-                <Box style={{ display: "flex", flexDirection: "column" }}>
+                <FormLabel component="legend" sx={{ marginBottom: "10px" }}>
+                  Points forts
+                </FormLabel>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column"
+                  }}
+                >
                   {[...Array(strongPointLength)].map((e, index) => {
                     return (
                       <Box key={index}>
@@ -140,7 +160,10 @@ function AddProduct() {
                           required
                           id="name"
                           color="info"
-                          sx={{ width: "360px", marginBottom: "10px" }}
+                          sx={{
+                            width: "360px",
+                            marginBottom: "10px"
+                          }}
                           variant="filled"
                           label="Point fort"
                           onChange={(e) => {
@@ -190,46 +213,74 @@ function AddProduct() {
               {/* UPLOAD IMAGES */}
               <Box
                 sx={{
-                  marginTop: "30px",
+                  marginTop: "20px",
                   display: "flex",
                   flexDirection: "column"
                 }}
               >
-                {[...Array(imagesLength)].map((e, index) => {
-                  return (
-                    <label htmlFor="contained-button-file" key={index}>
-                      <Input
-                        id="image1"
-                        type="file"
-                        color="info"
-                        onChange={(e) => {
-                          const newImages = [...productImages];
+                <p style={{ color: "rgba(255, 255, 255, 0.7)", margin: 0 }}>
+                  Images du produit
+                </p>
+                {!productImages.length ? (
+                  <label
+                    htmlFor="contained-button-file"
+                    sx={{ display: "flex", flexDirection: "row" }}
+                  >
+                    <Input
+                      type="file"
+                      color="info"
+                      sx={{ color: "transparent", width: "135px" }}
+                      onChange={(e) => {
+                        const newImages = [...productImages];
 
-                          newImages[index] = e.target.value;
-                          setProductImages(newImages);
-                          setImagesLength(imagesLength + 1);
-                        }}
-                      />
-                      {imagesLength > 1 ? (
-                        <IconButton
-                          aria-label="delete"
-                          size="large"
-                          color="error"
-                          onClick={() => {
+                        newImages[0] = e.target.value;
+                        setProductImages(newImages);
+                        setImagesLength(imagesLength + 1);
+                      }}
+                    />
+                  </label>
+                ) : (
+                  [...Array(imagesLength)].map((e, index) => {
+                    return (
+                      <label
+                        htmlFor="contained-button-file"
+                        key={index}
+                        sx={{ display: "flex", flexDirection: "row" }}
+                      >
+                        <Input
+                          type="file"
+                          color="info"
+                          sx={{ color: "transparent", width: "135px" }}
+                          onChange={(e) => {
                             const newImages = [...productImages];
 
-                            newImages.splice(index, 1);
-
+                            newImages[index] = e.target.value;
                             setProductImages(newImages);
-                            setImagesLength(imagesLength - 1);
+                            setImagesLength(imagesLength + 1);
                           }}
-                        >
-                          <RemoveCircleRoundedIcon />
-                        </IconButton>
-                      ) : null}
-                    </label>
-                  );
-                })}
+                        />
+                        <ImageName index={index} />
+                        {imagesLength > 1 ? (
+                          <IconButton
+                            aria-label="delete"
+                            size="large"
+                            color="error"
+                            onClick={() => {
+                              const newImages = [...productImages];
+
+                              newImages.splice(index, 1);
+
+                              setProductImages(newImages);
+                              setImagesLength(imagesLength - 1);
+                            }}
+                          >
+                            <RemoveCircleRoundedIcon />
+                          </IconButton>
+                        ) : null}
+                      </label>
+                    );
+                  })
+                )}
               </Box>
 
               {/* URL */}
@@ -260,7 +311,13 @@ function AddProduct() {
           >
             <Typography variant="h2">CATÉGORIES</Typography>
 
-            <CategoryCheckBox cat={Genre} name={"Genres"} />
+            <CategoryCheckBox
+              cat={Genre}
+              name={"Genres"}
+              handleCategoryChange={(category) => {
+                setWhoKind(category);
+              }}
+            />
             <CategoryCheckBox cat={Type} name={"Types"} />
             <CategoryCheckBox cat={Occasion} name={"Occasions"} />
             <CategoryCheckBox cat={Fête} name={"Parties"} />
@@ -274,7 +331,12 @@ function AddProduct() {
             justifyContent: "center"
           }}
         >
-          <Button variant="contained" color="info" sx={{ color: "white" }}>
+          <Button
+            variant="contained"
+            color="info"
+            sx={{ color: "white", marginBottom: "30px" }}
+            onClick={{}}
+          >
             Ajouter produit
           </Button>
         </Box>

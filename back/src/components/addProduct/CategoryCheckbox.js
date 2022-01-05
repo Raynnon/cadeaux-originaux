@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Box,
   FormLabel,
@@ -6,7 +7,9 @@ import {
   Checkbox
 } from "@mui/material";
 
-export default function CategoryCheckBox({ cat, name }) {
+export default function CategoryCheckBox({ cat, name, handleCategoryChange }) {
+  const [categories, setCategories] = useState([]);
+
   return (
     <Box sx={{ marginTop: "30px" }}>
       <FormLabel component="legend">{name}</FormLabel>
