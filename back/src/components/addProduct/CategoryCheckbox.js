@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   FormLabel,
@@ -10,6 +10,24 @@ import {
 export default function CategoryCheckBox({ cat, name, handleCategoryChange }) {
   const [categories, setCategories] = useState([]);
 
+  const handleUpdateCategories = (category) => {
+    const newCategories = [...categories];
+
+    if (categories.includes(category)) {
+      const categoryToDelete = newCategories.indexOf(category);
+      newCategories.splice(categoryToDelete, 1);
+    } else {
+      newCategories.push(category);
+    }
+
+    setCategories(newCategories);
+  };
+
+  useEffect(() => {
+    handleCategoryChange(categories);
+  }, [categories, handleCategoryChange]);
+
+  console.log(categories);
   return (
     <Box sx={{ marginTop: "30px" }}>
       <FormLabel component="legend">{name}</FormLabel>
@@ -23,6 +41,9 @@ export default function CategoryCheckBox({ cat, name, handleCategoryChange }) {
                     value={item.name}
                     control={<Checkbox color="info" />}
                     label={item.name}
+                    onChange={(e) => {
+                      handleUpdateCategories(e.target.value);
+                    }}
                   />
                 </Box>
               );

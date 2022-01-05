@@ -62,6 +62,8 @@ function AddProduct() {
     form.append("image", productImages[0]);
     form.append("image", productImages[1]);
     form.append("urlAmazon", productUrl);
+
+    return form;
   };
 
   const ImageName = ({ index }) => {
@@ -75,7 +77,10 @@ function AddProduct() {
     return null;
   };
 
-  const submitForm = () => {};
+  const submitForm = () => {
+    console.log(sendAddProductForm().getAll("image"));
+    console.log(sendAddProductForm().entries());
+  };
 
   return (
     <Container component={"main"} maxWidth={false} sx={{ marginTop: "10px" }}>
@@ -314,13 +319,31 @@ function AddProduct() {
             <CategoryCheckBox
               cat={Genre}
               name={"Genres"}
-              handleCategoryChange={(category) => {
-                setWhoKind(category);
+              handleCategoryChange={(categories) => {
+                setWhoKind(categories);
               }}
             />
-            <CategoryCheckBox cat={Type} name={"Types"} />
-            <CategoryCheckBox cat={Occasion} name={"Occasions"} />
-            <CategoryCheckBox cat={Fête} name={"Parties"} />
+            <CategoryCheckBox
+              cat={Type}
+              name={"Types"}
+              handleCategoryChange={(categories) => {
+                setWhoType(categories);
+              }}
+            />
+            <CategoryCheckBox
+              cat={Occasion}
+              name={"Occasions"}
+              handleCategoryChange={(categories) => {
+                setOccasions(categories);
+              }}
+            />
+            <CategoryCheckBox
+              cat={Fête}
+              name={"Parties"}
+              handleCategoryChange={(categories) => {
+                setParties(categories);
+              }}
+            />
           </Paper>
         </Grid>
         <Box
@@ -335,7 +358,7 @@ function AddProduct() {
             variant="contained"
             color="info"
             sx={{ color: "white", marginBottom: "30px" }}
-            onClick={{}}
+            onClick={() => submitForm()}
           >
             Ajouter produit
           </Button>
