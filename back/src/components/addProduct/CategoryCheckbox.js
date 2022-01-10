@@ -27,7 +27,6 @@ export default function CategoryCheckBox({ cat, name, handleCategoryChange }) {
     handleCategoryChange(categories);
   }, [categories, handleCategoryChange]);
 
-  console.log(categories);
   return (
     <Box sx={{ marginTop: "30px" }}>
       <FormLabel component="legend">{name}</FormLabel>

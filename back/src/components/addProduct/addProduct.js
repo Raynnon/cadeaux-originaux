@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
+import axios from "axios";
+
 import CategoryCheckBox from "./CategoryCheckbox";
 
 import { Container, Button } from "@mui/material";
@@ -17,13 +19,17 @@ import {
   IconButton,
   Grid,
   Paper,
-  Typography
+  Typography,
+  Modal
 } from "@mui/material";
 
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
 
 function AddProduct() {
+  const [formError, setFormError] = useState(false);
+  const [productAdded, setProductAdded] = useState(false);
+
   //Product variables
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState("");
@@ -47,28 +53,9 @@ function AddProduct() {
     (state) => state.categories.categories
   );
 
-  const sendAddProductForm = () => {
-    const form = new FormData();
-    form.append("name", productName);
-    form.append("price", productPrice);
-    form.append("description", productDescription);
-    form.append("strongPoints[0]", productStrongPoints[0]);
-    form.append("whoType[0]", productName);
-    form.append("whoType[0]", productName);
-    form.append("whoKind[0]", productName);
-    form.append("whoType[0]", productName);
-    form.append("occasions[0]", productName);
-    form.append("parties[0]", productName);
-    form.append("image", productImages[0]);
-    form.append("image", productImages[1]);
-    form.append("urlAmazon", productUrl);
-
-    return form;
-  };
-
   const ImageName = ({ index }) => {
     if (productImages[index]) {
-      const nameArr = productImages[index].split("\\");
+      const nameArr = productImages[index].name.split("\\");
       const name = nameArr[nameArr.length - 1];
 
       return <p style={{ display: "inline", marginLeft: "10px" }}>{name}</p>;
@@ -77,13 +64,113 @@ function AddProduct() {
     return null;
   };
 
-  const submitForm = () => {
-    console.log(sendAddProductForm().getAll("image"));
-    console.log(sendAddProductForm().entries());
+  const submitForm = async () => {
+    if (!productName || !productPrice || !productImages || !productUrl) {
+      setFormError(true);
+    } else {
+      setFormError(false);
+
+      const data = new FormData();
+      data.append("name", productName);
+      data.append("price", productPrice);
+      data.append("description", productDescription);
+      data.append("strongPoints", productStrongPoints);
+      data.append("whoType", whoType);
+      data.append("whoKind", whoKind);
+      data.append("occasions", occasions);
+      data.append("parties", parties);
+      productImages.forEach((image) => {
+        data.append("image", image);
+      });
+      data.append("urlAmazon", productUrl);
+      try {
+        await axios({
+          method: "post",
+          url: process.env.REACT_APP_API_URL + "/products",
+          data,
+          headers: { "Content-Type": "multipart/form-data" }
+        });
+        setProductAdded(true);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+
+  const resetState = () => {
+    setFormError(false);
+    setProductAdded(false);
+    setProductName("");
+    setProductPrice("");
+    setProductDescription("");
+    setProductStrongPoints([]);
+    setStrongPointLength(1);
+    setProductImages([]);
+    setImagesLength(1);
+    setProductUrl("");
+    setWhoType([]);
+    setWhoKind([]);
+    setOccasions([]);
+    setParties([]);
   };
 
   return (
     <Container component={"main"} maxWidth={false} sx={{ marginTop: "10px" }}>
+      <Modal
+        open={formError}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        onClose={() => setFormError(false)}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4
+          }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Erreur lors de l'ajout du produit{" "}
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Veuillez remplir tous les champs possédant un astérisque et
+            choisissez au moins une catégorie.
+          </Typography>
+        </Box>
+      </Modal>
+      <Modal
+        open={productAdded}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        onClose={() => resetState()}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4
+          }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Succès!
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Produit ajouté avec succès!
+          </Typography>
+        </Box>
+      </Modal>
       <Typography variant="h1">{selectedMenuItem}</Typography>
       <Grid
         container
@@ -109,16 +196,20 @@ function AddProduct() {
                 color="info"
                 sx={{ width: "230px", marginTop: "30px" }}
                 onChange={(e) => setProductName(e.target.value)}
+                value={productName}
               />
 
               {/* PRICE */}
               <Box sx={{ marginTop: "30px" }}>
-                <FormLabel component="legend">Prix</FormLabel>
+                <FormLabel required component="legend">
+                  Prix
+                </FormLabel>
 
                 <RadioGroup
                   row
                   aria-label="price"
                   name="row-radio-buttons-group"
+                  value={productPrice || ""}
                 >
                   {prices.map((price, index) => {
                     return (
@@ -138,6 +229,7 @@ function AddProduct() {
               {/* DESCRIPTION*/}
               <TextField
                 id="outlined-multiline-static"
+                value={productDescription}
                 label="Description"
                 variant="filled"
                 multiline
@@ -149,9 +241,6 @@ function AddProduct() {
 
               {/* POINTS FORTS */}
               <Box sx={{ marginTop: "30px" }}>
-                <FormLabel component="legend" sx={{ marginBottom: "10px" }}>
-                  Points forts
-                </FormLabel>
                 <Box
                   sx={{
                     display: "flex",
@@ -162,7 +251,6 @@ function AddProduct() {
                     return (
                       <Box key={index}>
                         <TextField
-                          required
                           id="name"
                           color="info"
                           sx={{
@@ -171,6 +259,7 @@ function AddProduct() {
                           }}
                           variant="filled"
                           label="Point fort"
+                          value={productStrongPoints[index] || ""}
                           onChange={(e) => {
                             const newStrongPoints = [...productStrongPoints];
 
@@ -224,7 +313,7 @@ function AddProduct() {
                 }}
               >
                 <p style={{ color: "rgba(255, 255, 255, 0.7)", margin: 0 }}>
-                  Images du produit
+                  Images du produit *
                 </p>
                 {!productImages.length ? (
                   <label
@@ -238,7 +327,7 @@ function AddProduct() {
                       onChange={(e) => {
                         const newImages = [...productImages];
 
-                        newImages[0] = e.target.value;
+                        newImages[0] = e.target.files[0];
                         setProductImages(newImages);
                         setImagesLength(imagesLength + 1);
                       }}
@@ -259,7 +348,7 @@ function AddProduct() {
                           onChange={(e) => {
                             const newImages = [...productImages];
 
-                            newImages[index] = e.target.value;
+                            newImages[index] = e.target.files[0];
                             setProductImages(newImages);
                             setImagesLength(imagesLength + 1);
                           }}
@@ -296,6 +385,7 @@ function AddProduct() {
                 color="info"
                 sx={{ marginTop: "30px", width: "460px" }}
                 variant="filled"
+                value={productUrl}
                 onChange={(e) => setProductUrl(e.target.value)}
               />
             </FormGroup>
@@ -314,7 +404,7 @@ function AddProduct() {
               padding: "50px"
             }}
           >
-            <Typography variant="h2">CATÉGORIES</Typography>
+            <Typography variant="h2">CATÉGORIES *</Typography>
 
             <CategoryCheckBox
               cat={Genre}
