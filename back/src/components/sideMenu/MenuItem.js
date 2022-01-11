@@ -30,7 +30,11 @@ const MenuItem = ({ name, Icon, link }) => {
         <ListItemIcon>
           <Icon data-testid="menu-item-icon" color="secondary" />
         </ListItemIcon>
-        <ListItemText data-testid="menu-item-text" sx={{ color: "white" }}>
+        <ListItemText
+          className="menu-text"
+          sx={{ color: "white", display: { xs: "none", md: "block" } }}
+          data-testid="menu-item-text"
+        >
           {name}
         </ListItemText>
       </ListItemButton>

@@ -2,7 +2,8 @@ import MenuItem from "./MenuItem";
 
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import FormatListBulletedRoundedIcon from "@mui/icons-material/FormatListBulletedRounded";
-import logoMesCadeauxOriginaux from "./logo-cadeaux-originaux-small-white.png";
+import logoMesCadeauxOriginaux from "./logo-cadeaux-originaux-white.png";
+import logoMesCadeauxOriginauxSmall from "./logo-cadeaux-originaux-white-small.png";
 
 import { Box, Paper, MenuList } from "@mui/material/";
 
@@ -11,27 +12,36 @@ function SideMenu() {
     <>
       <Paper
         elevation={3}
+        id="side-menu"
         sx={{
+          width: { xs: "70px", md: "320px" },
           minHeight: "100vh",
-          width: 320,
-          maxWidth: "100%",
-          borderRadius: 0,
+          padding: { xs: "17px 5px", md: "10px 22px" },
           background:
             "linear-gradient(0deg, rgba(18,21,27,1) 0%, rgba(35,44,57,1) 50%, rgba(48,61,80,1) 100%)"
         }}
       >
         <Box
           sx={{
-            padding: "10px 22px",
             color: "text.secondary",
             justifyContent: "true"
           }}
         >
-          <img
-            data-testid="logo-img"
-            src={logoMesCadeauxOriginaux}
-            alt="logo-mescadeauxoriginaux"
-          />
+          <Box sx={{ display: { xs: "none", md: "block" } }}>
+            <img
+              data-testid="logo-img"
+              src={logoMesCadeauxOriginaux}
+              alt="logo-mescadeauxoriginaux"
+            />
+          </Box>
+
+          <Box sx={{ display: { xs: "block", md: "none" } }}>
+            <img
+              data-testid="logo-img"
+              src={logoMesCadeauxOriginauxSmall}
+              alt="logo-mescadeauxoriginaux"
+            />
+          </Box>
 
           <Box>
             <MenuList>
@@ -41,7 +51,7 @@ function SideMenu() {
                 link={"products"}
               />
               <MenuItem
-                name={"AJOUTER PRODUIT"}
+                name={"AJOUTER PROD."}
                 Icon={AddCircleRoundedIcon}
                 link={"add-product"}
               />

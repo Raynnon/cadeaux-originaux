@@ -179,7 +179,7 @@ function AddProduct() {
           marginTop: "10px"
         }}
       >
-        <Grid item xs={7}>
+        <Grid item xs={12} xl={7}>
           <Box
             sx={{
               padding: "20px 0px"
@@ -197,6 +197,7 @@ function AddProduct() {
                 sx={{ width: "230px", marginTop: "30px" }}
                 onChange={(e) => setProductName(e.target.value)}
                 value={productName}
+                data-testid="name-field"
               />
 
               {/* PRICE */}
@@ -210,6 +211,7 @@ function AddProduct() {
                   aria-label="price"
                   name="row-radio-buttons-group"
                   value={productPrice || ""}
+                  data-testid="prices-field"
                 >
                   {prices.map((price, index) => {
                     return (
@@ -235,8 +237,13 @@ function AddProduct() {
                 multiline
                 rows={4}
                 color="info"
-                sx={{ marginTop: "30px", width: "520px" }}
+                sx={{
+                  marginTop: "30px",
+                  width: "520px",
+                  maxWidth: { xs: "75vw" }
+                }}
                 onChange={(e) => setProductDescription(e.target.value)}
+                data-testid="description-field"
               />
 
               {/* POINTS FORTS */}
@@ -254,7 +261,7 @@ function AddProduct() {
                           id="name"
                           color="info"
                           sx={{
-                            width: "360px",
+                            width: { xs: "57vw", sm: "360px" },
                             marginBottom: "10px"
                           }}
                           variant="filled"
@@ -266,6 +273,7 @@ function AddProduct() {
                             newStrongPoints[index] = e.target.value;
                             setProductStrongPoints(newStrongPoints);
                           }}
+                          data-testid="strong-points-field"
                         />
 
                         {strongPointLength > 1 ? (
@@ -282,7 +290,7 @@ function AddProduct() {
                               setStrongPointLength(strongPointLength - 1);
                             }}
                           >
-                            <RemoveCircleRoundedIcon />
+                            <RemoveCircleRoundedIcon data-testid="strong-point-delete-button" />
                           </IconButton>
                         ) : null}
 
@@ -295,7 +303,7 @@ function AddProduct() {
                               setStrongPointLength(strongPointLength + 1)
                             }
                           >
-                            <AddCircleIcon />
+                            <AddCircleIcon data-testid="strong-point-add-button" />
                           </IconButton>
                         ) : null}
                       </Box>
@@ -331,6 +339,7 @@ function AddProduct() {
                         setProductImages(newImages);
                         setImagesLength(imagesLength + 1);
                       }}
+                      data-testid="images-upload-field"
                     />
                   </label>
                 ) : (
@@ -352,6 +361,7 @@ function AddProduct() {
                             setProductImages(newImages);
                             setImagesLength(imagesLength + 1);
                           }}
+                          data-testid="images-upload-field"
                         />
                         <ImageName index={index} />
                         {imagesLength > 1 ? (
@@ -368,7 +378,7 @@ function AddProduct() {
                               setImagesLength(imagesLength - 1);
                             }}
                           >
-                            <RemoveCircleRoundedIcon />
+                            <RemoveCircleRoundedIcon data-testid="images-upload-delete-button" />
                           </IconButton>
                         ) : null}
                       </label>
@@ -383,17 +393,18 @@ function AddProduct() {
                 id="url"
                 label="URL du produit"
                 color="info"
-                sx={{ marginTop: "30px", width: "460px" }}
+                sx={{ marginTop: "30px", width: { xs: "76vw", sm: "460px" } }}
                 variant="filled"
                 value={productUrl}
                 onChange={(e) => setProductUrl(e.target.value)}
+                data-testid="url-field"
               />
             </FormGroup>
           </Box>
         </Grid>
 
         {/* CATEGORIES*/}
-        <Grid item xs={5}>
+        <Grid item xs={12} xl={5}>
           <Paper
             elevation={3}
             sx={{
@@ -401,8 +412,10 @@ function AddProduct() {
                 "linear-gradient(45deg, #191c26 33.33%, #161924 33.33%, #161924 50%, #191c26 50%, #191c26 83.33%, #161924 83.33%, #161924 100%)",
               backgroundSize: "42.43px 42.43px",
               borderRadius: 5,
-              padding: "50px"
+              padding: { xs: "25px", sm: "50px" },
+              maxWidth: { xs: "76vw", sm: "100%" }
             }}
+            data-testid="categories-group"
           >
             <Typography variant="h2">CATÉGORIES *</Typography>
 
@@ -412,7 +425,9 @@ function AddProduct() {
               handleCategoryChange={(categories) => {
                 setWhoKind(categories);
               }}
+              data-testid="category-group"
             />
+
             <CategoryCheckBox
               cat={Type}
               name={"Types"}
@@ -420,6 +435,7 @@ function AddProduct() {
                 setWhoType(categories);
               }}
             />
+
             <CategoryCheckBox
               cat={Occasion}
               name={"Occasions"}
@@ -427,6 +443,7 @@ function AddProduct() {
                 setOccasions(categories);
               }}
             />
+
             <CategoryCheckBox
               cat={Fête}
               name={"Parties"}
@@ -449,6 +466,7 @@ function AddProduct() {
             color="info"
             sx={{ color: "white", marginBottom: "30px" }}
             onClick={() => submitForm()}
+            data-testid="add-product-button"
           >
             Ajouter produit
           </Button>
