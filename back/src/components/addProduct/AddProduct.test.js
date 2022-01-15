@@ -1,4 +1,4 @@
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, fireEvent, screen, prettyDOM } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import AddProduct from "./AddProduct";
 import { Provider } from "react-redux";
@@ -96,19 +96,5 @@ describe("Testing Strong points functionalities", () => {
     strongPointsField = screen.getAllByTestId("strong-points-field");
 
     expect(strongPointsField.length).toBe(1);
-  });
-
-  test("Add and delete file", async () => {
-    /* const file = new File(["hello"], "hello.png", { type: "image/png" }); */
-    const file = new Blob(["hello"], { type: "image/png" });
-    const fileInput = screen.getAllByTestId("images-upload-field");
-
-    /* const deleteButton = screen.getAllByTestId("images-upload-delete-button"); */
-
-    expect(fileInput.length).toBe(1);
-    console.log("fakeFile", file);
-    await userEvent.upload(fileInput, file);
-
-    /* expect(deleteButton.length).toBeFalsy(); */
   });
 });
