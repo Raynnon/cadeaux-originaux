@@ -6,13 +6,15 @@ const updateOneItem = async (req, model) => {
     ...req.body
   };
 
+  // If property does not exists, delete property
   const toUpdateNotNull = (obj) => {
-    for (let propName in obj) {
-      if (obj[propName] === null || obj[propName] === undefined) {
-        delete obj[propName];
-      }
-    }
-    return obj;
+    const objFiltered = Object.fromEntries(
+      Object.entries(obj).filter(([key, value]) => {
+        return value !== null && value !== undefined;
+      })
+    );
+
+    return objFiltered;
   };
 
   const data = await model.findById(_id).lean().exec();

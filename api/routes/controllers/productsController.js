@@ -2,11 +2,6 @@ const imageToDataAdder = require("../crud/tools/imageToDataAdder");
 const updateOneItem = require("../crud/updateOneItem");
 
 const read = async (model, params) => {
-  const options = {};
-  let imagesFolder = "";
-  let sort = "";
-  let skip = 0;
-
   if (params) {
     const simpleOptionParameters = [
       "_id",
@@ -14,23 +9,25 @@ const read = async (model, params) => {
       "whoType",
       "occasions",
       "parties",
-      "price",
-      "images"
+      "price"
     ];
 
-    simpleOptionParameters.forEach((optionParam) => {
-      if (params[optionParam]) {
-        if (params[optionParam].includes(",")) {
-          const paramsArray = params[optionParam].split(",");
+    const options = Object.fromEntries(
+      simpleOptionParameters
+        .filter((element) => {
+          return params[element];
+        })
+        .map((item) => {
+          if (params[item].includes(",")) {
+            return [item, { $in: params[item].split(",") }];
+          } else {
+            return [item, { $in: params[item] }];
+          }
+        })
+    );
+    let sort = "";
+    let skip = 0;
 
-          options[optionParam] = { $in: paramsArray };
-        } else {
-          optionParam === "images" && params.images === "true"
-            ? (imagesFolder = "imagesFolder")
-            : (options[optionParam] = params[optionParam]);
-        }
-      }
-    });
 
     if (params.count === "true") {
       const documentsCounter = await model.countDocuments(options);
@@ -54,14 +51,18 @@ const read = async (model, params) => {
     }
 
     const data = await model
-      .find(options, imagesFolder)
+      .find(options)
       .skip(skip)
       .sort(sort)
       .lean()
       .limit(Number(params.productsPerPage))
       .exec();
 
-    return await imageToDataAdder(data);
+    if (params.images) {
+      return await imageToDataAdder(data);
+    } else {
+      return data;
+    }
   }
 };
 
