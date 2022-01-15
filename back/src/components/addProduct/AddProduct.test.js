@@ -1,5 +1,4 @@
-import { render, fireEvent, screen, prettyDOM } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, fireEvent, screen } from "@testing-library/react";
 import AddProduct from "./AddProduct";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";

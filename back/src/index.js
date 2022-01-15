@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./app/App";
 import AddProduct from "./components/addProduct/AddProduct";
+import ProductsList from "./components/productsList/ProductsList";
 
 import { store } from "./app/state/store";
 import { Provider } from "react-redux";
@@ -22,7 +23,7 @@ ReactDOM.render(
           <CssBaseline />
           <Routes>
             <Route path="/" element={<App />}>
-              <Route path="products" element={<AddProduct />} />
+              <Route path="products" element={<ProductsList />} />
               <Route path="add-product" element={<AddProduct />} />
             </Route>
           </Routes>
