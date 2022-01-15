@@ -136,7 +136,7 @@ function AddProduct() {
           }}
         >
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Erreur lors de l'ajout du produit{" "}
+            Erreur lors de l'ajout du produit
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Veuillez remplir tous les champs possédant un astérisque et
@@ -446,7 +446,7 @@ function AddProduct() {
 
             <CategoryCheckBox
               cat={Fête}
-              name={"Parties"}
+              name={"Fêtes"}
               handleCategoryChange={(categories) => {
                 setParties(categories);
               }}
