@@ -136,7 +136,7 @@ export default function Product({
 export async function getServerSideProps({ query }) {
   try {
     const productData = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/products/?_id=${query.productId}`
+      `${process.env.NEXT_PUBLIC_API_URL}/products/?_id=${query.productId}&images=true`
     );
 
     const product = productData.data[0];

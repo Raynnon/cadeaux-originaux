@@ -16,12 +16,12 @@ export default function ProductsSuggestion({ type }) {
     if (type === "new") {
       setTitle("Nouveaux produits");
       productsReq = await axios(
-        `${process.env.NEXT_PUBLIC_API_URL}/products?sortBy=Nouveau&currentPage=1&productsPerPage=6`
+        `${process.env.NEXT_PUBLIC_API_URL}/products?images=true&sortBy=Nouveau&currentPage=1&productsPerPage=6`
       );
     } else {
       setTitle("Meilleurs produits");
       productsReq = await axios(
-        `${process.env.NEXT_PUBLIC_API_URL}/products?sortBy=Meilleures ventes&currentPage=1&productsPerPage=6`
+        `${process.env.NEXT_PUBLIC_API_URL}/products?images=true&currentPage=1&productsPerPage=6&sortBy=Meilleures ventes`
       );
     }
 

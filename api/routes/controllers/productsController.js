@@ -28,7 +28,6 @@ const read = async (model, params) => {
     let sort = "";
     let skip = 0;
 
-
     if (params.count === "true") {
       const documentsCounter = await model.countDocuments(options);
 

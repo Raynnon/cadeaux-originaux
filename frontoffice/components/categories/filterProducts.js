@@ -37,7 +37,8 @@ const filteredProducts = async (
     { sortBy: selectedSortBy },
     { currentPage },
     { productsPerPage },
-    { count }
+    { count },
+    { images: true }
   ];
 
   // Filter parameters that are not All
