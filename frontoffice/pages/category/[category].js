@@ -10,6 +10,7 @@ import slugify from "slugify";
 import filterProducts from "../../components/categories/filterProducts";
 
 export default function Category({
+  xcategories,
   categories,
   currentCategory,
   defaultSelectedSortBy,
@@ -17,9 +18,7 @@ export default function Category({
   defaultSelectedType,
   defaultPrices,
   defaultSelectedOccasion,
-  selectedParty,
-  defaultCurrentPage,
-  defaultProductsPerPage
+  selectedParty
 }) {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [numberOfProducts, setNumberOfProducts] = useState(0);
@@ -30,8 +29,9 @@ export default function Category({
   const [selectedOccasion, setSelectedOccasion] = useState(
     defaultSelectedOccasion
   );
-  const [currentPage, selectCurrentPage] = useState(defaultCurrentPage);
-  const productsPerPage = defaultProductsPerPage;
+  const [currentPage, selectCurrentPage] = useState(xcategories.currentPage);
+  const productsPerPage = xcategories.productsPerPage;
+  const categoryName = xcategories.categoryName;
 
   // GET PRODUCTS ON FILTER CHANGE
   useEffect(async () => {
@@ -54,8 +54,7 @@ export default function Category({
       prices,
       selectedType,
       selectedOccasion,
-      selectedParty,
-      numberOfProducts
+      selectedParty
     );
 
     setNumberOfProducts(maxProducts.numberOfProducts);
@@ -74,45 +73,38 @@ export default function Category({
     selectCurrentPage(Number(page));
   };
 
-  const pageTitle = (catName) => {
-    if (catName === "Nouveau") {
+  const pageTitle = () => {
+    if (categoryName === "Nouveau") {
       return "Nouveaux cadeaux - Mes cadeaux originaux";
-    } else if (catName === "Meilleurs cadeaux") {
+    } else if (categoryName === "Meilleurs cadeaux") {
       return "Meilleurs cadeaux - Mes cadeaux originaux";
     } else {
-      return `Cadeau pour ${catName} - Mes cadeaux originaux`;
+      return `Cadeau pour ${categoryName} - Mes cadeaux originaux`;
     }
   };
 
   return (
-    <Layout
-      pageTitle={pageTitle(currentCategory.name)}
-      description={currentCategory.description}
-    >
+    <Layout pageTitle={pageTitle()} description={currentCategory.description}>
       <div className="flex -mb-10">
         {/* FILTER */}
-        <aside className="hidden md:block mb-5 pt-4 xl:pl-32 pr-1 lg:pl-5 xl:pl-32">
+        <aside className="hidden px-1 md:block pb-5 pt-4 xl:pl-32 lg:pl-5 lg:pr:5 xl:pl-10 xl:pr-10 bg-coolGray-100">
           <form className="xl:w-52">
-            {currentCategory.name === "Nouveau" ||
-            currentCategory.name === "Meilleurs cadeaux" ? null : (
-              <ul
-                onChange={(e) => {
-                  setSelectedSortBy(e.target.value);
-                }}
-              >
+            {categoryName === "Nouveau" ||
+            categoryName === "Meilleurs cadeaux" ? null : (
+              <ul>
                 <label htmlFor="sort">
                   <h4>Classer par:</h4>
                 </label>
                 <select
                   id="sorts"
-                  className="block w-full bg-white border border-gray-100 hover:border-gray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
+                  className="block w-full bg-white border border-gray-100 hover:border-coolGray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
                   onChange={(e) => {
                     setSelectedSortBy(e.target.value);
                   }}
-                  defaultValue=""
+                  defaultValue={selectedSortBy}
                 >
-                  <option value="">Nouveau</option>
-                  <option>Meilleures ventes</option>
+                  <option value="Nouveau">Nouveau</option>
+                  <option value="Meilleures ventes">Meilleures ventes</option>
                 </select>
               </ul>
             )}
@@ -130,13 +122,13 @@ export default function Category({
                         </label>
                       </li>
                     );
-                  })}{" "}
+                  })}
                   <li className="flex-grow text-left pr-2">
                     <label className="inline-flex items-center">
                       <input
                         type="radio"
                         name="genre"
-                        value="Tout"
+                        value=""
                         defaultChecked
                       />
                       <span className="ml-2">Tout</span>
@@ -166,28 +158,28 @@ export default function Category({
                       if (type.parent.includes(selectedGenre)) {
                         return (
                           <li key={index} className="flex-grow text-left pr-2">
-                            <input
-                              type="checkbox"
-                              name="Type"
-                              value={type.name}
-                              defaultChecked
-                            />
                             <label className="inline-flex items-center">
-                              {type.name}
+                              <input
+                                type="checkbox"
+                                name="Type"
+                                value={type.name}
+                              />
+
+                              <span className="ml-2">{type.name}</span>
                             </label>
                           </li>
                         );
-                      } else if (selectedGenre === "Tout") {
+                      } else if (!selectedGenre) {
                         return (
                           <li key={index} className="flex-grow text-left pr-2">
-                            <input
-                              type="checkbox"
-                              name="Type"
-                              value={type.name}
-                              defaultChecked
-                            />
-                            <label className="inline-flex items-center ml-2">
-                              {type.name}
+                            <label className="inline-flex items-center">
+                              <input
+                                type="checkbox"
+                                name="Type"
+                                value={type.name}
+                              />
+
+                              <span className="ml-2">{type.name}</span>
                             </label>
                           </li>
                         );
@@ -211,12 +203,7 @@ export default function Category({
                 return (
                   <li key={index} className="flex-grow text-left pr-2">
                     <label className="inline-flex items-center">
-                      <input
-                        type="checkbox"
-                        name="prix"
-                        value={price}
-                        defaultChecked
-                      />
+                      <input type="checkbox" name="prix" value={price} />
                       <span className="ml-2">{price}</span>
                     </label>
                   </li>
@@ -229,7 +216,7 @@ export default function Category({
                 <h4>Occasion</h4>
                 <select
                   id="occasion"
-                  className="block w-full bg-white border border-gray-100 hover:border-gray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
+                  className="block w-full bg-white border border-coolGray-100 hover:border-coolGray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
                   onChange={(e) => {
                     setSelectedOccasion(e.target.value);
                   }}
@@ -244,8 +231,9 @@ export default function Category({
             )}
           </form>
         </aside>
-        <main className="mt-6 lg:px-5 xl:pr-20 border-2 border-transparent border-l-coolGray-100">
-          <h1 className="text-4xl font-semibold">{`${currentCategory.name}`}</h1>
+
+        <main className="mx-1 mt-6 lg:pl-5 xl:pr-20">
+          <h1 className="text-4xl font-semibold">{`${categoryName}`}</h1>
           <p className="my-5 text-justify">{currentCategory.description}</p>
 
           <Pagination
@@ -256,7 +244,7 @@ export default function Category({
           />
 
           {/*PRODUCTS */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 justify-between mb-10 min-w-full">
+          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-between mb-10 min-w-full">
             {filteredProducts.length
               ? filteredProducts.map((product, index) => {
                   return (
@@ -361,54 +349,65 @@ export async function getServerSideProps({ query }) {
     const categories = dataCategories.data;
 
     // INITIATE DEFAULT FILTERS
-    let defaultSelectedSortBy = "Nouveau";
-    let defaultSelectedGenre = "Tout";
+    let defaultSelectedSortBy =
+      currentCategory.name === "Meilleurs cadeaux"
+        ? "Meilleures ventes"
+        : "Nouveau";
+
+    let defaultSelectedGenre = currentCategory.parent.includes("Genre")
+      ? currentCategory.name
+      : "";
+
     let defaultSelectedType = {};
+
+    let defaultSelectedOccasion = currentCategory.parent.includes("Occasion")
+      ? currentCategory.name
+      : "";
+
+    let selectedParty = currentCategory.parent.includes("Fête")
+      ? currentCategory.name
+      : "";
+
     let defaultPrices = {
       "€": true,
       "€€": true,
       "€€€": true
     };
-    let defaultSelectedOccasion = "Tout";
-    let selectedParty = "Tout";
-
-    let defaultCurrentPage = 1;
-    let defaultProductsPerPage = 16;
 
     // SET FILTERS IN ACCORDANCE TO THE PAGE
-    const { name: categoryName } = currentCategory;
-
-    if (categoryName === "Nouveau" || categoryName === "Meilleurs cadeaux") {
-      if (categoryName === "Meilleurs cadeaux") {
-        defaultSelectedSortBy = "Meilleures ventes";
-      }
-    } else {
-      if (currentCategory.parent.includes("Type")) {
-        categories.Type.forEach((item) => {
-          if (item.name === categoryName) {
-            defaultSelectedType[item.name] = true;
-          } else {
-            defaultSelectedType[item.name] = false;
-          }
-        });
-      } else {
-        // INITIATE SELECTED TYPES
-        categories.Type.forEach((item) => {
+    if (currentCategory.parent.includes("Type")) {
+      categories.Type.forEach((item) => {
+        if (item.name === currentCategory.name) {
           defaultSelectedType[item.name] = true;
-        });
-
-        if (currentCategory.parent.includes("Genre")) {
-          defaultSelectedGenre = categoryName;
-        } else if (currentCategory.parent.includes("Occasion")) {
-          defaultSelectedOccasion = categoryName;
-        } else if (currentCategory.parent.includes("Fête")) {
-          selectedParty = categoryName;
+        } else {
+          defaultSelectedType[item.name] = false;
         }
-      }
+      });
+    } else {
+      // INITIATE SELECTED TYPES
+      categories.Type.forEach((item) => {
+        defaultSelectedType[item.name] = true;
+      });
     }
+
+    ////////////////////////////////////////
+    const xcategories = {
+      categoryName: currentCategory.name,
+      selectedSortBy: "Nouveau",
+      selectedGenre: [],
+      selectedType: [],
+      selectedPrices: [],
+      selectedOccasion: [],
+      selectedParty: [],
+      currentPage: 1,
+      productsPerPage: 16
+    };
+
+    console.log(xcategories);
 
     return {
       props: {
+        xcategories,
         categories,
         currentCategory,
         defaultSelectedSortBy,
@@ -417,8 +416,6 @@ export async function getServerSideProps({ query }) {
         defaultPrices,
         defaultSelectedOccasion,
         selectedParty,
-        defaultCurrentPage,
-        defaultProductsPerPage,
         key: query.category
       }
     };

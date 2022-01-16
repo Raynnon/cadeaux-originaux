@@ -34,16 +34,13 @@ const filteredProducts = async (
     { whoType: chechboxParamToString(selectedType) },
     { occasions: selectedOccasion },
     { parties: selectedParty },
-    { sortBy: selectedSortBy },
-    { currentPage },
-    { productsPerPage },
     { count },
     { images: true }
   ];
 
   // Filter parameters that are not All
   const filteredParameters = parameters.filter(
-    (item) => item[Object.keys(item)] != "Tout"
+    (item) => item[Object.keys(item)]
   );
 
   // Push each filtered parameters in option array
@@ -52,6 +49,28 @@ const filteredProducts = async (
   });
 
   const optionsReq = options.length ? `?${options.join("&")}` : ``;
+
+  ////////////////////
+
+  const parametersName = {
+    sortBy: selectedSortBy,
+    currentPage: currentPage,
+    productsPerPage: productsPerPage
+  };
+
+  const newOptions = Object.entries(parametersName)
+    .filter(([k, v]) => {
+      return v;
+    })
+    .map((item) => {
+      return `${item[0]}=${item[1]}`;
+    })
+    .join("&");
+
+  optionsReq += `&${newOptions}`;
+
+  /////////////////////////
+
   const dataProducts = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/products${optionsReq}`
   );
