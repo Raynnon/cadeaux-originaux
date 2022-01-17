@@ -6,6 +6,7 @@ import axios from "axios";
 
 import filterProducts from "../../components/categories/filterProducts";
 import CheckboxRadio from "../../components/categories/CheckboxRadio";
+import Select from "../../components/categories/Select.js";
 import ProductsCard from "../../components/categories/ProductsCard";
 
 export default function Category({ filters, categories, currentCategory }) {
@@ -18,6 +19,7 @@ export default function Category({ filters, categories, currentCategory }) {
   const [selectedOccasion, setSelectedOccasion] = useState(
     filters.selectedOccasion
   );
+  const [selectedParty, setSelectedParty] = useState(filters.selectedParty);
   const [currentPage, selectCurrentPage] = useState(filters.currentPage);
   const productsPerPage = filters.productsPerPage;
   const categoryName = filters.categoryName;
@@ -29,7 +31,7 @@ export default function Category({ filters, categories, currentCategory }) {
       prices,
       selectedType,
       selectedOccasion,
-      filters.selectedParty,
+      selectedParty,
       selectedSortBy,
       currentPage,
       productsPerPage
@@ -43,13 +45,14 @@ export default function Category({ filters, categories, currentCategory }) {
       prices,
       selectedType,
       selectedOccasion,
-      filters.selectedParty
+      selectedParty
     );
 
     setNumberOfProducts(maxProducts.numberOfProducts);
   }, [
     selectedGenre,
     selectedOccasion,
+    selectedParty,
     prices,
     selectedType,
     selectedSortBy,
@@ -97,7 +100,7 @@ export default function Category({ filters, categories, currentCategory }) {
               </ul>
             )}
 
-            {currentCategory.parent[0] === "Genre" ? null : (
+            {currentCategory.parent.includes("Genre") ? null : (
               <div>
                 <h4>Genre</h4>
                 <ul onChange={(e) => setSelectedGenre(e.target.value)}>
@@ -122,43 +125,47 @@ export default function Category({ filters, categories, currentCategory }) {
               </div>
             )}
 
-            {selectedGenre !== "Animal" ? (
-              currentCategory.parent[0] === "Type" ? null : (
-                <div>
-                  <h4>Type</h4>
-                  <ul>
-                    {categories.Type.map((type, index) => {
-                      if (
-                        type.parent.includes(selectedGenre) ||
-                        !selectedGenre
-                      ) {
-                        return (
-                          <CheckboxRadio
-                            key={index}
-                            type="checkbox"
-                            value={type.name}
-                            name="Type"
-                            changeCategoryHandler={(changedCategory) => {
-                              if (selectedType.includes(changedCategory)) {
-                                setSelectedType(
-                                  selectedType.filter(
-                                    (type) => type !== changedCategory
-                                  )
-                                );
-                              } else {
-                                setSelectedType([
-                                  ...selectedType,
-                                  changedCategory
-                                ]);
-                              }
-                            }}
-                          />
-                        );
-                      }
-                    })}
-                  </ul>
-                </div>
-              )
+            {!currentCategory.parent.includes("Type") &&
+            selectedGenre !== "Animal" ? (
+              <div>
+                <h4>Type</h4>
+                <ul>
+                  {categories.Type.filter(
+                    (type) =>
+                      type.parent.includes(selectedGenre) ||
+                      currentCategory !== "Nouveau" ||
+                      currentCategory !== "Meilleurs cadeaux"
+                  ).map((filteredType, index) => {
+                    if (
+                      filteredType.parent.includes(selectedGenre) ||
+                      !selectedGenre
+                    ) {
+                      return (
+                        <CheckboxRadio
+                          key={index}
+                          type="checkbox"
+                          value={filteredType.name}
+                          name="Type"
+                          changeCategoryHandler={(changedCategory) => {
+                            if (selectedType.includes(changedCategory)) {
+                              setSelectedType(
+                                selectedType.filter(
+                                  (type) => type !== changedCategory
+                                )
+                              );
+                            } else {
+                              setSelectedType([
+                                ...selectedType,
+                                changedCategory
+                              ]);
+                            }
+                          }}
+                        />
+                      );
+                    }
+                  })}
+                </ul>
+              </div>
             ) : null}
 
             <h4>Prix</h4>
@@ -184,34 +191,24 @@ export default function Category({ filters, categories, currentCategory }) {
                 );
               })}
             </ul>
-            {currentCategory.parent[0] === "Fête" ||
-            currentCategory.parent[0] === "Occasion" ? null : (
-              <div>
-                <h4>Occasion</h4>
-                <select
-                  id="occasion"
-                  className="block w-full bg-white border border-coolGray-100 hover:border-coolGray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
-                  onChange={(e) => {
-                    setSelectedOccasion(e.target.value);
-                  }}
-                  defaultValue=""
-                >
-                  {categories.Occasion.map((occasion, index) => {
-                    return (
-                      <option
-                        key={index}
-                        onChange={(e) => {
-                          setSelectedOccasion(e.target.value);
-                        }}
-                      >
-                        {occasion.name}
-                      </option>
-                    );
-                  })}
-                  <option value="">Tout</option>
-                </select>
-              </div>
-            )}
+            {!selectedParty && !currentCategory.parent.includes("Occasion") ? (
+              <Select
+                categoryName="Occasion"
+                category={categories.Occasion}
+                changeCategoryHandler={(categoryName) => {
+                  setSelectedOccasion(categoryName);
+                }}
+              />
+            ) : null}
+            {!selectedOccasion && !currentCategory.parent.includes("Fête") ? (
+              <Select
+                categoryName="Fête"
+                category={categories.Fête}
+                changeCategoryHandler={(categoryName) => {
+                  setSelectedParty(categoryName);
+                }}
+              />
+            ) : null}
           </form>
         </aside>
 
