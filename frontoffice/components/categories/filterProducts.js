@@ -10,6 +10,7 @@ const filteredProducts = async (
   currentPage,
   productsPerPage
 ) => {
+  console.log("prices", prices);
   //transform parameters with multiple values to string
   const chechboxParamToString = (obj) => {
     const filter = Object.keys(obj).filter((key) => {
@@ -29,8 +30,6 @@ const filteredProducts = async (
   }
 
   const parameters = [
-    { whoKind: selectedGenre },
-    { price: chechboxParamToString(prices) },
     { whoType: chechboxParamToString(selectedType) },
     { occasions: selectedOccasion },
     { parties: selectedParty },
@@ -51,11 +50,12 @@ const filteredProducts = async (
   const optionsReq = options.length ? `?${options.join("&")}` : ``;
 
   ////////////////////
-
   const parametersName = {
     sortBy: selectedSortBy,
     currentPage: currentPage,
-    productsPerPage: productsPerPage
+    productsPerPage: productsPerPage,
+    whoKind: selectedGenre,
+    price: prices.join(",")
   };
 
   const newOptions = Object.entries(parametersName)
@@ -67,9 +67,13 @@ const filteredProducts = async (
     })
     .join("&");
 
-  optionsReq += `&${newOptions}`;
+  if (newOptions) {
+    optionsReq += `&${newOptions}`;
+  }
 
   /////////////////////////
+
+  console.log(optionsReq);
 
   const dataProducts = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/products${optionsReq}`

@@ -8,24 +8,23 @@ import axios from "axios";
 import slugify from "slugify";
 
 import filterProducts from "../../components/categories/filterProducts";
+import CheckboxRadio from "../../components/categories/CheckboxRadio";
 
 export default function Category({
   xcategories,
   categories,
   currentCategory,
   defaultSelectedSortBy,
-  defaultSelectedGenre,
   defaultSelectedType,
-  defaultPrices,
   defaultSelectedOccasion,
   selectedParty
 }) {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [numberOfProducts, setNumberOfProducts] = useState(0);
   const [selectedSortBy, setSelectedSortBy] = useState(defaultSelectedSortBy);
-  const [selectedGenre, setSelectedGenre] = useState(defaultSelectedGenre);
+  const [selectedGenre, setSelectedGenre] = useState(xcategories.selectedGenre);
   const [selectedType, setSelectedType] = useState(defaultSelectedType);
-  const [prices, setPrices] = useState(defaultPrices);
+  const [prices, setPrices] = useState(xcategories.selectedPrices);
   const [selectedOccasion, setSelectedOccasion] = useState(
     defaultSelectedOccasion
   );
@@ -115,25 +114,21 @@ export default function Category({
                 <ul onChange={(e) => setSelectedGenre(e.target.value)}>
                   {categories.Genre.map((genre, index) => {
                     return (
-                      <li key={index} className="flex-grow text-left pr-2">
-                        <label className="inline-flex items-center">
-                          <input type="radio" name="genre" value={genre.name} />
-                          <span className="ml-2">{genre.name}</span>
-                        </label>
-                      </li>
+                      <CheckboxRadio
+                        key={index}
+                        type="radio"
+                        value={genre.name}
+                        name="genre"
+                      />
                     );
                   })}
-                  <li className="flex-grow text-left pr-2">
-                    <label className="inline-flex items-center">
-                      <input
-                        type="radio"
-                        name="genre"
-                        value=""
-                        defaultChecked
-                      />
-                      <span className="ml-2">Tout</span>
-                    </label>
-                  </li>
+                  <CheckboxRadio
+                    type="radio"
+                    value=""
+                    description={"Tout"}
+                    name="genre"
+                    checked
+                  />
                 </ul>
               </div>
             )}
@@ -155,33 +150,17 @@ export default function Category({
                     }}
                   >
                     {categories.Type.map((type, index) => {
-                      if (type.parent.includes(selectedGenre)) {
+                      if (
+                        type.parent.includes(selectedGenre) ||
+                        !selectedGenre
+                      ) {
                         return (
-                          <li key={index} className="flex-grow text-left pr-2">
-                            <label className="inline-flex items-center">
-                              <input
-                                type="checkbox"
-                                name="Type"
-                                value={type.name}
-                              />
-
-                              <span className="ml-2">{type.name}</span>
-                            </label>
-                          </li>
-                        );
-                      } else if (!selectedGenre) {
-                        return (
-                          <li key={index} className="flex-grow text-left pr-2">
-                            <label className="inline-flex items-center">
-                              <input
-                                type="checkbox"
-                                name="Type"
-                                value={type.name}
-                              />
-
-                              <span className="ml-2">{type.name}</span>
-                            </label>
-                          </li>
+                          <CheckboxRadio
+                            key={index}
+                            type="checkbox"
+                            value={type.name}
+                            name="Type"
+                          />
                         );
                       }
                     })}
@@ -191,22 +170,25 @@ export default function Category({
             ) : null}
 
             <h4>Prix</h4>
-            <ul
-              onChange={(e) => {
-                const updatedPricesStatus = {};
-                updatedPricesStatus[e.target.value] = !prices[e.target.value];
-
-                setPrices({ ...prices, ...updatedPricesStatus });
-              }}
-            >
-              {Object.keys(prices).map((price, index) => {
+            <ul>
+              {["€", "€€", "€€€"].map((price, index) => {
                 return (
-                  <li key={index} className="flex-grow text-left pr-2">
-                    <label className="inline-flex items-center">
-                      <input type="checkbox" name="prix" value={price} />
-                      <span className="ml-2">{price}</span>
-                    </label>
-                  </li>
+                  <CheckboxRadio
+                    key={index}
+                    type="checkbox"
+                    value={price}
+                    name="prix"
+                    checked={prices.includes(price)}
+                    pricesChangeHandler={(changedPrice) => {
+                      if (prices.includes(changedPrice)) {
+                        setPrices(
+                          prices.filter((price) => price !== changedPrice)
+                        );
+                      } else {
+                        setPrices([...prices, changedPrice]);
+                      }
+                    }}
+                  />
                 );
               })}
             </ul>
@@ -354,7 +336,7 @@ export async function getServerSideProps({ query }) {
         ? "Meilleures ventes"
         : "Nouveau";
 
-    let defaultSelectedGenre = currentCategory.parent.includes("Genre")
+    let selectedGenre = currentCategory.parent.includes("Genre")
       ? currentCategory.name
       : "";
 
@@ -394,7 +376,7 @@ export async function getServerSideProps({ query }) {
     const xcategories = {
       categoryName: currentCategory.name,
       selectedSortBy: "Nouveau",
-      selectedGenre: [],
+      selectedGenre,
       selectedType: [],
       selectedPrices: [],
       selectedOccasion: [],
@@ -411,7 +393,6 @@ export async function getServerSideProps({ query }) {
         categories,
         currentCategory,
         defaultSelectedSortBy,
-        defaultSelectedGenre,
         defaultSelectedType,
         defaultPrices,
         defaultSelectedOccasion,
