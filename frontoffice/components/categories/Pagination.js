@@ -57,7 +57,7 @@ export default function Pagination({
 
   return (
     <div
-      className="pb-10 flex items-center justify-between"
+      className="pb-5 flex items-center justify-between"
       style={maxPages <= 1 ? { visibility: "hidden" } : null}
     >
       <div className="flex-1 flex justify-between sm:hidden">

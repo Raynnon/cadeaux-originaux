@@ -1,36 +1,26 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import Layout from "../../components/Layout";
 import Pagination from "../../components/categories/Pagination";
-import Image from "next/image";
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import slugify from "slugify";
 
 import filterProducts from "../../components/categories/filterProducts";
 import CheckboxRadio from "../../components/categories/CheckboxRadio";
+import ProductsCard from "../../components/categories/ProductsCard";
 
-export default function Category({
-  xcategories,
-  categories,
-  currentCategory,
-  defaultSelectedSortBy,
-  defaultSelectedType,
-  defaultSelectedOccasion,
-  selectedParty
-}) {
+export default function Category({ filters, categories, currentCategory }) {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [numberOfProducts, setNumberOfProducts] = useState(0);
-  const [selectedSortBy, setSelectedSortBy] = useState(defaultSelectedSortBy);
-  const [selectedGenre, setSelectedGenre] = useState(xcategories.selectedGenre);
-  const [selectedType, setSelectedType] = useState(defaultSelectedType);
-  const [prices, setPrices] = useState(xcategories.selectedPrices);
+  const [selectedSortBy, setSelectedSortBy] = useState(filters.sortBy);
+  const [selectedGenre, setSelectedGenre] = useState(filters.selectedGenre);
+  const [selectedType, setSelectedType] = useState(filters.selectedType);
+  const [prices, setPrices] = useState([]);
   const [selectedOccasion, setSelectedOccasion] = useState(
-    defaultSelectedOccasion
+    filters.selectedOccasion
   );
-  const [currentPage, selectCurrentPage] = useState(xcategories.currentPage);
-  const productsPerPage = xcategories.productsPerPage;
-  const categoryName = xcategories.categoryName;
+  const [currentPage, selectCurrentPage] = useState(filters.currentPage);
+  const productsPerPage = filters.productsPerPage;
+  const categoryName = filters.categoryName;
 
   // GET PRODUCTS ON FILTER CHANGE
   useEffect(async () => {
@@ -39,7 +29,7 @@ export default function Category({
       prices,
       selectedType,
       selectedOccasion,
-      selectedParty,
+      filters.selectedParty,
       selectedSortBy,
       currentPage,
       productsPerPage
@@ -53,14 +43,13 @@ export default function Category({
       prices,
       selectedType,
       selectedOccasion,
-      selectedParty
+      filters.selectedParty
     );
 
     setNumberOfProducts(maxProducts.numberOfProducts);
   }, [
     selectedGenre,
     selectedOccasion,
-    selectedParty,
     prices,
     selectedType,
     selectedSortBy,
@@ -96,7 +85,7 @@ export default function Category({
                 </label>
                 <select
                   id="sorts"
-                  className="block w-full bg-white border border-gray-100 hover:border-coolGray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
+                  className="block w-full bg-white hover:border-coolGray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
                   onChange={(e) => {
                     setSelectedSortBy(e.target.value);
                   }}
@@ -137,18 +126,7 @@ export default function Category({
               currentCategory.parent[0] === "Type" ? null : (
                 <div>
                   <h4>Type</h4>
-                  <ul
-                    onChange={(e) => {
-                      const updatedTypeStatus = {};
-                      updatedTypeStatus[e.target.value] =
-                        !selectedType[e.target.value];
-
-                      setSelectedType({
-                        ...selectedType,
-                        ...updatedTypeStatus
-                      });
-                    }}
-                  >
+                  <ul>
                     {categories.Type.map((type, index) => {
                       if (
                         type.parent.includes(selectedGenre) ||
@@ -160,6 +138,20 @@ export default function Category({
                             type="checkbox"
                             value={type.name}
                             name="Type"
+                            changeCategoryHandler={(changedCategory) => {
+                              if (selectedType.includes(changedCategory)) {
+                                setSelectedType(
+                                  selectedType.filter(
+                                    (type) => type !== changedCategory
+                                  )
+                                );
+                              } else {
+                                setSelectedType([
+                                  ...selectedType,
+                                  changedCategory
+                                ]);
+                              }
+                            }}
                           />
                         );
                       }
@@ -179,7 +171,7 @@ export default function Category({
                     value={price}
                     name="prix"
                     checked={prices.includes(price)}
-                    pricesChangeHandler={(changedPrice) => {
+                    changeCategoryHandler={(changedPrice) => {
                       if (prices.includes(changedPrice)) {
                         setPrices(
                           prices.filter((price) => price !== changedPrice)
@@ -205,7 +197,16 @@ export default function Category({
                   defaultValue=""
                 >
                   {categories.Occasion.map((occasion, index) => {
-                    return <option key={index}>{occasion.name}</option>;
+                    return (
+                      <option
+                        key={index}
+                        onChange={(e) => {
+                          setSelectedOccasion(e.target.value);
+                        }}
+                      >
+                        {occasion.name}
+                      </option>
+                    );
                   })}
                   <option value="">Tout</option>
                 </select>
@@ -227,51 +228,20 @@ export default function Category({
 
           {/*PRODUCTS */}
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-between mb-10 min-w-full">
-            {filteredProducts.length
-              ? filteredProducts.map((product, index) => {
-                  return (
-                    <Link
-                      key={index}
-                      href={{
-                        pathname: `/produit/${slugify(product.name)}`,
-                        query: {
-                          productId: product._id
-                        }
-                      }}
-                    >
-                      <a>
-                        <div className="flex flex-col border-2 border-coolGray-100 hover:bg-coolGray-100 rounded-lg p-5 mx-1 mt-5 group">
-                          {product.images ? (
-                            <div>
-                              <Image
-                                src={product.images[0]}
-                                width={225}
-                                height={225}
-                                layout="responsive"
-                                className="rounded-lg"
-                              />
-                            </div>
-                          ) : null}
-                          <div className="flex items-center text-center text-xl font-semibold align-middle justify-center h-20">
-                            <h2>{product.name}</h2>
-                          </div>
-
-                          <div className="flex justify-around items-center">
-                            <div>
-                              <p className="font-semibold">Prix</p>
-                              <p className="text-center">{product.price}</p>
-                            </div>
-                            <button className="border border-coolGray-300 group-hover:bg-orange-500 group-hover:border-transparent group-hover:text-white rounded-lg p-1 h-9 font-semibold">
-                              En savoir plus
-                            </button>
-                          </div>
-                        </div>
-                      </a>
-                    </Link>
-                  );
-                })
-              : null}
+            {filteredProducts.map((product, index) => {
+              return (
+                <ProductsCard
+                  key={index}
+                  cardNumber={index}
+                  productId={product._id}
+                  productName={product.name}
+                  productPrice={product.price}
+                  productImages={product.images}
+                />
+              );
+            })}
           </div>
+
           <Pagination
             numberOfProducts={numberOfProducts}
             currentPage={currentPage}
@@ -331,7 +301,7 @@ export async function getServerSideProps({ query }) {
     const categories = dataCategories.data;
 
     // INITIATE DEFAULT FILTERS
-    let defaultSelectedSortBy =
+    let sortBy =
       currentCategory.name === "Meilleurs cadeaux"
         ? "Meilleures ventes"
         : "Nouveau";
@@ -340,9 +310,7 @@ export async function getServerSideProps({ query }) {
       ? currentCategory.name
       : "";
 
-    let defaultSelectedType = {};
-
-    let defaultSelectedOccasion = currentCategory.parent.includes("Occasion")
+    let selectedOccasion = currentCategory.parent.includes("Occasion")
       ? currentCategory.name
       : "";
 
@@ -350,53 +318,26 @@ export async function getServerSideProps({ query }) {
       ? currentCategory.name
       : "";
 
-    let defaultPrices = {
-      "€": true,
-      "€€": true,
-      "€€€": true
-    };
+    const selectedType = currentCategory.parent.includes("Type")
+      ? [currentCategory.name]
+      : [];
 
-    // SET FILTERS IN ACCORDANCE TO THE PAGE
-    if (currentCategory.parent.includes("Type")) {
-      categories.Type.forEach((item) => {
-        if (item.name === currentCategory.name) {
-          defaultSelectedType[item.name] = true;
-        } else {
-          defaultSelectedType[item.name] = false;
-        }
-      });
-    } else {
-      // INITIATE SELECTED TYPES
-      categories.Type.forEach((item) => {
-        defaultSelectedType[item.name] = true;
-      });
-    }
-
-    ////////////////////////////////////////
-    const xcategories = {
+    const filters = {
       categoryName: currentCategory.name,
-      selectedSortBy: "Nouveau",
+      sortBy,
       selectedGenre,
-      selectedType: [],
-      selectedPrices: [],
-      selectedOccasion: [],
-      selectedParty: [],
+      selectedType: selectedType,
+      selectedOccasion,
+      selectedParty,
       currentPage: 1,
       productsPerPage: 16
     };
 
-    console.log(xcategories);
-
     return {
       props: {
-        xcategories,
+        filters,
         categories,
         currentCategory,
-        defaultSelectedSortBy,
-        defaultSelectedType,
-        defaultPrices,
-        defaultSelectedOccasion,
-        selectedParty,
         key: query.category
       }
     };

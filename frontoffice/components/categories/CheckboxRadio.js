@@ -4,10 +4,10 @@ export default function CheckboxRadio({
   description,
   name,
   checked,
-  pricesChangeHandler
+  changeCategoryHandler
 }) {
   const priceChange = () => {
-    pricesChangeHandler(value);
+    changeCategoryHandler(value);
   };
 
   return (

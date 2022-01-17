@@ -10,52 +10,20 @@ const filteredProducts = async (
   currentPage,
   productsPerPage
 ) => {
-  console.log("prices", prices);
-  //transform parameters with multiple values to string
-  const chechboxParamToString = (obj) => {
-    const filter = Object.keys(obj).filter((key) => {
-      if (obj[key]) {
-        return key;
-      }
-    });
-
-    return filter.join(",");
-  };
-
   // If there is no specified page so we retun the count of documents
-  let count = false;
+  let count = !currentPage && !productsPerPage;
 
-  if (!currentPage && !productsPerPage) {
-    count = true;
-  }
-
-  const parameters = [
-    { whoType: chechboxParamToString(selectedType) },
-    { occasions: selectedOccasion },
-    { parties: selectedParty },
-    { count },
-    { images: true }
-  ];
-
-  // Filter parameters that are not All
-  const filteredParameters = parameters.filter(
-    (item) => item[Object.keys(item)]
-  );
-
-  // Push each filtered parameters in option array
-  const options = filteredParameters.map((param) => {
-    return `${Object.keys(param)}=${param[Object.keys(param)]}`;
-  });
-
-  const optionsReq = options.length ? `?${options.join("&")}` : ``;
-
-  ////////////////////
   const parametersName = {
     sortBy: selectedSortBy,
     currentPage: currentPage,
     productsPerPage: productsPerPage,
     whoKind: selectedGenre,
-    price: prices.join(",")
+    whoType: selectedType.join(","),
+    price: prices.join(","),
+    occasions: selectedOccasion,
+    parties: selectedParty,
+    count,
+    images: true
   };
 
   const newOptions = Object.entries(parametersName)
@@ -67,16 +35,8 @@ const filteredProducts = async (
     })
     .join("&");
 
-  if (newOptions) {
-    optionsReq += `&${newOptions}`;
-  }
-
-  /////////////////////////
-
-  console.log(optionsReq);
-
   const dataProducts = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/products${optionsReq}`
+    `${process.env.NEXT_PUBLIC_API_URL}/products?${newOptions}`
   );
 
   return dataProducts.data;

@@ -5,12 +5,10 @@ import { useState, useEffect } from "react";
 
 export default function Header({ categories }) {
   const [showMenu, setShowMenu] = useState(true);
-  const [smallDevice, setSmallDevice] = useState(false);
 
   useEffect(() => {
     if (window.innerWidth < 1024) {
       setShowMenu(false);
-      setSmallDevice(true);
     }
   }, []);
 
@@ -42,7 +40,7 @@ export default function Header({ categories }) {
 
   return (
     <header className="items-center shadow-sm lg:px-32 xl:flex text-center">
-      <nav className="flex items-center justify-between flex-wrap p-6">
+      <nav className="flex items-center justify-between flex-wrap p-2">
         <div className="flex items-center flex-shrink-0 text-white mr-6">
           <Link href="/">
             <a>
