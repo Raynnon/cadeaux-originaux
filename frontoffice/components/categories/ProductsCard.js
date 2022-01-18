@@ -19,7 +19,7 @@ export default function ProductsCard({
       }}
     >
       <a>
-        <div className="flex flex-col border-2 border-coolGray-100 hover:bg-coolGray-100 rounded-lg p-5 mx-1 mb-5 group">
+        <div className="flex flex-col border-2 border-coolGray-100 hover:bg-coolGray-100 rounded-lg p-2 mx-1 mb-5 group">
           {productImages ? (
             <div>
               <Image

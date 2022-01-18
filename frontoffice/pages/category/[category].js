@@ -78,8 +78,8 @@ export default function Category({ filters, categories, currentCategory }) {
     <Layout pageTitle={pageTitle()} description={currentCategory.description}>
       <div className="flex -mb-10">
         {/* FILTER */}
-        <aside className="hidden px-1 md:block pb-5 pt-4 xl:pl-32 lg:pl-5 lg:pr:5 xl:pl-10 xl:pr-10 bg-coolGray-100">
-          <form className="xl:w-52">
+        <aside className="hidden px-1 sm:block pb-5 pt-4 lg:px-5 xl:px-10 bg-coolGray-100">
+          <form className="sm:w-44 xl:w-52">
             {categoryName === "Nouveau" ||
             categoryName === "Meilleurs cadeaux" ? null : (
               <ul>
@@ -212,7 +212,7 @@ export default function Category({ filters, categories, currentCategory }) {
           </form>
         </aside>
 
-        <main className="mx-1 mt-6 lg:pl-5 xl:pr-20">
+        <div className="mx-1 mt-6 lg:px-5">
           <h1 className="text-4xl font-semibold">{`${categoryName}`}</h1>
           <p className="my-5 text-justify">{currentCategory.description}</p>
 
@@ -224,7 +224,7 @@ export default function Category({ filters, categories, currentCategory }) {
           />
 
           {/*PRODUCTS */}
-          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-between mb-10 min-w-full">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 justify-between mb-10 min-w-full">
             {filteredProducts.map((product, index) => {
               return (
                 <ProductsCard
@@ -246,7 +246,7 @@ export default function Category({ filters, categories, currentCategory }) {
             updateCurrentPage={onUpdateCurrentPage}
             details={true}
           />
-        </main>
+        </div>
       </div>
       <style global jsx>{`
         h4 {
@@ -327,7 +327,7 @@ export async function getServerSideProps({ query }) {
       selectedOccasion,
       selectedParty,
       currentPage: 1,
-      productsPerPage: 16
+      productsPerPage: 24
     };
 
     return {

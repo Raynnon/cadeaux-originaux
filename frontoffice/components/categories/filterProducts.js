@@ -26,6 +26,7 @@ const filteredProducts = async (
     images: true
   };
 
+  //format options for query
   const newOptions = Object.entries(parametersName)
     .filter(([k, v]) => {
       return v;
