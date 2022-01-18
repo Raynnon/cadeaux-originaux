@@ -143,32 +143,18 @@ export async function getServerSideProps({ query }) {
     const defaultMainImage = productData.data[0].images[0];
 
     // SPLIT SENTENCES OF THE PRODUCT DESCRIPTION
-    let sentencesAndSyntax = split(product.description);
-    const sentences = sentencesAndSyntax.filter(
+    const sentences = split(product.description).filter(
       (item) => item.type === "Sentence"
     );
 
     // Description Limit is max size of metadescription - "Acheter {product name}"
-    const descriptionLimit = 155 - 7 - product.name.length;
-    let metaDescription = "";
-    let sentencesAdded = 0;
+    const descriptionLimit = 155 - 11 - product.name.length;
+    let limitedDescription = sentences
+      .filter((items) => items.range[1] < descriptionLimit)
+      .map((item) => item.raw)
+      .join(" ");
 
-    while (
-      metaDescription.length + sentences[sentencesAdded].raw.length <
-      descriptionLimit
-    ) {
-      metaDescription += sentences[sentencesAdded].raw;
-      sentencesAdded++;
-    }
-
-    if (sentencesAdded === 0) {
-      metaDescription += sentences[0].raw;
-    }
-
-    if (metaDescription.length < descriptionLimit) {
-      metaDescription += ` Acheter ${product.name.toLowerCase()}`;
-    }
-
+    let metaDescription = `Acheter ${product.name.toLowerCase()} - ${limitedDescription}`;
     return {
       props: {
         product,
