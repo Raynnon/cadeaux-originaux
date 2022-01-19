@@ -4,6 +4,7 @@ const updateOneItem = require("../crud/updateOneItem");
 const read = async (model, params) => {
   if (params) {
     const simpleOptionParameters = [
+      "name",
       "_id",
       "whoKind",
       "whoType",
@@ -20,33 +21,28 @@ const read = async (model, params) => {
         .map((item) => {
           if (params[item].includes(",")) {
             return [item, { $in: params[item].split(",") }];
+          } else if (item === "name") {
+            return ["name", { $regex: ".*" + params[item], $options: "i" }];
           } else {
             return [item, { $in: params[item] }];
           }
         })
     );
-    let sort = "";
-    let skip = 0;
 
-    if (params.count === "true") {
+    let sort =
+      params.sortBy === "Meilleures ventes" && !params.count
+        ? { visits: -1 }
+        : { editedAt: -1 };
+
+    let skip =
+      params.currentPage && params.productsPerPage && !params.count
+        ? (params.currentPage - 1) * params.productsPerPage
+        : 0;
+
+    if (params.count) {
       const documentsCounter = await model.countDocuments(options);
 
       return { numberOfProducts: documentsCounter };
-    } else {
-      // SORT
-      if (params.sortBy) {
-        if (params.sortBy === "Meilleures ventes") {
-          sort = { visits: -1 };
-        } else {
-          sort = { editedAt: -1 };
-        }
-      }
-
-      // PRODUCTS PER PAGE
-      if (params.currentPage && params.productsPerPage) {
-        //skipping products depending on the number of pages
-        skip = (params.currentPage - 1) * params.productsPerPage;
-      }
     }
 
     const data = await model
