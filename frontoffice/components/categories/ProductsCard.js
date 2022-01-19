@@ -28,7 +28,7 @@ export default function ProductsCard({
                 height={225}
                 layout="responsive"
                 className="rounded-lg"
-                priority={cardNumber <= 7}
+                priority={cardNumber <= 12}
               />
             </div>
           ) : null}

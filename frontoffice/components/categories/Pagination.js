@@ -9,11 +9,11 @@ export default function Pagination({
   details
 }) {
   const [indexFirstProduct, setIndexFirstProduct] = useState(1);
-  const [indexLastProduct, setIndexLastProduct] = useState(16);
+  const [indexLastProduct, setIndexLastProduct] = useState(productsPerPage);
   const [maxPages, setMaxPages] = useState(1);
 
   useEffect(() => {
-    setIndexFirstProduct(productsPerPage * currentPage - 15);
+    setIndexFirstProduct(productsPerPage * currentPage - productsPerPage + 1);
 
     let netIndexLastProduct = productsPerPage * currentPage;
 
