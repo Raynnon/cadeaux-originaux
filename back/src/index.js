@@ -14,6 +14,7 @@ import MIUITheme from "./app/styles/MIUITheme";
 import { ThemeProvider } from "@mui/material/styles";
 
 import * as serviceWorker from "./serviceWorker";
+import Product from "./components/productsList/product/Product";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -24,6 +25,7 @@ ReactDOM.render(
           <Routes>
             <Route path="/" element={<App />}>
               <Route path="products" element={<ProductsList />} />
+              <Route path="products/:product" element={<Product />} />
               <Route path="add-product" element={<AddProduct />} />
             </Route>
           </Routes>

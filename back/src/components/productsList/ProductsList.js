@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { Outlet, Link } from "react-router-dom";
 
 import readProducts from "../apiCalls/readProducts";
 
@@ -7,13 +8,16 @@ import { Container } from "@mui/material";
 
 import { TextField, Box, Grid, Paper, Typography } from "@mui/material";
 
+import "./productList.css";
+
 function ProductsList() {
   const [products, setProducts] = useState([]);
   const [apiReqOptions, setApiReqOptions] = useState({
     name: "",
-    sortBy: "Nouveau"
+    sortBy: "Nouveau",
+    images: "true"
   });
-
+  console.log(products);
   const selectedMenuItem = useSelector((state) => state.menu.selectedMenuItem);
 
   useEffect(() => {
@@ -29,66 +33,93 @@ function ProductsList() {
       <Typography variant="h1">{selectedMenuItem}</Typography>
       <Box
         sx={{
-          marginTop: "20px",
-          padding: "0 10px"
+          marginTop: "20px"
         }}
       >
+        <TextField
+          label="Recherche"
+          sx={{ width: "300px", float: "right" }}
+          onChange={(e) =>
+            setApiReqOptions({ ...apiReqOptions, name: e.target.value })
+          }
+        />
+
         <Grid
+          className="grid-item"
           container
-          spacing={2}
-          sx={{ margin: "auto", textAlign: "center" }}
+          sx={{
+            margin: "auto",
+            textAlign: "center"
+          }}
         >
-          <Grid xs={5}>
+          <Grid
+            item={true}
+            xs={0}
+            sm={2}
+            sx={{ display: { xs: "none", md: "block" } }}
+          >
+            <p>Image</p>
+          </Grid>
+          <Grid item={true} xs={7} md={6}>
             <p>Nom</p>
           </Grid>
-          <Grid xs={2}>
+          <Grid item={true} xs={2} md={2}>
             <p>Prix</p>
           </Grid>
-          <Grid xs={2}>
+          <Grid item={true} xs={3} md={2}>
             <p>Dernière édition</p>
-          </Grid>
-          <Grid xs={3}>
-            <TextField
-              label="Recherche"
-              sx={{ width: "300px" }}
-              onChange={(e) =>
-                setApiReqOptions({ ...apiReqOptions, name: e.target.value })
-              }
-            />
           </Grid>
         </Grid>
 
         {products.map((product, index) => (
-          <Paper
-            key={index}
-            elevation={3}
-            sx={{
-              backgroundColor: "#1E2530",
-              marginTop: "10px",
-              "&:hover": {
-                backgroundColor: "#323943"
-              }
-            }}
-          >
-            <Grid
-              container
-              spacing={2}
-              sx={{ margin: "auto", textAlign: "center" }}
+          <Link key={index} to={`/products/${product._id}`}>
+            <Paper
+              className="grid-item"
+              elevation={3}
+              sx={{
+                textAlign: "center",
+                cursor: "pointer",
+                display: "flex",
+                padding: { sm: "5px 0" },
+                backgroundColor: "#1E2530",
+                marginTop: "10px",
+                "&:hover": {
+                  backgroundColor: "#323943"
+                }
+              }}
             >
-              <Grid xs={5}>
+              <Grid
+                className="grid-item"
+                item={true}
+                xs={0}
+                md={2}
+                sx={{ display: { xs: "none", md: "flex" } }}
+              >
+                <img
+                  src={product.images[0]}
+                  alt={product.name.split(" ").join("-").toLowerCase()}
+                  style={{
+                    width: "75px",
+                    height: "75px",
+                    objectFit: "cover",
+                    borderRadius: 4
+                  }}
+                />
+              </Grid>
+              <Grid item={true} xs={7} md={6}>
                 <p>{product.name}</p>
               </Grid>
-              <Grid xs={2}>
+              <Grid item={true} xs={2} md={2}>
                 <p>{product.price}</p>
               </Grid>
-              <Grid xs={2}>
+              <Grid item={true} xs={3} md={2}>
                 <p>{new Date(product.editedAt).toLocaleDateString()}</p>
               </Grid>
-              <Grid xs={3}></Grid>
-            </Grid>
-          </Paper>
+            </Paper>
+          </Link>
         ))}
       </Box>
+      <Outlet />
     </Container>
   );
 }

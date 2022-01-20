@@ -77,7 +77,7 @@ export default function Product({
             <p className="text-justify leading-loose">{product.description}</p>
             {product.urlAmazon ? (
               <Link href={product.urlAmazon}>
-                <a>
+                <a rel="noopener">
                   <button
                     className="w-44 py-3 mt-10 rounded-lg text-white bg-orange-500 text-2xl hover:bg-orange-600"
                     onClick={addVisit}
