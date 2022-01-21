@@ -4,8 +4,6 @@ import { Outlet, Link } from "react-router-dom";
 
 import readProducts from "../apiCalls/readProducts";
 
-import { Container } from "@mui/material";
-
 import { TextField, Box, Grid, Paper, Typography } from "@mui/material";
 
 import "./productList.css";
@@ -17,7 +15,7 @@ function ProductsList() {
     sortBy: "Nouveau",
     images: "true"
   });
-  console.log(products);
+
   const selectedMenuItem = useSelector((state) => state.menu.selectedMenuItem);
 
   useEffect(() => {
@@ -29,7 +27,7 @@ function ProductsList() {
   }, [apiReqOptions]);
 
   return (
-    <Container component={"main"} maxWidth={false} sx={{ marginTop: "10px" }}>
+    <>
       <Typography variant="h1">{selectedMenuItem}</Typography>
       <Box
         sx={{
@@ -120,7 +118,7 @@ function ProductsList() {
         ))}
       </Box>
       <Outlet />
-    </Container>
+    </>
   );
 }
 

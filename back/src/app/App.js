@@ -20,7 +20,9 @@ function App() {
       sx={{ display: "flex", flexDirection: "row" }}
     >
       <SideMenu />
-      <Outlet />
+      <Container component={"main"} maxWidth={false} sx={{ marginTop: "10px" }}>
+        <Outlet />
+      </Container>
     </Container>
   );
 }

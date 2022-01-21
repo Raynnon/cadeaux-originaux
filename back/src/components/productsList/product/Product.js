@@ -1,14 +1,9 @@
 import { useParams } from "react-router-dom";
-import { Container } from "@mui/material";
 
-import { TextField, Box, Grid, Paper, Typography } from "@mui/material";
+import EditProduct from "../../editProduct/EditProduct";
 
 export default function Product() {
-  const { product } = useParams();
+  const { productId } = useParams();
 
-  return (
-    <Container component={"main"} maxWidth={false} sx={{ marginTop: "10px" }}>
-      <Typography variant="h1">PRODUITS</Typography>
-    </Container>
-  );
+  return <EditProduct productId={productId} />;
 }

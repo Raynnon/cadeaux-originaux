@@ -1,5 +1,5 @@
 import { render, fireEvent, screen } from "@testing-library/react";
-import AddProduct from "./AddProduct";
+import AddProduct from "../addProduct/AddProduct";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { store } from "../../app/state/store";
