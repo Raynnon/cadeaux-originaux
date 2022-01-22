@@ -24,8 +24,8 @@ import {
   Modal
 } from "@mui/material";
 
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
+import StrongPoints from "./strongPoints/StrongPoints";
 
 function EditProduct({ productId }) {
   const [formError, setFormError] = useState(false);
@@ -35,9 +35,8 @@ function EditProduct({ productId }) {
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productDescription, setProductDescription] = useState("");
-  const [productStrongPoints, setProductStrongPoints] = useState([]);
+  const [productStrongPoints, setProductStrongPoints] = useState([""]);
   const [productImages, setProductImages] = useState([]);
-  const [imagesLength, setImagesLength] = useState(1);
   const [productUrl, setProductUrl] = useState("");
 
   //categories variables
@@ -140,14 +139,12 @@ function EditProduct({ productId }) {
     setProductDescription("");
     setProductStrongPoints([]);
     setProductImages([]);
-    setImagesLength(1);
     setProductUrl("");
     setProductWhoType([]);
     setProductWhoKind([]);
     setProductOccasions([]);
     setProductParties([]);
   };
-
   return (
     <>
       <Modal
@@ -283,75 +280,10 @@ function EditProduct({ productId }) {
               />
 
               {/* POINTS FORTS */}
-              <Box sx={{ marginTop: "30px" }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column"
-                  }}
-                >
-                  {productStrongPoints.map((point, index) => {
-                    return (
-                      <Box key={index}>
-                        <TextField
-                          id="name"
-                          color="info"
-                          sx={{
-                            width: { xs: "57vw", sm: "360px" },
-                            marginBottom: "10px"
-                          }}
-                          variant="filled"
-                          label="Point fort"
-                          value={point}
-                          onChange={(e) => {
-                            setProductStrongPoints(
-                              [...productStrongPoints].slice(index, 1)
-                            );
-                            const newStrongPoints = [...productStrongPoints];
-
-                            newStrongPoints[index] = e.target.value;
-                            setProductStrongPoints(newStrongPoints);
-                          }}
-                          data-testid="strong-points-field"
-                        />
-
-                        {productStrongPoints.length > 1 ? (
-                          <IconButton
-                            aria-label="delete"
-                            size="large"
-                            color="error"
-                            onClick={(e) => {
-                              setProductStrongPoints(
-                                [...productStrongPoints].filter(
-                                  (item) => item !== productStrongPoints[index]
-                                )
-                              );
-                            }}
-                          >
-                            <RemoveCircleRoundedIcon data-testid="strong-point-delete-button" />
-                          </IconButton>
-                        ) : null}
-
-                        {index === productStrongPoints.length - 1 ? (
-                          <IconButton
-                            aria-label="delete"
-                            size="large"
-                            color="info"
-                            onClick={() => {
-                              setProductStrongPoints([
-                                ...productStrongPoints,
-                                ""
-                              ]);
-                            }}
-                          >
-                            <AddCircleIcon data-testid="strong-point-add-button" />
-                          </IconButton>
-                        ) : null}
-                      </Box>
-                    );
-                  })}
-                </Box>
-              </Box>
+              <StrongPoints
+                productStrongPoints={productStrongPoints}
+                handleStrongPointsChange={(sp) => setProductStrongPoints(sp)}
+              />
 
               {/* UPLOAD IMAGES */}
               <Box
@@ -364,68 +296,67 @@ function EditProduct({ productId }) {
                 <p style={{ color: "rgba(255, 255, 255, 0.7)", margin: 0 }}>
                   Images du produit *
                 </p>
-                {!productImages.length ? (
-                  <label
-                    htmlFor="contained-button-file"
-                    sx={{ display: "flex", flexDirection: "row" }}
-                  >
-                    <Input
-                      type="file"
-                      color="info"
-                      sx={{ color: "transparent", width: "135px" }}
-                      onChange={(e) => {
-                        const newImages = [...productImages];
 
-                        newImages[0] = e.target.files[0];
-                        setProductImages(newImages);
-                        setImagesLength(imagesLength + 1);
-                      }}
-                      data-testid="images-upload-field"
-                    />
-                  </label>
-                ) : (
-                  [...Array(imagesLength)].map((e, index) => {
-                    return (
-                      <label
-                        htmlFor="contained-button-file"
-                        key={index}
-                        sx={{ display: "flex", flexDirection: "row" }}
-                      >
-                        <Input
-                          type="file"
-                          color="info"
-                          sx={{ color: "transparent", width: "135px" }}
-                          onChange={(e) => {
+                {productImages.map((item, index) => {
+                  return (
+                    <label
+                      htmlFor="contained-button-file"
+                      key={index}
+                      sx={{ display: "flex", flexDirection: "row" }}
+                    >
+                      <Input
+                        type="file"
+                        color="info"
+                        sx={{ color: "transparent", width: "135px" }}
+                        onChange={(e) => {
+                          setProductImages([
+                            ...productImages,
+                            e.target.files[0]
+                          ]);
+                        }}
+                        data-testid="images-upload-field"
+                      />
+                      <ImageName index={index} />
+                      {productImages.length > 0 ? (
+                        <IconButton
+                          aria-label="delete"
+                          size="large"
+                          color="error"
+                          onClick={() => {
                             const newImages = [...productImages];
 
-                            newImages[index] = e.target.files[0];
+                            newImages.splice(index, 1);
+
                             setProductImages(newImages);
-                            setImagesLength(imagesLength + 1);
                           }}
-                          data-testid="images-upload-field"
-                        />
-                        <ImageName index={index} />
-                        {imagesLength > 1 ? (
-                          <IconButton
-                            aria-label="delete"
-                            size="large"
-                            color="error"
-                            onClick={() => {
-                              const newImages = [...productImages];
-
-                              newImages.splice(index, 1);
-
-                              setProductImages(newImages);
-                              setImagesLength(imagesLength - 1);
-                            }}
-                          >
-                            <RemoveCircleRoundedIcon data-testid="images-upload-delete-button" />
-                          </IconButton>
-                        ) : null}
-                      </label>
-                    );
-                  })
-                )}
+                        >
+                          <RemoveCircleRoundedIcon data-testid="images-upload-delete-button" />
+                        </IconButton>
+                      ) : null}
+                    </label>
+                  );
+                })}
+                <label
+                  htmlFor="contained-button-file"
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row"
+                  }}
+                >
+                  <Input
+                    type="file"
+                    color="info"
+                    sx={{
+                      color: "transparent",
+                      width: "135px",
+                      marginTop: "10px"
+                    }}
+                    onChange={(e) => {
+                      setProductImages([...productImages, e.target.files[0]]);
+                    }}
+                    data-testid="images-upload-field"
+                  />
+                </label>
               </Box>
 
               {/* URL */}
