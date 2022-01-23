@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import axios from "axios";
 import CategoryCheckBox from "./CategoryCheckbox";
 
 import { Button } from "@mui/material";
@@ -24,6 +23,7 @@ import {
 
 import StrongPoints from "./strongPoints/StrongPoints";
 import ImagesAdder from "./imagesAdder/ImagesAdder";
+import postProduct from "../apiCalls/postProduct";
 
 function EditProduct({ productId }) {
   const [formError, setFormError] = useState(false);
@@ -91,26 +91,24 @@ function EditProduct({ productId }) {
     } else {
       setFormError(false);
 
-      const data = new FormData();
-      data.append("name", productName);
-      data.append("price", productPrice);
-      data.append("description", productDescription);
-      data.append("strongPoints", productStrongPoints);
-      data.append("whoType", productWhoType);
-      data.append("whoKind", productWhoKind);
-      data.append("occasions", productOccasions);
-      data.append("parties", productParties);
-      productImages.forEach((image) => {
-        data.append("image", image);
-      });
-      data.append("urlAmazon", productUrl);
       try {
-        await axios({
-          method: "post",
-          url: process.env.REACT_APP_API_URL + "/products",
-          data,
-          headers: { "Content-Type": "multipart/form-data" }
-        });
+        if (productId) {
+          console.log("TESTR");
+        } else {
+          await postProduct(
+            productName,
+            productPrice,
+            productDescription,
+            productStrongPoints,
+            productWhoType,
+            productWhoKind,
+            productOccasions,
+            productParties,
+            productImages,
+            productUrl
+          );
+        }
+
         setProductAdded(true);
       } catch (e) {
         console.log(e);
@@ -132,6 +130,7 @@ function EditProduct({ productId }) {
     setProductOccasions([]);
     setProductParties([]);
   };
+
   return (
     <>
       <Modal
