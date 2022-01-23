@@ -24,6 +24,7 @@ import {
 import StrongPoints from "./strongPoints/StrongPoints";
 import ImagesAdder from "./imagesAdder/ImagesAdder";
 import postProduct from "../apiCalls/postProduct";
+import productToFormData from "../../scripts/productToFormData";
 
 function EditProduct({ productId }) {
   const [formError, setFormError] = useState(false);
@@ -92,21 +93,22 @@ function EditProduct({ productId }) {
       setFormError(false);
 
       try {
+        const data = await productToFormData(
+          productName,
+          productPrice,
+          productDescription,
+          productStrongPoints,
+          productWhoType,
+          productWhoKind,
+          productOccasions,
+          productParties,
+          productImages,
+          productUrl
+        );
+
         if (productId) {
-          console.log("TESTR");
         } else {
-          await postProduct(
-            productName,
-            productPrice,
-            productDescription,
-            productStrongPoints,
-            productWhoType,
-            productWhoKind,
-            productOccasions,
-            productParties,
-            productImages,
-            productUrl
-          );
+          await postProduct(data);
         }
 
         setProductAdded(true);
@@ -122,7 +124,7 @@ function EditProduct({ productId }) {
     setProductName("");
     setProductPrice("");
     setProductDescription("");
-    setProductStrongPoints([]);
+    setProductStrongPoints([""]);
     setProductImages([]);
     setProductUrl("");
     setProductWhoType([]);
