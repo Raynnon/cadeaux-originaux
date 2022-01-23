@@ -16,16 +16,14 @@ import {
   RadioGroup,
   FormControlLabel,
   FormLabel,
-  Input,
-  IconButton,
   Grid,
   Paper,
   Typography,
   Modal
 } from "@mui/material";
 
-import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
 import StrongPoints from "./strongPoints/StrongPoints";
+import ImagesAdder from "./imagesAdder/ImagesAdder";
 
 function EditProduct({ productId }) {
   const [formError, setFormError] = useState(false);
@@ -86,17 +84,6 @@ function EditProduct({ productId }) {
   const { Genre, Type, Occasion, Fête } = useSelector(
     (state) => state.categories.categories
   );
-
-  const ImageName = ({ index }) => {
-    if (productImages[index]) {
-      const nameArr = productImages[index].name.split("\\");
-      const name = nameArr[nameArr.length - 1];
-
-      return <p style={{ display: "inline", marginLeft: "10px" }}>{name}</p>;
-    }
-
-    return null;
-  };
 
   const submitForm = async () => {
     if (!productName || !productPrice || !productImages || !productUrl) {
@@ -279,85 +266,17 @@ function EditProduct({ productId }) {
                 data-testid="description-field"
               />
 
-              {/* POINTS FORTS */}
+              {/* STRONG POINTS */}
               <StrongPoints
                 productStrongPoints={productStrongPoints}
                 handleStrongPointsChange={(sp) => setProductStrongPoints(sp)}
               />
 
               {/* UPLOAD IMAGES */}
-              <Box
-                sx={{
-                  marginTop: "20px",
-                  display: "flex",
-                  flexDirection: "column"
-                }}
-              >
-                <p style={{ color: "rgba(255, 255, 255, 0.7)", margin: 0 }}>
-                  Images du produit *
-                </p>
-
-                {productImages.map((item, index) => {
-                  return (
-                    <label
-                      htmlFor="contained-button-file"
-                      key={index}
-                      sx={{ display: "flex", flexDirection: "row" }}
-                    >
-                      <Input
-                        type="file"
-                        color="info"
-                        sx={{ color: "transparent", width: "135px" }}
-                        onChange={(e) => {
-                          setProductImages([
-                            ...productImages,
-                            e.target.files[0]
-                          ]);
-                        }}
-                        data-testid="images-upload-field"
-                      />
-                      <ImageName index={index} />
-                      {productImages.length > 0 ? (
-                        <IconButton
-                          aria-label="delete"
-                          size="large"
-                          color="error"
-                          onClick={() => {
-                            const newImages = [...productImages];
-
-                            newImages.splice(index, 1);
-
-                            setProductImages(newImages);
-                          }}
-                        >
-                          <RemoveCircleRoundedIcon data-testid="images-upload-delete-button" />
-                        </IconButton>
-                      ) : null}
-                    </label>
-                  );
-                })}
-                <label
-                  htmlFor="contained-button-file"
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row"
-                  }}
-                >
-                  <Input
-                    type="file"
-                    color="info"
-                    sx={{
-                      color: "transparent",
-                      width: "135px",
-                      marginTop: "10px"
-                    }}
-                    onChange={(e) => {
-                      setProductImages([...productImages, e.target.files[0]]);
-                    }}
-                    data-testid="images-upload-field"
-                  />
-                </label>
-              </Box>
+              <ImagesAdder
+                productImages={productImages}
+                handleProductImagesChange={(images) => setProductImages(images)}
+              />
 
               {/* URL */}
               <TextField

@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-
 import { TextField, Box, IconButton } from "@mui/material";
 
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -9,12 +7,6 @@ export default function StrongPoints({
   productStrongPoints,
   handleStrongPointsChange
 }) {
-  const [strongPoints, setStrongPoints] = useState(productStrongPoints);
-
-  useEffect(() => {
-    handleStrongPointsChange(strongPoints);
-  }, [strongPoints, handleStrongPointsChange]);
-
   return (
     <Box sx={{ marginTop: "30px" }}>
       <Box
@@ -23,7 +15,7 @@ export default function StrongPoints({
           flexDirection: "column"
         }}
       >
-        {strongPoints.map((item, index) => {
+        {productStrongPoints.map((item, index) => {
           return (
             <Box key={index}>
               <TextField
@@ -34,37 +26,37 @@ export default function StrongPoints({
                   marginBottom: "10px"
                 }}
                 variant="filled"
-                value={strongPoints[index]}
+                value={productStrongPoints[index]}
                 label="Point fort"
                 onChange={(e) => {
-                  const newStrongPoints = [...strongPoints];
+                  const newStrongPoints = [...productStrongPoints];
 
                   newStrongPoints[index] = e.target.value;
-                  setStrongPoints(newStrongPoints);
+                  handleStrongPointsChange(newStrongPoints);
                 }}
                 data-testid="strong-points-field"
               />
-              {strongPoints.length > 1 ? (
+              {productStrongPoints.length > 1 ? (
                 <IconButton
                   aria-label="delete"
                   size="large"
                   color="error"
                   onClick={() => {
-                    const newStrongPoints = [...strongPoints];
+                    const newStrongPoints = [...productStrongPoints];
                     newStrongPoints.splice(index, 1);
-                    setStrongPoints(newStrongPoints);
+                    handleStrongPointsChange(newStrongPoints);
                   }}
                 >
                   <RemoveCircleRoundedIcon data-testid="strong-point-delete-button" />
                 </IconButton>
               ) : null}
-              {index === strongPoints.length - 1 ? (
+              {index === productStrongPoints.length - 1 ? (
                 <IconButton
                   aria-label="delete"
                   size="large"
                   color="info"
                   onClick={() => {
-                    setStrongPoints([...strongPoints, ""]);
+                    handleStrongPointsChange([...productStrongPoints, ""]);
                   }}
                 >
                   <AddCircleIcon data-testid="strong-point-add-button" />
