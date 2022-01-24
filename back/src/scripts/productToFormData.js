@@ -1,32 +1,8 @@
-const productToFormData = (
-  name,
-  price,
-  description,
-  strongPoints,
-  whoType,
-  whoKind,
-  occasions,
-  parties,
-  images,
-  url
-) => {
-  const productFormData = {
-    name,
-    price,
-    description,
-    strongPoints,
-    whoType,
-    whoKind,
-    occasions,
-    parties,
-    image: images,
-    urlAmazon: url
-  };
-
+const productToFormData = (product) => {
   const data = new FormData();
 
-  Object.entries(productFormData).forEach(([key, value]) => {
-    if (value) {
+  Object.entries(product).forEach(([key, value]) => {
+    if (value && key !== "_id") {
       if (["name", "price", "description", "urlAmazon"].includes(key)) {
         data.append(key, value);
       } else {

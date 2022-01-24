@@ -30,51 +30,45 @@ function EditProduct({ productId }) {
   const [formError, setFormError] = useState(false);
   const [productAdded, setProductAdded] = useState(false);
 
-  //Product variables
-  const [productName, setProductName] = useState("");
-  const [productPrice, setProductPrice] = useState("");
-  const [productDescription, setProductDescription] = useState("");
-  const [productStrongPoints, setProductStrongPoints] = useState([""]);
-  const [productImages, setProductImages] = useState([]);
-  const [productUrl, setProductUrl] = useState("");
+  const productInitialState = {
+    _id: "",
+    name: "",
+    price: "",
+    description: "",
+    strongPoints: [""],
+    whoType: [],
+    whoKind: [],
+    occasions: [],
+    parties: [],
+    image: [],
+    urlAmazon: ""
+  };
 
-  //categories variables
-  const [productWhoType, setProductWhoType] = useState([]);
-  const [productWhoKind, setProductWhoKind] = useState([]);
-  const [productOccasions, setProductOccasions] = useState([]);
-  const [productParties, setProductParties] = useState([]);
+  const [product, setProduct] = useState(productInitialState);
 
-  const prices = ["€", "€€", "€€€"];
+  const availablePrices = ["€", "€€", "€€€"];
 
   useEffect(() => {
     if (productId) {
       const getProducts = async () => {
         const productData = await readProducts({
           _id: productId,
-          images: true
+          image: true
         });
 
-        const {
-          name,
-          price,
-          description,
-          strongPoints,
-          urlAmazon,
-          whoKind,
-          whoType,
-          occasions,
-          parties
-        } = productData[0];
-
-        setProductName(name);
-        setProductPrice(price);
-        setProductDescription(description);
-        setProductStrongPoints(strongPoints);
-        setProductUrl(urlAmazon);
-        setProductWhoKind(whoKind);
-        setProductWhoType(whoType);
-        setProductOccasions(occasions);
-        setProductParties(parties);
+        setProduct((prevProduct) => ({
+          ...prevProduct,
+          _id: productId,
+          name: productData[0].name,
+          price: productData[0].price,
+          description: productData[0].description,
+          strongPoints: productData[0].strongPoints,
+          urlAmazon: productData[0].urlAmazon,
+          whoKind: productData[0].whoKind,
+          whoType: productData[0].whoType,
+          occasions: productData[0].occasions,
+          parties: productData[0].parties
+        }));
       };
 
       getProducts();
@@ -87,24 +81,18 @@ function EditProduct({ productId }) {
   );
 
   const submitForm = async () => {
-    if (!productName || !productPrice || !productImages || !productUrl) {
+    if (
+      !product.name ||
+      !product.price ||
+      !product.image ||
+      !product.urlAmazon
+    ) {
       setFormError(true);
     } else {
       setFormError(false);
 
       try {
-        const data = await productToFormData(
-          productName,
-          productPrice,
-          productDescription,
-          productStrongPoints,
-          productWhoType,
-          productWhoKind,
-          productOccasions,
-          productParties,
-          productImages,
-          productUrl
-        );
+        const data = productToFormData(product);
 
         if (productId) {
         } else {
@@ -121,16 +109,7 @@ function EditProduct({ productId }) {
   const resetState = () => {
     setFormError(false);
     setProductAdded(false);
-    setProductName("");
-    setProductPrice("");
-    setProductDescription("");
-    setProductStrongPoints([""]);
-    setProductImages([]);
-    setProductUrl("");
-    setProductWhoType([]);
-    setProductWhoKind([]);
-    setProductOccasions([]);
-    setProductParties([]);
+    setProduct(productInitialState);
   };
 
   return (
@@ -191,7 +170,7 @@ function EditProduct({ productId }) {
         </Box>
       </Modal>
       <Typography variant="h1">
-        {productId ? productName : selectedMenuItem}
+        {productId ? product.name : selectedMenuItem}
       </Typography>
       <Grid
         container
@@ -216,8 +195,10 @@ function EditProduct({ productId }) {
                 variant="filled"
                 color="info"
                 sx={{ width: "230px", marginTop: "30px" }}
-                onChange={(e) => setProductName(e.target.value)}
-                value={productName}
+                onChange={(e) =>
+                  setProduct({ ...product, name: e.target.value })
+                }
+                value={product.name}
                 data-testid="name-field"
               />
 
@@ -231,17 +212,19 @@ function EditProduct({ productId }) {
                   row
                   aria-label="price"
                   name="row-radio-buttons-group"
-                  value={productPrice || ""}
+                  value={product.price || ""}
                   data-testid="prices-field"
                 >
-                  {prices.map((price, index) => {
+                  {availablePrices.map((price, index) => {
                     return (
                       <Box key={index}>
                         <FormControlLabel
                           value={price}
                           control={<Radio color="info" />}
                           label={price}
-                          onChange={(e) => setProductPrice(e.target.value)}
+                          onChange={(e) =>
+                            setProduct({ ...product, price: e.target.value })
+                          }
                         />
                       </Box>
                     );
@@ -252,7 +235,7 @@ function EditProduct({ productId }) {
               {/* DESCRIPTION*/}
               <TextField
                 id="outlined-multiline-static"
-                value={productDescription}
+                value={product.description}
                 label="Description"
                 variant="filled"
                 multiline
@@ -263,20 +246,26 @@ function EditProduct({ productId }) {
                   width: "520px",
                   maxWidth: { xs: "75vw" }
                 }}
-                onChange={(e) => setProductDescription(e.target.value)}
+                onChange={(e) =>
+                  setProduct({ ...product, description: e.target.value })
+                }
                 data-testid="description-field"
               />
 
               {/* STRONG POINTS */}
               <StrongPoints
-                productStrongPoints={productStrongPoints}
-                handleStrongPointsChange={(sp) => setProductStrongPoints(sp)}
+                productStrongPoints={product.strongPoints}
+                handleStrongPointsChange={(sp) =>
+                  setProduct({ ...product, strongPoints: sp })
+                }
               />
 
               {/* UPLOAD IMAGES */}
               <ImagesAdder
-                productImages={productImages}
-                handleProductImagesChange={(images) => setProductImages(images)}
+                productImages={product.image}
+                handleProductImagesChange={(image) =>
+                  setProduct({ ...product, image })
+                }
               />
 
               {/* URL */}
@@ -287,8 +276,10 @@ function EditProduct({ productId }) {
                 color="info"
                 sx={{ marginTop: "30px", width: { xs: "76vw", sm: "460px" } }}
                 variant="filled"
-                value={productUrl}
-                onChange={(e) => setProductUrl(e.target.value)}
+                value={product.urlAmazon}
+                onChange={(e) =>
+                  setProduct({ ...product, urlAmazon: e.target.value })
+                }
                 data-testid="url-field"
               />
             </FormGroup>
@@ -312,39 +303,39 @@ function EditProduct({ productId }) {
             <Typography variant="h2">CATÉGORIES *</Typography>
 
             <CategoryCheckBox
-              selectedItem={productWhoKind}
+              selectedItem={product.whoKind}
               cat={Genre}
               name={"Genres"}
-              handleCategoryChange={(categories) => {
-                setProductWhoKind(categories);
+              handleCategoryChange={(whoKind) => {
+                setProduct({ ...product, whoKind });
               }}
               data-testid="category-group"
             />
 
             <CategoryCheckBox
-              selectedItem={productWhoType}
+              selectedItem={product.whoType}
               cat={Type}
               name={"Types"}
-              handleCategoryChange={(categories) => {
-                setProductWhoType(categories);
+              handleCategoryChange={(whoType) => {
+                setProduct({ ...product, whoType });
               }}
             />
 
             <CategoryCheckBox
-              selectedItem={productOccasions}
+              selectedItem={product.occasions}
               cat={Occasion}
               name={"Occasions"}
-              handleCategoryChange={(categories) => {
-                setProductOccasions(categories);
+              handleCategoryChange={(occasions) => {
+                setProduct({ ...product, occasions });
               }}
             />
 
             <CategoryCheckBox
-              selectedItem={productParties}
+              selectedItem={product.parties}
               cat={Fête}
               name={"Fêtes"}
-              handleCategoryChange={(categories) => {
-                setProductParties(categories);
+              handleCategoryChange={(parties) => {
+                setProduct({ ...product, parties });
               }}
             />
           </Paper>
