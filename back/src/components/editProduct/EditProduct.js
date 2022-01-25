@@ -44,6 +44,8 @@ function EditProduct({ productId }) {
     urlAmazon: ""
   };
 
+  const [productCurrentImages, setProductCurrentImages] = useState([]);
+
   const [product, setProduct] = useState(productInitialState);
 
   const availablePrices = ["€", "€€", "€€€"];
@@ -53,8 +55,10 @@ function EditProduct({ productId }) {
       const getProducts = async () => {
         const productData = await readProducts({
           _id: productId,
-          image: true
+          images: true
         });
+
+        setProductCurrentImages(productData[0].images);
 
         setProduct((prevProduct) => ({
           ...prevProduct,
@@ -261,7 +265,37 @@ function EditProduct({ productId }) {
               />
 
               {/* UPLOAD IMAGES */}
+              {productCurrentImages ? (
+                <Box>
+                  <p
+                    style={{
+                      color: "rgba(255, 255, 255, 0.7)",
+                      marginTop: "20px"
+                    }}
+                  >
+                    Images du produit
+                  </p>
+                  <Grid container spacing={3}>
+                    {productCurrentImages.map((image) => (
+                      <Grid item xs={4} sm={3} xl={2}>
+                        <img
+                          src={image}
+                          alt="test"
+                          style={{
+                            width: "100px",
+                            height: "100px",
+                            marginRight: "10px",
+                            objectFit: "cover"
+                          }}
+                        />
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Box>
+              ) : null}
+
               <ImagesAdder
+                productCurrentImages={productCurrentImages}
                 productImages={product.image}
                 handleProductImagesChange={(image) =>
                   setProduct({ ...product, image })
