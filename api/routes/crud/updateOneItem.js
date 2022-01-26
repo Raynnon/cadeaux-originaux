@@ -1,26 +1,29 @@
 const moveFile = require("../../middlewares/moveFile.js");
+const fs = require("fs");
 
 const updateOneItem = async (req, model) => {
   const _id = req.params.id;
-  const toUpdate = {
-    ...req.body
-  };
-
-  // If property does not exists, delete property
-  const toUpdateNotNull = (obj) => {
-    const objFiltered = Object.fromEntries(
-      Object.entries(obj).filter(([key, value]) => {
-        return value !== null && value !== undefined;
-      })
-    );
-
-    return objFiltered;
-  };
-
+  const { basename } = require("path");
   const data = await model.findById(_id).lean().exec();
+
+  // Delete images
+  const { imagesToDelete } = req.body;
+  if (imagesToDelete) {
+    const fileName =
+      typeof imagesToDelete !== "string"
+        ? imagesToDelete.map((file) => {
+            return basename(file);
+          })
+        : [basename(imagesToDelete)];
+
+    fileName.forEach((file) => {
+      fs.unlinkSync(`./public/${data.imagesFolder}/${file}`);
+    });
+  }
+
   moveFile("./public/" + data.imagesFolder);
 
-  await model.findOneAndUpdate({ _id }, toUpdateNotNull(toUpdate));
+  await model.findOneAndUpdate({ _id }, req.body);
 };
 
 module.exports = updateOneItem;
