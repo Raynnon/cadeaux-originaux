@@ -19,7 +19,12 @@ import {
   Grid,
   Paper,
   Typography,
-  Modal
+  Modal,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
 } from "@mui/material";
 
 import StrongPoints from "./strongPoints/StrongPoints";
@@ -27,6 +32,7 @@ import ImagesAdder from "./imagesAdder/ImagesAdder";
 import postProduct from "../apiCalls/postProduct";
 import productToFormData from "../../scripts/productToFormData";
 import putProduct from "../apiCalls/putProduct";
+import axios from "axios";
 
 function EditProduct({ productId }) {
   const [formError, setFormError] = useState(false);
@@ -47,11 +53,12 @@ function EditProduct({ productId }) {
     urlAmazon: ""
   };
 
+  const [product, setProduct] = useState(productInitialState);
   const [productCurrentImages, setProductCurrentImages] = useState([]);
 
-  const [product, setProduct] = useState(productInitialState);
-
   const availablePrices = ["€", "€€", "€€€"];
+
+  const [deleteDialog, setDeleteDialog] = useState(false);
 
   useEffect(() => {
     if (productId) {
@@ -415,12 +422,64 @@ function EditProduct({ productId }) {
           <Button
             variant="contained"
             color="info"
-            sx={{ color: "white", marginBottom: "30px" }}
+            sx={{ color: "white", margin: "0 10px 30px 10px" }}
             onClick={() => submitForm()}
-            data-testid="add-product-button"
           >
-            Ajouter produit
+            {productId ? "Editer produit" : "Ajouter produit"}
           </Button>
+
+          {productId ? (
+            <Box>
+              <Button
+                variant="contained"
+                color="error"
+                sx={{ color: "white", margin: "0 10px 30px 10px" }}
+                onClick={() => setDeleteDialog(true)}
+              >
+                Supprimer produit
+              </Button>
+              <Dialog
+                /* fullScreen={fullScreen} */
+                open={deleteDialog}
+                /* onClose={handleClose} */
+                aria-labelledby="responsive-dialog-title"
+              >
+                <DialogTitle id="responsive-dialog-title">
+                  Supprimer produit
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    En confirmant, vous supprimerez définitivement ce produit.
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    autoFocus
+                    color="info"
+                    onClick={() => {
+                      setDeleteDialog(false);
+                    }}
+                  >
+                    Annuler
+                  </Button>
+                  <Button
+                    autoFocus
+                    color="error"
+                    onClick={async () => {
+                      setDeleteDialog(false);
+                      try {
+                        await axios.delete(
+                          `${process.env.REACT_APP_API_URL}/products/${productId}`
+                        );
+                      } catch {}
+                    }}
+                  >
+                    Confirmer
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </Box>
+          ) : null}
         </Box>
       </Grid>
     </>
