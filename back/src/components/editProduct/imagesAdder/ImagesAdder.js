@@ -3,7 +3,6 @@ import { Box, Input, IconButton, Grid } from "@mui/material";
 import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
 
 export default function ImagesAdder({
-  productCurrentImages,
   productImages,
   handleProductImagesChange
 }) {
@@ -17,13 +16,11 @@ export default function ImagesAdder({
       <p style={{ color: "rgba(255, 255, 255, 0.7)" }}>Nouvelles images</p>
 
       <Grid container spacing={3}>
-        {productImages.map((item) => {
-          const fr = URL.createObjectURL(item);
-
+        {productImages.map((item, index) => {
           return (
-            <Grid item xs={4} sm={3} xl={2}>
+            <Grid key={index} item xs={4} sm={3} xl={2}>
               <img
-                src={fr}
+                src={URL.createObjectURL(item)}
                 alt="test"
                 style={{
                   width: "100px",

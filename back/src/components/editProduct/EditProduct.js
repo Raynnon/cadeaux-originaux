@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 
 import CategoryCheckBox from "./CategoryCheckbox";
 
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
+import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
 
 import readProducts from "../apiCalls/readProducts";
 
@@ -25,6 +26,7 @@ import StrongPoints from "./strongPoints/StrongPoints";
 import ImagesAdder from "./imagesAdder/ImagesAdder";
 import postProduct from "../apiCalls/postProduct";
 import productToFormData from "../../scripts/productToFormData";
+import putProduct from "../apiCalls/putProduct";
 
 function EditProduct({ productId }) {
   const [formError, setFormError] = useState(false);
@@ -41,6 +43,7 @@ function EditProduct({ productId }) {
     occasions: [],
     parties: [],
     image: [],
+    imagesToDelete: [],
     urlAmazon: ""
   };
 
@@ -99,6 +102,7 @@ function EditProduct({ productId }) {
         const data = productToFormData(product);
 
         if (productId) {
+          await putProduct(data, product._id);
         } else {
           await postProduct(data);
         }
@@ -113,7 +117,10 @@ function EditProduct({ productId }) {
   const resetState = () => {
     setFormError(false);
     setProductAdded(false);
-    setProduct(productInitialState);
+
+    if (!product._id) {
+      setProduct(productInitialState);
+    }
   };
 
   return (
@@ -264,8 +271,8 @@ function EditProduct({ productId }) {
                 }
               />
 
-              {/* UPLOAD IMAGES */}
-              {productCurrentImages ? (
+              {/* IMAGES */}
+              {productCurrentImages.length ? (
                 <Box>
                   <p
                     style={{
@@ -276,8 +283,8 @@ function EditProduct({ productId }) {
                     Images du produit
                   </p>
                   <Grid container spacing={3}>
-                    {productCurrentImages.map((image) => (
-                      <Grid item xs={4} sm={3} xl={2}>
+                    {productCurrentImages.map((image, index) => (
+                      <Grid key={index} item xs={4} sm={3} xl={2}>
                         <img
                           src={image}
                           alt="test"
@@ -288,6 +295,30 @@ function EditProduct({ productId }) {
                             objectFit: "cover"
                           }}
                         />
+                        <IconButton
+                          aria-label="delete"
+                          size="large"
+                          color="error"
+                          onClick={() => {
+                            const newCurrentImages = [
+                              ...productCurrentImages
+                            ].filter((item) => item !== image);
+
+                            setProduct({
+                              ...product,
+                              imagesToDelete: [...product.imagesToDelete, image]
+                            });
+
+                            setProductCurrentImages(newCurrentImages);
+                          }}
+                          sx={{
+                            position: "relative",
+                            bottom: "30px",
+                            left: "28px"
+                          }}
+                        >
+                          <RemoveCircleRoundedIcon />
+                        </IconButton>
                       </Grid>
                     ))}
                   </Grid>
@@ -295,11 +326,10 @@ function EditProduct({ productId }) {
               ) : null}
 
               <ImagesAdder
-                productCurrentImages={productCurrentImages}
                 productImages={product.image}
-                handleProductImagesChange={(image) =>
-                  setProduct({ ...product, image })
-                }
+                handleProductImagesChange={(image) => {
+                  setProduct({ ...product, image });
+                }}
               />
 
               {/* URL */}
