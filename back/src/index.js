@@ -15,22 +15,24 @@ import { ThemeProvider } from "@mui/material/styles";
 
 import * as serviceWorker from "./serviceWorker";
 import Product from "./components/productsList/product/Product";
+import Admin from "./components/Admin";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <ThemeProvider theme={MIUITheme()}>
-          <CssBaseline />
+      <ThemeProvider theme={MIUITheme()}>
+        <CssBaseline />
+        <BrowserRouter>
           <Routes>
-            <Route path="/" element={<App />}>
+            <Route path="/" element={<App />} />
+            <Route path="/admin" element={<Admin />}>
               <Route path="products" element={<ProductsList />} />
               <Route path="products/:productId" element={<Product />} />
               <Route path="add-product" element={<AddProduct />} />
             </Route>
           </Routes>
-        </ThemeProvider>
-      </BrowserRouter>
+        </BrowserRouter>
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

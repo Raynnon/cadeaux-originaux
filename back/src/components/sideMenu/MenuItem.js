@@ -8,7 +8,7 @@ const MenuItem = ({ name, Icon, link }) => {
   const selectedMenuItem = useSelector((state) => state.menu.selectedMenuItem);
   const dispatch = useDispatch();
   return (
-    <Link to={link}>
+    <Link to={`/admin/${link}`}>
       <ListItemButton
         data-testid="menu-item"
         selected={name === selectedMenuItem}
