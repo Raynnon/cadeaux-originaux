@@ -15,7 +15,7 @@ module.exports = {
       }
     });
 
-    /* ADD  */
+    /* POST  */
     router.post(`/${name}`, uploadFile(), async (req, res) => {
       try {
         await addItem(req, model, `${name}/`);
