@@ -19,6 +19,7 @@ test("Component initiate correctly with an empty Array", () => {
 
 test("Component initiate correctly with an array of string with a length of 2", () => {
   const file = new File([""], "file-test", { type: "image/jpeg" });
+  URL.createObjectURL = jest.fn(() => "url");
 
   render(
     <Provider store={store}>

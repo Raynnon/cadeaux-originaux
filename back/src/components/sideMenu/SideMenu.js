@@ -2,10 +2,14 @@ import MenuItem from "./MenuItem";
 
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import FormatListBulletedRoundedIcon from "@mui/icons-material/FormatListBulletedRounded";
+import LogoutIcon from "@mui/icons-material/Logout";
 import logoMesCadeauxOriginaux from "./logo-cadeaux-originaux-white.png";
 import logoMesCadeauxOriginauxSmall from "./logo-cadeaux-originaux-white-small.png";
 
-import { Box, Paper, MenuList } from "@mui/material/";
+import { Box, Paper, MenuList, IconButton } from "@mui/material/";
+
+import cookieManager from "../apiCalls/cookieManager";
+import { Link } from "react-router-dom";
 
 function SideMenu() {
   return (
@@ -23,40 +27,50 @@ function SideMenu() {
       >
         <Box
           sx={{
-            color: "text.secondary",
-            justifyContent: "true"
+            display: { xs: "none", md: "block" },
+            textAlign: "center"
           }}
         >
-          <Box sx={{ display: { xs: "none", md: "block" } }}>
-            <img
-              data-testid="logo-img"
-              src={logoMesCadeauxOriginaux}
-              alt="logo-mescadeauxoriginaux"
-            />
-          </Box>
+          <img
+            data-testid="logo-img"
+            src={logoMesCadeauxOriginaux}
+            alt="logo-mescadeauxoriginaux"
+          />
+        </Box>
 
-          <Box sx={{ display: { xs: "block", md: "none" } }}>
-            <img
-              data-testid="logo-img"
-              src={logoMesCadeauxOriginauxSmall}
-              alt="logo-mescadeauxoriginaux"
-            />
-          </Box>
+        <Box sx={{ display: { xs: "block", md: "none" } }}>
+          <img
+            data-testid="logo-img"
+            src={logoMesCadeauxOriginauxSmall}
+            alt="logo-mescadeauxoriginaux"
+          />
+        </Box>
 
-          <Box>
-            <MenuList>
-              <MenuItem
-                name={"PRODUITS"}
-                Icon={FormatListBulletedRoundedIcon}
-                link={"products"}
-              />
-              <MenuItem
-                name={"AJOUTER PROD."}
-                Icon={AddCircleRoundedIcon}
-                link={"add-product"}
-              />
-            </MenuList>
-          </Box>
+        <Box sx={{ textAlign: "center", marginTop: "5px" }}>
+          <Link to={"/"}>
+            <IconButton
+              onClick={() => {
+                cookieManager("delete");
+              }}
+            >
+              <LogoutIcon fontSize="medium" />
+            </IconButton>
+          </Link>
+        </Box>
+
+        <Box>
+          <MenuList>
+            <MenuItem
+              name={"PRODUITS"}
+              Icon={FormatListBulletedRoundedIcon}
+              link={"products"}
+            />
+            <MenuItem
+              name={"AJOUTER PROD."}
+              Icon={AddCircleRoundedIcon}
+              link={"add-product"}
+            />
+          </MenuList>
         </Box>
       </Paper>
     </>

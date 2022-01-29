@@ -70,7 +70,7 @@ function ProductsList() {
         </Grid>
 
         {products.map((product, index) => (
-          <Link key={index} to={`/admin/products/${product._id}`}>
+          <Link key={index} to={`/products/${product._id}`}>
             <Paper
               className="grid-item"
               elevation={3}

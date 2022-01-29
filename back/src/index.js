@@ -15,7 +15,6 @@ import { ThemeProvider } from "@mui/material/styles";
 
 import * as serviceWorker from "./serviceWorker";
 import Product from "./components/productsList/product/Product";
-import Admin from "./components/Admin";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -24,8 +23,7 @@ ReactDOM.render(
         <CssBaseline />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<App />} />
-            <Route path="/admin" element={<Admin />}>
+            <Route path="/" element={<App />}>
               <Route path="products" element={<ProductsList />} />
               <Route path="products/:productId" element={<Product />} />
               <Route path="add-product" element={<AddProduct />} />
