@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import CategoryCheckBox from "./CategoryCheckbox";
 
-import { Button, IconButton } from "@mui/material";
+import { Button, IconButton, Tooltip } from "@mui/material";
 import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
 
 import readProducts from "../apiCalls/readProducts";
@@ -37,6 +37,8 @@ import axios from "axios";
 function EditProduct({ productId }) {
   const [formError, setFormError] = useState(false);
   const [productAdded, setProductAdded] = useState(false);
+
+  const token = useSelector((state) => state.login.token);
 
   const productInitialState = {
     _id: "",
@@ -419,25 +421,54 @@ function EditProduct({ productId }) {
             justifyContent: "center"
           }}
         >
-          <Button
-            variant="contained"
-            color="info"
-            sx={{ color: "white", margin: "0 10px 30px 10px" }}
-            onClick={() => submitForm()}
+          <Tooltip
+            title={
+              token !== "anonymous" ? "" : "Please log in to use this button"
+            }
+            followCursor
           >
-            {productId ? "Editer produit" : "Ajouter produit"}
-          </Button>
-
-          {productId ? (
             <Box>
               <Button
                 variant="contained"
-                color="error"
-                sx={{ color: "white", margin: "0 10px 30px 10px" }}
-                onClick={() => setDeleteDialog(true)}
+                color="info"
+                sx={{
+                  color: "white",
+                  margin: "0 10px 30px 10px"
+                }}
+                disabled={token !== "anonymous" ? false : true}
+                onClick={token !== "anonymous" ? () => submitForm() : null}
+                title="click here"
               >
-                Supprimer produit
+                {productId ? "Editer produit" : "Ajouter produit"}
               </Button>
+            </Box>
+          </Tooltip>
+
+          {productId ? (
+            <Box>
+              <Tooltip
+                title={
+                  token !== "anonymous"
+                    ? ""
+                    : "Please log in to use this button"
+                }
+                followCursor
+              >
+                <Box>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    sx={{ color: "white", margin: "0 10px 30px 10px" }}
+                    disabled={token !== "anonymous" ? false : true}
+                    onClick={
+                      token !== "anonymous" ? () => setDeleteDialog(true) : null
+                    }
+                  >
+                    Supprimer produit
+                  </Button>
+                </Box>
+              </Tooltip>
+
               <Dialog
                 open={deleteDialog}
                 aria-labelledby="responsive-dialog-title"

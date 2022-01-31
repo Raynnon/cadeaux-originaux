@@ -1,7 +1,8 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { fetchCategories } from "../app/state/slices/categoriesSlice";
+import { changeToken } from "../app/state/slices/loginSlice";
 
 import {
   Container,
@@ -18,24 +19,20 @@ import Admin from "../components/Admin";
 function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [token, setToken] = useState("");
-  const [anonymous, setAnonymous] = useState(false);
 
+  const token = useSelector((state) => state.login.token);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchCategories());
+
+    const cookie = cookieManager();
+    dispatch(changeToken(cookie));
   }, [dispatch]);
-
-  useEffect(() => {
-    setToken(cookieManager());
-  }, []);
-
-  console.log(token);
 
   return (
     <>
-      {!token && !anonymous ? (
+      {!token ? (
         <Container
           sx={{
             padding: "0 10px",
@@ -70,7 +67,8 @@ function App() {
               to={"/products"}
               onClick={() => {
                 userLogin(username, password);
-                setToken(cookieManager());
+                const cookie = changeToken();
+                dispatch(changeToken(cookie));
               }}
               sx={{
                 display: "flex",
@@ -89,7 +87,10 @@ function App() {
             <Button
               color="secondary"
               sx={{ marginTop: "30px" }}
-              onClick={() => setAnonymous(true)}
+              onClick={() => {
+                cookieManager("anonymous");
+                dispatch(changeToken("anonymous"));
+              }}
             >
               Test the backoffice without logging in
             </Button>

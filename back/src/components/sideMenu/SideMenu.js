@@ -7,11 +7,15 @@ import logoMesCadeauxOriginaux from "./logo-cadeaux-originaux-white.png";
 import logoMesCadeauxOriginauxSmall from "./logo-cadeaux-originaux-white-small.png";
 
 import { Box, Paper, MenuList, IconButton } from "@mui/material/";
+import { changeToken } from "../../app/state/slices/loginSlice";
 
 import cookieManager from "../apiCalls/cookieManager";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 function SideMenu() {
+  const dispatch = useDispatch();
+
   return (
     <>
       <Paper
@@ -51,6 +55,7 @@ function SideMenu() {
             <IconButton
               onClick={() => {
                 cookieManager("delete");
+                dispatch(changeToken(""));
               }}
             >
               <LogoutIcon fontSize="medium" />
