@@ -11,7 +11,7 @@ export default function Admin() {
       sx={{ display: "flex", flexDirection: "row" }}
     >
       <SideMenu />
-      <Container component={"main"} maxWidth={false} sx={{ marginTop: "10px" }}>
+      <Container component={"main"} maxWidth={false} sx={{ margin: "10px 0" }}>
         <Outlet />
       </Container>
     </Container>

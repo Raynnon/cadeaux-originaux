@@ -9,7 +9,7 @@ import logoMesCadeauxOriginauxSmall from "./logo-cadeaux-originaux-white-small.p
 import { Box, Paper, MenuList, IconButton } from "@mui/material/";
 import { changeToken } from "../../app/state/slices/loginSlice";
 
-import cookieManager from "../apiCalls/cookieManager";
+import cookieManager from "../../routes/cookieManager";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 

@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Outlet, Link } from "react-router-dom";
 
-import readProducts from "../apiCalls/readProducts";
+import readProducts from "../../routes/readProducts";
 
-import { TextField, Box, Grid, Paper, Typography } from "@mui/material";
+import { TextField, Box, Grid, Typography, Pagination } from "@mui/material";
 
 import "./productList.css";
+import ProductCard from "./productCard/ProductCard";
 
 function ProductsList() {
   const [products, setProducts] = useState([]);
@@ -16,22 +16,40 @@ function ProductsList() {
     images: "true"
   });
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [numberOfPages, setNumberOfPages] = useState(0);
+  const productsPerPage = 10;
+
   const selectedMenuItem = useSelector((state) => state.menu.selectedMenuItem);
 
+  console.log(currentPage);
+
   useEffect(() => {
-    const getProducts = async () => {
-      setProducts(await readProducts(apiReqOptions));
+    const getProducts = async (options, count) => {
+      const fullOptions = count
+        ? { ...options, count: "true" }
+        : { ...options, currentPage, productsPerPage };
+
+      if (count) {
+        const numberOfProducts = await readProducts(fullOptions);
+        setNumberOfPages(
+          Math.floor(numberOfProducts.numberOfProducts / productsPerPage)
+        );
+      } else {
+        setProducts(await readProducts(fullOptions));
+      }
     };
 
-    getProducts();
-  }, [apiReqOptions]);
+    getProducts(apiReqOptions);
+    getProducts(apiReqOptions, true);
+  }, [apiReqOptions, productsPerPage, currentPage]);
 
   return (
     <>
       <Typography variant="h1">{selectedMenuItem}</Typography>
       <Box
         sx={{
-          marginTop: "20px"
+          margin: "20px 0 10px 0"
         }}
       >
         <TextField
@@ -69,55 +87,25 @@ function ProductsList() {
           </Grid>
         </Grid>
 
+        {/* PRODUCTS */}
         {products.map((product, index) => (
-          <Link key={index} to={`/products/${product._id}`}>
-            <Paper
-              className="grid-item"
-              elevation={3}
-              sx={{
-                textAlign: "center",
-                cursor: "pointer",
-                display: "flex",
-                padding: { sm: "5px 0" },
-                backgroundColor: "#1E2530",
-                marginTop: "10px",
-                "&:hover": {
-                  backgroundColor: "#323943"
-                }
-              }}
-            >
-              <Grid
-                className="grid-item"
-                item={true}
-                xs={0}
-                md={2}
-                sx={{ display: { xs: "none", md: "flex" } }}
-              >
-                <img
-                  src={product.images[0]}
-                  alt={product.name.split(" ").join("-").toLowerCase()}
-                  style={{
-                    width: "75px",
-                    height: "75px",
-                    objectFit: "cover",
-                    borderRadius: 4
-                  }}
-                />
-              </Grid>
-              <Grid item={true} xs={7} md={6}>
-                <p>{product.name}</p>
-              </Grid>
-              <Grid item={true} xs={2} md={2}>
-                <p>{product.price}</p>
-              </Grid>
-              <Grid item={true} xs={3} md={2}>
-                <p>{new Date(product.editedAt).toLocaleDateString()}</p>
-              </Grid>
-            </Paper>
-          </Link>
+          <ProductCard key={index} product={product} />
         ))}
       </Box>
-      <Outlet />
+
+      {/* PAGINATION */}
+      {numberOfPages > 1 ? (
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Pagination
+            page={currentPage}
+            count={numberOfPages}
+            size="large"
+            onChange={(e, value) => {
+              setCurrentPage(value);
+            }}
+          />
+        </Box>
+      ) : null}
     </>
   );
 }

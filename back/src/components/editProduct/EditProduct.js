@@ -6,7 +6,9 @@ import CategoryCheckBox from "./CategoryCheckbox";
 import { Button, IconButton, Tooltip } from "@mui/material";
 import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
 
-import readProducts from "../apiCalls/readProducts";
+import readProducts from "../../routes/readProducts";
+import postProduct from "../../routes/postProduct";
+import putProduct from "../../routes/putProduct";
 
 import {
   FormGroup,
@@ -29,9 +31,9 @@ import {
 
 import StrongPoints from "./strongPoints/StrongPoints";
 import ImagesAdder from "./imagesAdder/ImagesAdder";
-import postProduct from "../apiCalls/postProduct";
+
 import productToFormData from "../../scripts/productToFormData";
-import putProduct from "../apiCalls/putProduct";
+
 import axios from "axios";
 
 function EditProduct({ productId }) {
