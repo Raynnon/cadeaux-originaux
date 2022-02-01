@@ -15,6 +15,7 @@ import {
 import { userLogin } from "../components/apiCalls/userLogin";
 import cookieManager from "../components/apiCalls/cookieManager";
 import Admin from "../components/Admin";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -22,6 +23,7 @@ function App() {
 
   const token = useSelector((state) => state.login.token);
   const dispatch = useDispatch();
+  let navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -65,11 +67,6 @@ function App() {
             />
             <Link
               to={"/products"}
-              onClick={() => {
-                userLogin(username, password);
-                const cookie = changeToken();
-                dispatch(changeToken(cookie));
-              }}
               sx={{
                 display: "flex",
                 justifyContent: "center",
@@ -77,24 +74,32 @@ function App() {
                 textDecoration: "none"
               }}
             >
-              <Button color="info" variant="contained">
+              <Button
+                color="info"
+                variant="contained"
+                onClick={async () => {
+                  await userLogin(username, password);
+                  setUsername("");
+                  setPassword("");
+                  navigate("/products");
+                  dispatch(changeToken(cookieManager()));
+                }}
+              >
                 Go!
               </Button>
             </Link>
           </FormGroup>
 
-          <Link to={"/products"}>
-            <Button
-              color="secondary"
-              sx={{ marginTop: "30px" }}
-              onClick={() => {
-                cookieManager("anonymous");
-                dispatch(changeToken("anonymous"));
-              }}
-            >
-              Test the backoffice without logging in
-            </Button>
-          </Link>
+          <Button
+            color="secondary"
+            sx={{ marginTop: "30px" }}
+            onClick={() => {
+              navigate("/products");
+              dispatch(changeToken("anonymous"));
+            }}
+          >
+            Test the backoffice without logging in
+          </Button>
         </Container>
       ) : (
         <Admin />
