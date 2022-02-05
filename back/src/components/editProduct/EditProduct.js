@@ -9,6 +9,7 @@ import RemoveCircleRoundedIcon from "@mui/icons-material/RemoveCircleRounded";
 import readProducts from "../../routes/readProducts";
 import postProduct from "../../routes/postProduct";
 import putProduct from "../../routes/putProduct";
+import deleteProduct from "../../routes/deleteProduct";
 
 import {
   FormGroup,
@@ -33,8 +34,6 @@ import StrongPoints from "./strongPoints/StrongPoints";
 import ImagesAdder from "./imagesAdder/ImagesAdder";
 
 import productToFormData from "../../scripts/productToFormData";
-
-import axios from "axios";
 
 function EditProduct({ productId }) {
   const [formError, setFormError] = useState(false);
@@ -498,11 +497,7 @@ function EditProduct({ productId }) {
                     color="error"
                     onClick={async () => {
                       setDeleteDialog(false);
-                      try {
-                        await axios.delete(
-                          `${process.env.REACT_APP_API_URL}/products/${productId}`
-                        );
-                      } catch {}
+                      deleteProduct(productId);
                     }}
                   >
                     Confirmer
