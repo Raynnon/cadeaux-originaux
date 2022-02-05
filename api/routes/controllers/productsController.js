@@ -1,5 +1,6 @@
 const imageToDataAdder = require("../crud/tools/imageToDataAdder");
 const updateOneItem = require("../crud/updateOneItem");
+const auth = require("../../middlewares/authMiddleware");
 
 const read = async (model, params) => {
   if (params) {

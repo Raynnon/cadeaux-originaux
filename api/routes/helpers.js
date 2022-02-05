@@ -1,6 +1,7 @@
 const uploadFile = require("../middlewares/uploadFile");
 const addItem = require("./crud/addItem");
 const deleteItem = require("./crud/deleteItem");
+const auth = require("../middlewares/authMiddleware");
 
 module.exports = {
   crud(router, name, model, controller) {
@@ -16,7 +17,7 @@ module.exports = {
     });
 
     /* POST  */
-    router.post(`/${name}`, uploadFile(), async (req, res) => {
+    router.post(`/${name}`, auth, uploadFile(), async (req, res) => {
       try {
         await addItem(req, model, `${name}/`);
 
@@ -28,7 +29,7 @@ module.exports = {
     });
 
     // EDIT BY ID
-    router.put(`/${name}/:id`, uploadFile(), async (req, res) => {
+    router.put(`/${name}/:id`, auth, uploadFile(), async (req, res) => {
       try {
         res.send(await controller.updateOne(req, model));
 
@@ -40,7 +41,7 @@ module.exports = {
     });
 
     // DELETE
-    router.delete(`/${name}/:id`, async (req, res) => {
+    router.delete(`/${name}/:id`, auth, async (req, res) => {
       try {
         await deleteItem(req.params.id, model);
 

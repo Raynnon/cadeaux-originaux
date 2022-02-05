@@ -2,19 +2,12 @@ const jwt = require("jsonwebtoken");
 
 const auth = (req, res, next) => {
   try {
+    const { USERNAME, PASSWORD, PASSPHRASE } = process.env;
     const token = req.header("Authorization").replace("Bearer ", "");
-    const decoded = jwt.verify(token, "passphrase");
-    const user = await User.findOne({
-      _id: decoded._id,
-      "tokens.token": token
-    });
 
-    if (!user) {
-      throw new Error();
-    } else {
-      req.token = token;
-      req.user = user;
+    const decoded = jwt.verify(token, PASSPHRASE);
 
+    if (decoded.username === USERNAME && decoded.password === PASSWORD) {
       next();
     }
   } catch (e) {
