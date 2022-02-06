@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import CategoryCheckBox from "./CategoryCheckbox";
 
@@ -35,11 +36,13 @@ import ImagesAdder from "./imagesAdder/ImagesAdder";
 
 import productToFormData from "../../scripts/productToFormData";
 
-function EditProduct({ productId }) {
+function EditProduct() {
   const [formError, setFormError] = useState(false);
   const [productAdded, setProductAdded] = useState(false);
 
   const token = useSelector((state) => state.login.token);
+
+  const { productId } = useParams();
 
   const productInitialState = {
     _id: "",

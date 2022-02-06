@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./app/App";
-import AddProduct from "./components/addProduct/AddProduct";
 import ProductsList from "./components/productsList/ProductsList";
 
 import { store } from "./app/state/store";
@@ -14,7 +13,7 @@ import MIUITheme from "./app/styles/MIUITheme";
 import { ThemeProvider } from "@mui/material/styles";
 
 import * as serviceWorker from "./serviceWorker";
-import Product from "./components/productsList/product/Product";
+import EditProduct from "./components/editProduct/EditProduct";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -25,8 +24,14 @@ ReactDOM.render(
           <Routes>
             <Route path="/" element={<App />}>
               <Route path="products" element={<ProductsList />} />
-              <Route path="products/:productId" element={<Product />} />
-              <Route path="add-product" element={<AddProduct />} />
+              <Route
+                path="products/:productId"
+                element={<EditProduct key={"edit-product"} />}
+              />
+              <Route
+                path="add-product"
+                element={<EditProduct key={"add-product"} />}
+              />
             </Route>
           </Routes>
         </BrowserRouter>
