@@ -1,0 +1,15 @@
+#santa-claus {
+  height: 20vw;
+  min-height: 300px;
+  animation: santarotate 2s ease 0s infinite alternate none;
+}
+
+@keyframes santarotate {
+  0% {
+    transform: rotate(30deg);
+  }
+
+  100% {
+    transform: rotate(-60deg);
+  }
+}

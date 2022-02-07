@@ -9,6 +9,7 @@ import Admin from "../components/Admin";
 import Login from "../components/login/Login";
 
 function App() {
+  document.title = "Mes cadeaux originaux - Admin";
   const token = useSelector((state) => state.login.token);
   const dispatch = useDispatch();
 

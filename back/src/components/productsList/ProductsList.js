@@ -22,8 +22,6 @@ function ProductsList() {
 
   const selectedMenuItem = useSelector((state) => state.menu.selectedMenuItem);
 
-  console.log(currentPage);
-
   useEffect(() => {
     const getProducts = async (options, count) => {
       const fullOptions = count
