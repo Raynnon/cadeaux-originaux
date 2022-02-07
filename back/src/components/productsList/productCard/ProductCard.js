@@ -39,13 +39,18 @@ export default function ProductCard({ product }) {
             }}
           />
         </Grid>
-        <Grid item={true} xs={7} md={6}>
+        <Grid item={true} xs={8} sm={7} md={6}>
           <p>{product.name}</p>
         </Grid>
-        <Grid item={true} xs={2} md={2}>
+        <Grid
+          item={true}
+          xs={0}
+          sm={2}
+          sx={{ display: { xs: "none", sm: "block" } }}
+        >
           <p>{product.price}</p>
         </Grid>
-        <Grid item={true} xs={3} md={2}>
+        <Grid item={true} xs={4} sm={3} md={2}>
           <p>{new Date(product.editedAt).toLocaleDateString()}</p>
         </Grid>
       </Paper>
