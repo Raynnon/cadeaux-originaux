@@ -35,7 +35,8 @@ const NotFound = () => {
           width: "100%",
           height: "70%",
           display: "flex",
-          alignItems: "center"
+          alignItems: "center",
+          paddingTop: "100px"
         }}
       >
         <Grid
@@ -76,7 +77,7 @@ const NotFound = () => {
             minWidth: "200px",
             height: "3vw",
             minHeight: "50px",
-            marginTop: "6vh",
+            marginTop: "10vh",
             fontSize: "calc(11px + 0.7vw)"
           }}
         >
