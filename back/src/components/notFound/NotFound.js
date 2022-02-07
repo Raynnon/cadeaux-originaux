@@ -33,19 +33,12 @@ const NotFound = () => {
         component={"main"}
         style={{
           width: "100%",
-          height: "70%",
+          height: "100%",
           display: "flex",
-          alignItems: "center",
-          paddingTop: "100px"
+          alignItems: "center"
         }}
       >
-        <Grid
-          container
-          alignItems="center"
-          align="center"
-          spacing={{ xs: 10 }}
-          sx={{ padding: "0 100px" }}
-        >
+        <Grid container alignItems="center" align="center" spacing={{ xs: 10 }}>
           <Grid item xs={12} lg={4}>
             <Typography
               className="text-error"
@@ -66,24 +59,22 @@ const NotFound = () => {
               404
             </Typography>
           </Grid>
+          <Grid item xs={12}>
+            <Link to="/">
+              <Button
+                variant="contained"
+                size="large"
+                sx={{
+                  minWidth: "200px",
+                  fontSize: "calc(11px + 0.7vw)"
+                }}
+              >
+                Retour au site
+              </Button>
+            </Link>
+          </Grid>
         </Grid>
       </Box>
-      <Link to="/">
-        <Button
-          variant="contained"
-          size="large"
-          sx={{
-            width: "20vw",
-            minWidth: "200px",
-            height: "3vw",
-            minHeight: "50px",
-            marginTop: "10vh",
-            fontSize: "calc(11px + 0.7vw)"
-          }}
-        >
-          Retour au site
-        </Button>
-      </Link>
     </Box>
   );
 };

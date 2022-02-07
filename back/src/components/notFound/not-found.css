@@ -1,6 +1,6 @@
 #santa-claus {
   height: 20vw;
-  min-height: 300px;
+  min-height: 200px;
   animation: santarotate 2s ease 0s infinite alternate none;
 }
 
