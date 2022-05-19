@@ -46,7 +46,7 @@ export default function Header({ categories }) {
           }`}
         >
           <ul className="h-full flex flex-row justify-between align-center items-center">
-            <li className="h-full mx-8 text-white font-semibold hover:underline hover:underline-offset-2 hover:cursor-pointer">
+            <li className="h-full px-8 text-white font-semibold hover:underline hover:underline-offset-2 hover:cursor-pointer">
               <Link
                 href={{
                   pathname: '/category/Nouveau'
@@ -55,7 +55,7 @@ export default function Header({ categories }) {
                 <a className="h-full flex items-center">NOUVEAU</a>
               </Link>
             </li>
-            <li className="h-full mx-8 text-white font-semibold hover:underline hover:underline-offset-2 hover:cursor-pointer">
+            <li className="h-full px-8 text-white font-semibold hover:underline hover:underline-offset-2 hover:cursor-pointer">
               <Link
                 href={{
                   pathname: '/category/Meilleurs-cadeaux'
@@ -68,7 +68,7 @@ export default function Header({ categories }) {
               return (
                 <>
                   <li
-                    className="h-full mx-8 text-white font-semibold hover:underline hover:underline-offset-2 hover:cursor-pointer group"
+                    className="h-full px-8 text-white font-semibold hover:underline hover:underline-offset-2 hover:cursor-pointer group"
                     key={index}
                   >
                     <p className="h-full flex items-center">
