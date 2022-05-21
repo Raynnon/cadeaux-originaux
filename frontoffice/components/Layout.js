@@ -1,10 +1,11 @@
-import Head from "next/head";
-import Header from "./Header";
-import Footer from "./Footer";
+import Head from 'next/head';
+import Header from './header/Header';
+import SubHeader from './header/SubHeader';
+import Footer from './Footer';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-import axios from "axios";
+import axios from 'axios';
 
 export default function Layout({ children, pageTitle, description }) {
   const [categories, setCategories] = useState([]);
@@ -19,15 +20,15 @@ export default function Layout({ children, pageTitle, description }) {
       const categoriesData = categoriesReq.data;
 
       const prices = [
-        { shortName: "€", name: "Pas cher" },
-        { shortName: "€€", name: "Bon rapport qualité prix" },
-        { shortName: "€€€", name: "Haut de gamme" }
+        { shortName: '€', name: 'Pas cher' },
+        { shortName: '€€', name: 'Bon rapport qualité prix' },
+        { shortName: '€€€', name: 'Haut de gamme' }
       ];
 
       setCategories(categoriesData);
       setPrices(prices);
     } catch (e) {
-      console.log("categoriesReq error", e);
+      console.log('categoriesReq error', e);
     }
   }, []);
 
@@ -53,6 +54,7 @@ export default function Layout({ children, pageTitle, description }) {
         <meta name="description" content={description} />
       </Head>
       <Header categories={categories} />
+      <SubHeader categories={categories} />
       <main>{children}</main>
       <Footer categories={categories} prices={prices} />
     </>
