@@ -6,6 +6,7 @@
     "start": "next start -p 3020"
   },
   "dependencies": {
+    "@heroicons/react": "^1.0.6",
     "axios": "^0.24.0",
     "next": "^12.0.9",
     "react": "^17.0.2",
