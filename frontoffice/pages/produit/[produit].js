@@ -1,10 +1,10 @@
-import Layout from "../../components/Layout";
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
-import ProductsSuggestion from "../../components/subcomponents/ProductsSuggestion";
-import axios from "axios";
-import { split } from "sentence-splitter";
+import Layout from '../../components/Layout';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
+import ProductsSuggestion from '../../components/subcomponents/ProductsSuggestion';
+import axios from 'axios';
+import { split } from 'sentence-splitter';
 
 export default function Product({
   product,
@@ -18,10 +18,10 @@ export default function Product({
   const addVisit = async () => {
     try {
       const formData = new FormData();
-      formData.append("visits", "true");
+      formData.append('visits', 'true');
 
       await axios({
-        method: "put",
+        method: 'put',
         url: `${process.env.NEXT_PUBLIC_API_URL}/products/${productID}`,
         data: formData
       });
@@ -55,7 +55,7 @@ export default function Product({
                     return (
                       <div
                         key={index}
-                        className="w-20 xl:w-36 border-2 border-transparent hover:border-orange-500 rounded-lg"
+                        className="w-20 xl:w-36 border-2 border-transparent hover:border-orange-400 rounded-lg"
                       >
                         <Image
                           alt={product.name}
@@ -79,7 +79,7 @@ export default function Product({
               <Link href={product.urlAmazon}>
                 <a rel="noopener">
                   <button
-                    className="w-44 py-3 mt-10 rounded-lg text-white bg-orange-500 text-2xl hover:bg-orange-600"
+                    className="w-44 py-3 mt-10 rounded-lg text-white bg-orange-400 text-2xl hover:bg-orange-500"
                     onClick={addVisit}
                   >
                     Acheter
@@ -144,7 +144,7 @@ export async function getServerSideProps({ query }) {
 
     // SPLIT SENTENCES OF THE PRODUCT DESCRIPTION
     const sentences = split(product.description).filter(
-      (item) => item.type === "Sentence"
+      (item) => item.type === 'Sentence'
     );
 
     // Description Limit is max size of metadescription - "Acheter {product name}"
@@ -152,7 +152,7 @@ export async function getServerSideProps({ query }) {
     let limitedDescription = sentences
       .filter((items) => items.range[1] < descriptionLimit)
       .map((item) => item.raw)
-      .join(" ");
+      .join(' ');
 
     let metaDescription = `Acheter ${product.name.toLowerCase()} - ${limitedDescription}`;
     return {

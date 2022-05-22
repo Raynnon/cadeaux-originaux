@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import Image from "next/image";
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 export default function Pagination({
   numberOfProducts,
@@ -35,11 +35,11 @@ export default function Pagination({
     const pageNumberArr = [...Array(maxPages).keys()];
 
     return pageNumberArr.map((page, index) => {
-      let classToAdd = "";
+      let classToAdd = '';
       if (page + 1 === currentPage) {
-        classToAdd = "z-10 bg-orange-300 border-orange-500";
+        classToAdd = 'z-10 bg-orange-400 border-orange-500';
       } else {
-        classToAdd = "bg-white cursor-pointer";
+        classToAdd = 'bg-white cursor-pointer';
       }
 
       return (
@@ -58,13 +58,13 @@ export default function Pagination({
   return (
     <div
       className="pb-5 flex items-center justify-between"
-      style={maxPages <= 1 ? { visibility: "hidden" } : null}
+      style={maxPages <= 1 ? { visibility: 'hidden' } : null}
     >
       <div className="flex-1 flex justify-between sm:hidden">
         <button
           href="#"
           className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700"
-          style={currentPage === 1 ? { visibility: "hidden" } : null}
+          style={currentPage === 1 ? { visibility: 'hidden' } : null}
           onClick={() => pageChange(currentPage - 1)}
         >
           Précédent
@@ -73,7 +73,7 @@ export default function Pagination({
         <button
           href="#"
           className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-          style={currentPage === maxPages ? { visibility: "hidden" } : null}
+          style={currentPage === maxPages ? { visibility: 'hidden' } : null}
           onClick={() => pageChange(currentPage + 1)}
         >
           Next
@@ -81,11 +81,11 @@ export default function Pagination({
       </div>
 
       <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-        <div style={details ? null : { visibility: "hidden" }}>
+        <div style={details ? null : { visibility: 'hidden' }}>
           <p className="text-sm text-gray-700">
             Produits <span className="font-medium">{indexFirstProduct}</span> à
             <span className="font-medium">{` ${indexLastProduct}`}</span> sur
-            <span className="font-medium">{` ${numberOfProducts}`}</span>{" "}
+            <span className="font-medium">{` ${numberOfProducts}`}</span>{' '}
             résultats
           </p>
         </div>

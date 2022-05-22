@@ -1,41 +1,41 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import Image from "next/image";
-import Link from "next/link";
-import Layout from "../components/Layout";
-import SearchBox from "../components/subcomponents/Searchbox";
-import ProductsSuggestion from "../components/subcomponents/ProductsSuggestion";
+import Image from 'next/image';
+import Link from 'next/link';
+import Layout from '../components/Layout';
+import SearchBox from '../components/subcomponents/Searchbox';
+import ProductsSuggestion from '../components/subcomponents/ProductsSuggestion';
 
 export default function Home() {
   const categoriesShowcase = [
     {
-      name: "Anniversaire",
-      image: "/images/categories-showcase/ballons-anniversaire.jpg",
-      link: "/category/Anniversaire"
+      name: 'Anniversaire',
+      image: '/images/categories-showcase/ballons-anniversaire.jpg',
+      link: '/category/Anniversaire'
     },
     {
-      name: "Romantique",
-      image: "/images/categories-showcase/couple-s-embrasse.jpg",
-      link: "/category/Romantique"
+      name: 'Romantique',
+      image: '/images/categories-showcase/couple-s-embrasse.jpg',
+      link: '/category/Romantique'
     },
     {
-      name: "Naissance",
-      image: "/images/categories-showcase/bebe-yeux-bleus.jpg",
-      link: "/category/B%C3%A9b%C3%A9"
+      name: 'Naissance',
+      image: '/images/categories-showcase/bebe-yeux-bleus.jpg',
+      link: '/category/B%C3%A9b%C3%A9'
     },
     {
-      name: "Mariage",
-      image: "/images/categories-showcase/couple-mariage.jpg",
-      link: "/category/Mariage"
+      name: 'Mariage',
+      image: '/images/categories-showcase/couple-mariage.jpg',
+      link: '/category/Mariage'
     },
     {
-      name: "Remerciement",
-      image: "/images/categories-showcase/carte-merci.jpg",
-      link: "/category/Remerciements"
+      name: 'Remerciement',
+      image: '/images/categories-showcase/carte-merci.jpg',
+      link: '/category/Remerciements'
     },
     {
-      name: "Fun",
-      image: "/images/categories-showcase/mamie-sombrero.jpg",
-      link: "/category/Cadeau-rigolo"
+      name: 'Fun',
+      image: '/images/categories-showcase/mamie-sombrero.jpg',
+      link: '/category/Cadeau-rigolo'
     }
   ];
 
@@ -65,7 +65,7 @@ export default function Home() {
               </h1>
               <Link href="/category/Anniversaire">
                 <a>
-                  <button className="w-44 px-5 py-3 lg:ml-32 mt-10 rounded-lg text-white bg-orange-500 text-3xl hover:bg-orange-600">
+                  <button className="w-44 px-5 py-3 lg:ml-32 mt-10 rounded-lg text-white bg-orange-400 text-3xl hover:bg-orange-500">
                     Découvrir
                   </button>
                 </a>

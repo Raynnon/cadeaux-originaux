@@ -1,6 +1,6 @@
-import Link from "next/link";
-import Image from "next/image";
-import slugify from "slugify";
+import Link from 'next/link';
+import Image from 'next/image';
+import slugify from 'slugify';
 
 export default function ProductsCard({
   cardNumber,
@@ -41,7 +41,7 @@ export default function ProductsCard({
               <p className="font-semibold">Prix</p>
               <p className="text-center">{productPrice}</p>
             </div>
-            <button className="border border-coolGray-300 group-hover:bg-orange-500 group-hover:border-transparent group-hover:text-white rounded-lg p-1 h-9 font-semibold">
+            <button className="border border-coolGray-300 group-hover:bg-orange-400 group-hover:border-transparent group-hover:text-white rounded-lg p-1 h-9 font-semibold">
               En savoir plus
             </button>
           </div>
