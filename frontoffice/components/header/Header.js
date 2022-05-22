@@ -129,11 +129,13 @@ export default function Header({ categories }) {
         )}
       </div>
 
-      <Link href="/">
-        <a className="flex justify-center flex-1">
-          <Image src={logo} height={50} width={179} />
-        </a>
-      </Link>
+      <div className="flex flex-1 justify-center ">
+        <Link href="/">
+          <a className="flex justify-center ">
+            <Image src={logo} height={50} width={179} />
+          </a>
+        </Link>
+      </div>
     </header>
   );
 }
