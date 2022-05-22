@@ -6,9 +6,7 @@ import logoWhite from '../../public/logos/logo-cadeaux-originaux-blanc.png';
 
 export default function SubHeader({ categories }) {
   const [subHeaderLogoActive, setSubHeaderLogoActive] = useState(false);
-  if (typeof window !== 'undefined') {
-    console.log(window.innerWidth);
-  }
+
   if (typeof window !== 'undefined' && window.innerWidth > 1023) {
     window.onscroll = () => {
       if (window.scrollY > 56) {
@@ -24,7 +22,7 @@ export default function SubHeader({ categories }) {
       <Link href="/">
         <a
           className={`hidden flex self-center pt-1 ${
-            subHeaderLogoActive ? 'lg:inline' : 'lg:hidden'
+            subHeaderLogoActive ? 'lg:inline' : ''
           }`}
         >
           <Image src={logoWhite} height={35} width={125} />
@@ -57,7 +55,10 @@ export default function SubHeader({ categories }) {
           </li>
           {Object.keys(categories).map((category, index) => {
             return (
-              <li className="h-full px-8 text-white font-semibold hover:underline hover:underline-offset-2 hover:cursor-pointer group">
+              <li
+                className="h-full px-8 text-white font-semibold hover:underline hover:underline-offset-2 hover:cursor-pointer group"
+                key={index}
+              >
                 <p className="h-full flex items-center">
                   {category.toUpperCase()}
                 </p>
