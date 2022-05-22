@@ -50,7 +50,7 @@ export default function SubHeader({ categories }) {
                 pathname: '/category/Meilleurs-cadeaux'
               }}
             >
-              <a className="h-full flex items-center">MEILLEURES VENTES</a>
+              <a className="h-full flex items-center">POPULAIRE</a>
             </Link>
           </li>
           {Object.keys(categories).map((category, index) => {
