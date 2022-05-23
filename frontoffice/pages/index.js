@@ -60,12 +60,12 @@ export default function Home() {
             <SearchBox className="relative" />
 
             <div className="flex lg:block flex-col items-center text-center lg:text-left lg:pt-20 xl:pt-40 pb-10 lg:pb-24 xl:pb-32">
-              <h1 className="p-5 md:mx-20 lg:mx-32 w-auto lg:w-2/5 bg-opacity-30 bg-coolGray-900 text-white font-black rounded-lg text-4xl xl:text-5xl leading-relaxed xl:leading-relaxed">
+              <h1 className="md:mx-20 lg:mx-32 w-auto lg:w-2/5 bg-opacity-30 text-white text-4xl xl:text-5xl leading-relaxed xl:leading-relaxed text-coolGray-800">
                 Nos meilleurs cadeaux d'anniversaire
               </h1>
               <Link href="/category/Anniversaire">
                 <a>
-                  <button className="w-44 px-5 py-3 lg:ml-32 mt-10 rounded-lg text-white bg-orange-400 text-3xl hover:bg-orange-500">
+                  <button className="w-44 px-5 py-3 lg:ml-32 mt-10 text-white text-2xl bg-orange-400 hover:bg-orange-500">
                     Découvrir
                   </button>
                 </a>
@@ -74,29 +74,30 @@ export default function Home() {
           </div>
         </div>
         {/* CATEGORIES */}
-        <div className="px-1 items-center grid grid-flow-col grid-cols-2 grid-rows-3 gap-1 text-center py-5 sm:grid-cols-3 sm:grid-rows-2 xl:px-56 bg-coolGray-100">
+        <div className="px-1 items-center grid grid-flow-col grid-cols-2 grid-rows-3 gap-1 text-center pt-12 sm:grid-cols-3 sm:grid-rows-2 xl:px-56">
           {categoriesShowcase.length
             ? categoriesShowcase.map((category, index) => {
                 return (
                   <div key={index} className="flex items-center justify-center">
-                    <figure className="relative max-w-xs cursor-pointer">
-                      <Link href={category.link}>
-                        <a>
+                    <Link href={category.link}>
+                      <a>
+                        <figure className="relative max-w-xs cursor-pointer">
                           <Image
                             alt={category.name}
                             src={category.image}
                             width={600}
                             height={350}
                             objectFit="cover"
-                            quality={50}
-                            className="rounded-lg"
+                            quality={70}
+                            className="hover:scale-110 brightness-75"
                           />
-                        </a>
-                      </Link>
-                      <figcaption className="absolute text-lg -mt-16 text-white px-4 bg-opacity-30 bg-coolGray-900">
-                        <p className="font-medium">{category.name}</p>
-                      </figcaption>
-                    </figure>
+
+                          <p className="absolute font-medium text-white left-0 bottom-0 right-0 top-0 flex justify-center items-center hover:underline underline-offset-2">
+                            {category.name}
+                          </p>
+                        </figure>
+                      </a>
+                    </Link>
                   </div>
                 );
               })
