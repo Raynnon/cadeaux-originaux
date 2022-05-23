@@ -60,7 +60,7 @@ export default function Home() {
             <SearchBox className="relative" />
 
             <div className="flex lg:block flex-col items-center text-center lg:text-left lg:pt-20 xl:pt-40 pb-10 lg:pb-24 xl:pb-32">
-              <h1 className="p-5 md:mx-20 lg:mx-32 w-auto lg:w-2/5 bg-opacity-30 bg-coolGray-900 text-white font-black rounded-lg font-mono text-4xl xl:text-6xl leading-relaxed xl:leading-relaxed">
+              <h1 className="p-5 md:mx-20 lg:mx-32 w-auto lg:w-2/5 bg-opacity-30 bg-coolGray-900 text-white font-black rounded-lg text-4xl xl:text-5xl leading-relaxed xl:leading-relaxed">
                 Nos meilleurs cadeaux d'anniversaire
               </h1>
               <Link href="/category/Anniversaire">
@@ -107,18 +107,6 @@ export default function Home() {
           <ProductsSuggestion type="new" />
           <ProductsSuggestion />
         </div>
-
-        <p className="px-1 py-5 mt-5 -mb-10 lg:px-32 bg-coolGray-100 leading-loose text-sm md:text-base md:leading-loose text-justify">
-          Mes cadeaux originaux est un site web qui vous donne des idées de
-          cadeaux. Vous trouverez des cadeaux d'anniversaire, de Noël,
-          romantiques etc. Il y en a pour tous les goûts! Que vous souhaitiez
-          offrir un cadeau à un homme, une femme, un enfant ou votre animal de
-          compagnie, vous trouverez toujours un cadeau original! Explorez les
-          différentes sections du site et vous trouverez forcément votre
-          bonheur. Il y en a pour tous les goût et toutes les bourses. Même avec
-          un petit budget c'est sûr que vous trouverez un cadeau sympas pour vos
-          proches. Vous cherchez une idée de cadeau? Vous êtes au bon endroit!
-        </p>
       </div>
     </Layout>
   );
