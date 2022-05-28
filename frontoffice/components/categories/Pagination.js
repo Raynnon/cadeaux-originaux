@@ -63,7 +63,7 @@ export default function Pagination({
       <div className="flex-1 flex justify-between sm:hidden">
         <button
           href="#"
-          className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700"
+          className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700"
           style={currentPage === 1 ? { visibility: 'hidden' } : null}
           onClick={() => pageChange(currentPage - 1)}
         >
@@ -72,7 +72,7 @@ export default function Pagination({
 
         <button
           href="#"
-          className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+          className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
           style={currentPage === maxPages ? { visibility: 'hidden' } : null}
           onClick={() => pageChange(currentPage + 1)}
         >
@@ -92,12 +92,12 @@ export default function Pagination({
 
         <div>
           <nav
-            className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+            className="relative z-0 inline-flex shadow-sm -space-x-px"
             aria-label="Pagination"
           >
             {currentPage === 1 ? null : (
               <button
-                className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                className="relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                 onClick={() => pageChange(currentPage - 1)}
               >
                 <span className="sr-only">Previous</span>
@@ -116,7 +116,7 @@ export default function Pagination({
             {displayNumberOfPages()}
             {currentPage === maxPages ? null : (
               <button
-                className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                className="relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                 onClick={() => pageChange(currentPage + 1)}
               >
                 <span className="sr-only">Next</span>
