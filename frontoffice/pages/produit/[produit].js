@@ -44,7 +44,6 @@ export default function Product({
                   height={580}
                   quality={100}
                   objectFit="responsive"
-                  className="rounded-lg"
                 />
               </div>
             ) : null}
@@ -55,7 +54,7 @@ export default function Product({
                     return (
                       <div
                         key={index}
-                        className="w-20 xl:w-36 border-2 border-transparent hover:border-orange-400 rounded-lg"
+                        className="w-20 xl:w-36 border-2 border-transparent hover:border-orange-400"
                       >
                         <Image
                           alt={product.name}
@@ -63,7 +62,7 @@ export default function Product({
                           width={140}
                           height={140}
                           layout="responsive"
-                          className="rounded-md cursor-pointer"
+                          className="cursor-pointer"
                           onMouseEnter={() => setMainImage({ image }.image)}
                         />
                       </div>
@@ -79,7 +78,7 @@ export default function Product({
               <Link href={product.urlAmazon}>
                 <a rel="noopener">
                   <button
-                    className="w-44 py-3 mt-10 rounded-lg text-white bg-orange-400 text-2xl hover:bg-orange-500"
+                    className="w-44 py-3 mt-10 text-white bg-orange-400 text-2xl hover:bg-orange-500"
                     onClick={addVisit}
                   >
                     Acheter

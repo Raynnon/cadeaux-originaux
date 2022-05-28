@@ -19,7 +19,7 @@ export default function ProductsCard({
       }}
     >
       <a>
-        <div className="flex flex-col border-2 border-coolGray-100 hover:bg-coolGray-100 rounded-lg p-2 mx-1 mb-5 group">
+        <div className="flex flex-col border-2 border-coolGray-100 hover:bg-coolGray-100 p-2 mx-1 mb-5 group">
           {productImages ? (
             <div>
               <Image
@@ -27,12 +27,11 @@ export default function ProductsCard({
                 width={225}
                 height={225}
                 layout="responsive"
-                className="rounded-lg"
                 priority={cardNumber <= 12}
               />
             </div>
           ) : null}
-          <div className="flex items-center text-center text-xl font-semibold align-middle justify-center h-20">
+          <div className="flex items-center text-center text-lg font-semibold align-middle justify-center h-20">
             <h2>{productName}</h2>
           </div>
 
@@ -41,7 +40,7 @@ export default function ProductsCard({
               <p className="font-semibold">Prix</p>
               <p className="text-center">{productPrice}</p>
             </div>
-            <button className="border border-coolGray-300 group-hover:bg-orange-400 group-hover:border-transparent group-hover:text-white rounded-lg p-1 h-9 font-semibold">
+            <button className="border border-coolGray-300 group-hover:bg-orange-400 group-hover:border-transparent group-hover:text-white p-1 h-9">
               En savoir plus
             </button>
           </div>
