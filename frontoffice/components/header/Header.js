@@ -37,7 +37,7 @@ export default function Header({ categories }) {
   };
 
   return (
-    <header className="sticky lg:static top-0 z-50 bg-white items-center text-center h-14 px-2 md:px-10 flex">
+    <header className="sticky lg:static top-0 z-30 bg-white items-center text-center h-14 px-2 md:px-10 flex">
       <div className="lg:hidden">
         <MenuIcon
           className="h-10 w-10 hover:cursor-pointer"

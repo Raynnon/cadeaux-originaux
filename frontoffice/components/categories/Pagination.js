@@ -57,17 +57,17 @@ export default function Pagination({
 
   return (
     <div
-      className="pb-5 flex items-center justify-between"
+      className="flex items-center justify-between"
       style={maxPages <= 1 ? { visibility: 'hidden' } : null}
     >
       <div className="flex-1 flex justify-between sm:hidden">
         <button
           href="#"
-          className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700"
+          className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium bg-white text-gray-700"
           style={currentPage === 1 ? { visibility: 'hidden' } : null}
           onClick={() => pageChange(currentPage - 1)}
         >
-          Précédent
+          Previous
         </button>
 
         <button

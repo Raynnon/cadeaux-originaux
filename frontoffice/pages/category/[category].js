@@ -1,15 +1,17 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import Layout from "../../components/Layout";
-import Pagination from "../../components/categories/Pagination";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import Layout from '../../components/Layout';
+import Pagination from '../../components/categories/Pagination';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { XIcon } from '@heroicons/react/solid';
 
-import filterProducts from "../../components/categories/filterProducts";
-import CheckboxRadio from "../../components/categories/CheckboxRadio";
-import Select from "../../components/categories/Select.js";
-import ProductsCard from "../../components/categories/ProductsCard";
+import filterProducts from '../../components/categories/filterProducts';
+import CheckboxRadio from '../../components/categories/CheckboxRadio';
+import Select from '../../components/categories/Select.js';
+import ProductsCard from '../../components/categories/ProductsCard';
 
 export default function Category({ filters, categories, currentCategory }) {
+  const [mobileFiltersActive, setMobileFiltersActive] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [numberOfProducts, setNumberOfProducts] = useState(0);
   const [selectedSortBy, setSelectedSortBy] = useState(filters.sortBy);
@@ -65,10 +67,10 @@ export default function Category({ filters, categories, currentCategory }) {
   };
 
   const pageTitle = () => {
-    if (categoryName === "Nouveau") {
-      return "Nouveaux cadeaux - Mes cadeaux originaux";
-    } else if (categoryName === "Meilleurs cadeaux") {
-      return "Meilleurs cadeaux - Mes cadeaux originaux";
+    if (categoryName === 'Nouveau') {
+      return 'Nouveaux cadeaux - Mes cadeaux originaux';
+    } else if (categoryName === 'Meilleurs cadeaux') {
+      return 'Meilleurs cadeaux - Mes cadeaux originaux';
     } else {
       return `Cadeau pour ${categoryName} - Mes cadeaux originaux`;
     }
@@ -76,31 +78,75 @@ export default function Category({ filters, categories, currentCategory }) {
 
   return (
     <Layout pageTitle={pageTitle()} description={currentCategory.description}>
-      <div className="flex -mb-10">
-        {/* FILTER */}
-        <aside className="hidden px-1 sm:block pb-5 pt-4 lg:px-5 xl:px-10 bg-coolGray-100">
-          <form className="sm:w-44 xl:w-52">
-            {categoryName === "Nouveau" ||
-            categoryName === "Meilleurs cadeaux" ? null : (
-              <ul>
-                <label htmlFor="sort">
-                  <h4>Classer par:</h4>
-                </label>
-                <select
-                  id="sorts"
-                  className="block w-full bg-white hover:border-coolGray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
-                  onChange={(e) => {
-                    setSelectedSortBy(e.target.value);
-                  }}
-                  defaultValue={selectedSortBy}
-                >
-                  <option value="Nouveau">Nouveau</option>
-                  <option value="Meilleures ventes">Meilleures ventes</option>
-                </select>
-              </ul>
+      {mobileFiltersActive ? (
+        <XIcon
+          className="absolute top-3 left-3 z-50 h-12 w-12 cursor-pointer"
+          onClick={() => setMobileFiltersActive(false)}
+        />
+      ) : null}
+
+      <div className="mx-1 lg:px-6 mt-6 text-center">
+        <h1 className="text-4xl font-semibold lg:mx-64">{`${categoryName}`}</h1>
+        <p className="my-5 text-center lg:mx-64">
+          {currentCategory.description}
+        </p>
+        <div className="hidden lg:block pb-6">
+          <Pagination
+            numberOfProducts={numberOfProducts}
+            currentPage={currentPage}
+            productsPerPage={productsPerPage}
+            updateCurrentPage={onUpdateCurrentPage}
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-col lg:flex-row -mb-10">
+        {/* FILTERS */}
+        <aside className="px-1 sm:block lg:pb-5 lg:pt-4 lg:px-5 xl:px-10 lg:bg-coolGray-100">
+          <div className="flex items-center justify-between lg:hidden mx-2">
+            <p
+              className="bg-coolGray-900 text-white py-2 px-4"
+              onClick={() => setMobileFiltersActive(true)}
+            >
+              Filters
+            </p>
+
+            <Pagination
+              numberOfProducts={numberOfProducts}
+              currentPage={currentPage}
+              productsPerPage={productsPerPage}
+              updateCurrentPage={onUpdateCurrentPage}
+            />
+          </div>
+
+          <form
+            className={`${
+              mobileFiltersActive ? 'absolute' : 'hidden'
+            } lg:static z-40 flex flex-col items-center w-full text-center lg:text-left lg-text lg:block xl:w-52 bg-coolGray-100 top-0 left-0 pt-5 h-full`}
+          >
+            {categoryName === 'Nouveau' ||
+            categoryName === 'Meilleurs cadeaux' ? null : (
+              <>
+                <ul>
+                  <label htmlFor="sort">
+                    <h4>Classer par:</h4>
+                  </label>
+                  <select
+                    id="sorts"
+                    className="block w-full bg-white hover:border-coolGray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
+                    onChange={(e) => {
+                      setSelectedSortBy(e.target.value);
+                    }}
+                    defaultValue={selectedSortBy}
+                  >
+                    <option value="Nouveau">Nouveau</option>
+                    <option value="Meilleures ventes">Meilleures ventes</option>
+                  </select>
+                </ul>
+              </>
             )}
 
-            {currentCategory.parent.includes("Genre") ? null : (
+            {currentCategory.parent.includes('Genre') ? null : (
               <div>
                 <h4>Genre</h4>
                 <ul onChange={(e) => setSelectedGenre(e.target.value)}>
@@ -117,7 +163,7 @@ export default function Category({ filters, categories, currentCategory }) {
                   <CheckboxRadio
                     type="radio"
                     value=""
-                    description={"Tout"}
+                    description={'Tout'}
                     name="genre"
                     checked
                   />
@@ -125,16 +171,16 @@ export default function Category({ filters, categories, currentCategory }) {
               </div>
             )}
 
-            {!currentCategory.parent.includes("Type") &&
-            selectedGenre !== "Animal" ? (
+            {!currentCategory.parent.includes('Type') &&
+            selectedGenre !== 'Animal' ? (
               <div>
                 <h4>Type</h4>
                 <ul>
                   {categories.Type.filter(
                     (type) =>
                       type.parent.includes(selectedGenre) ||
-                      currentCategory !== "Nouveau" ||
-                      currentCategory !== "Meilleurs cadeaux"
+                      currentCategory !== 'Nouveau' ||
+                      currentCategory !== 'Meilleurs cadeaux'
                   ).map((filteredType, index) => {
                     if (
                       filteredType.parent.includes(selectedGenre) ||
@@ -170,7 +216,7 @@ export default function Category({ filters, categories, currentCategory }) {
 
             <h4>Prix</h4>
             <ul>
-              {["€", "€€", "€€€"].map((price, index) => {
+              {['€', '€€', '€€€'].map((price, index) => {
                 return (
                   <CheckboxRadio
                     key={index}
@@ -191,7 +237,7 @@ export default function Category({ filters, categories, currentCategory }) {
                 );
               })}
             </ul>
-            {!selectedParty && !currentCategory.parent.includes("Occasion") ? (
+            {!selectedParty && !currentCategory.parent.includes('Occasion') ? (
               <Select
                 categoryName="Occasion"
                 category={categories.Occasion}
@@ -200,7 +246,7 @@ export default function Category({ filters, categories, currentCategory }) {
                 }}
               />
             ) : null}
-            {!selectedOccasion && !currentCategory.parent.includes("Fête") ? (
+            {!selectedOccasion && !currentCategory.parent.includes('Fête') ? (
               <Select
                 categoryName="Fête"
                 category={categories.Fête}
@@ -212,45 +258,40 @@ export default function Category({ filters, categories, currentCategory }) {
           </form>
         </aside>
 
-        <div className="mx-1 mt-6 lg:px-5">
-          <h1 className="text-4xl font-semibold">{`${categoryName}`}</h1>
-          <p className="my-5 text-justify">{currentCategory.description}</p>
-
-          <Pagination
-            numberOfProducts={numberOfProducts}
-            currentPage={currentPage}
-            productsPerPage={productsPerPage}
-            updateCurrentPage={onUpdateCurrentPage}
-          />
-
-          {/*PRODUCTS */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 justify-between mb-10 min-w-full">
-            {filteredProducts.map((product, index) => {
-              return (
-                <ProductsCard
-                  key={index}
-                  cardNumber={index}
-                  productId={product._id}
-                  productName={product.name}
-                  productPrice={product.price}
-                  productImages={product.images}
-                />
-              );
-            })}
+        {/*PRODUCTS */}
+        {!mobileFiltersActive ? (
+          <div>
+            <div className="px-1 mt-6 lg:mt-0 lg:px-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 justify-between mb-10">
+              {filteredProducts.map((product, index) => {
+                return (
+                  <ProductsCard
+                    key={index}
+                    cardNumber={index}
+                    productId={product._id}
+                    productName={product.name}
+                    productPrice={product.price}
+                    productImages={product.images}
+                  />
+                );
+              })}
+            </div>
+            <div className="px-2 lg:mt-0 lg:px-5 pb-6">
+              <Pagination
+                numberOfProducts={numberOfProducts}
+                currentPage={currentPage}
+                productsPerPage={productsPerPage}
+                updateCurrentPage={onUpdateCurrentPage}
+                details={true}
+              />
+            </div>
           </div>
-
-          <Pagination
-            numberOfProducts={numberOfProducts}
-            currentPage={currentPage}
-            productsPerPage={productsPerPage}
-            updateCurrentPage={onUpdateCurrentPage}
-            details={true}
-          />
-        </div>
+        ) : null}
       </div>
+
       <style global jsx>{`
         h4 {
           margin-top: 10px;
+          margin-bottom: 5px;
           font-weight: 600;
           font-size: 1.25rem;
         }
@@ -264,23 +305,23 @@ export async function getServerSideProps({ query }) {
     const { category } = query;
 
     const formatedCategoryName =
-      category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, " ");
+      category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, ' ');
 
     let currentCategory = {};
 
-    if (formatedCategoryName === "Nouveau") {
+    if (formatedCategoryName === 'Nouveau') {
       currentCategory = {
         name: formatedCategoryName,
         description:
           "Trouvez tous nos nouveaux cadeaux mis en ligne. Si vous cherchez un cadeau vraiment original alors n'hésitez pas à parcourir cette liste d'articles récents.",
-        parent: [""]
+        parent: ['']
       };
-    } else if (formatedCategoryName === "Meilleurs cadeaux") {
+    } else if (formatedCategoryName === 'Meilleurs cadeaux') {
       currentCategory = {
         name: formatedCategoryName,
         description:
-          "Retrouvez nos articles les plus vendus sur cette page. En choisissant parmi nos meilleurs cadeaux, vous vous assurez de faire plaisir à ceux qui les recevront!",
-        parent: [""]
+          'Retrouvez nos articles les plus vendus sur cette page. En choisissant parmi nos meilleurs cadeaux, vous vous assurez de faire plaisir à ceux qui les recevront!',
+        parent: ['']
       };
     } else {
       const dataCurrentCategories = await axios.get(
@@ -299,23 +340,23 @@ export async function getServerSideProps({ query }) {
 
     // INITIATE DEFAULT FILTERS
     let sortBy =
-      currentCategory.name === "Meilleurs cadeaux"
-        ? "Meilleures ventes"
-        : "Nouveau";
+      currentCategory.name === 'Meilleurs cadeaux'
+        ? 'Meilleures ventes'
+        : 'Nouveau';
 
-    let selectedGenre = currentCategory.parent.includes("Genre")
+    let selectedGenre = currentCategory.parent.includes('Genre')
       ? currentCategory.name
-      : "";
+      : '';
 
-    let selectedOccasion = currentCategory.parent.includes("Occasion")
+    let selectedOccasion = currentCategory.parent.includes('Occasion')
       ? currentCategory.name
-      : "";
+      : '';
 
-    let selectedParty = currentCategory.parent.includes("Fête")
+    let selectedParty = currentCategory.parent.includes('Fête')
       ? currentCategory.name
-      : "";
+      : '';
 
-    const selectedType = currentCategory.parent.includes("Type")
+    const selectedType = currentCategory.parent.includes('Type')
       ? [currentCategory.name]
       : [];
 
