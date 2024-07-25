@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
-const getProductionImages = require("../scripts/getProductionImages");
-const dotenv = require("dotenv");
-const fs = require("fs");
-const { dumpDB, restoreDB } = require("./copyDatabase.js");
+const mongoose = require('mongoose');
+const getProductionImages = require('../scripts/getProductionImages');
+const dotenv = require('dotenv');
+const fs = require('fs');
+const { dumpDB, restoreDB } = require('./copyDatabase.js');
 
 dotenv.config();
 
@@ -28,7 +28,7 @@ if (process.env.DEVELOPMENT_MOD) {
   getProductionImages(`${PRODUCTION_URL}/products?images=true`);
 
   const copyDB = async () => {
-    if (!fs.existsSync("./database/backup/")) {
+    if (!fs.existsSync('./database/backup/')) {
       //DUMP PROD DATABASE
       await dumpDB(DB_USER, DB_PASSWORD, DB_HOST, PRODUCTION_DB_NAME);
     }
