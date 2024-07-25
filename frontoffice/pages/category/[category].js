@@ -39,6 +39,8 @@ export default function Category({ filters, categories, currentCategory }) {
       productsPerPage
     );
 
+    console.log('Test', currentCategory);
+
     setFilteredProducts(products);
 
     //SETUP MAX PRODUCTS FOR PAGINATION
@@ -263,6 +265,7 @@ export default function Category({ filters, categories, currentCategory }) {
           <div>
             <div className="px-1 mt-6 lg:mt-0 lg:px-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 justify-between mb-10">
               {filteredProducts.map((product, index) => {
+                console.log('product', product);
                 return (
                   <ProductsCard
                     key={index}
