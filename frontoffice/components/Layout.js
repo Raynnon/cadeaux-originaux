@@ -1,62 +1,40 @@
-import Head from 'next/head';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import Header from './header/Header';
 import SubHeader from './header/SubHeader';
 import Footer from './Footer';
+import { priceRanges } from '../data/prices';
 
-import { useState, useEffect } from 'react';
-
-import axios from 'axios';
-
-export default function Layout({ children, pageTitle, description }) {
+/**
+ * Layout Component
+ * Wraps all pages with header, subheader, and footer
+ * Fetches and provides categories data to child components
+ */
+export default function Layout({ children }) {
   const [categories, setCategories] = useState([]);
-  const [prices, setPrices] = useState([]);
 
-  useEffect(async () => {
-    try {
-      const categoriesReq = await axios(
-        `${process.env.NEXT_PUBLIC_API_URL}/categories/?ordered=true`
-      );
+  useEffect(() => {
+    (async () => {
+      try {
+        // Fetch categories from API
+        const categoriesReq = await axios(
+          `${process.env.NEXT_PUBLIC_API_URL}/categories/?ordered=true`
+        );
 
-      const categoriesData = categoriesReq.data;
-
-      const prices = [
-        { shortName: '€', name: 'Pas cher' },
-        { shortName: '€€', name: 'Bon rapport qualité prix' },
-        { shortName: '€€€', name: 'Haut de gamme' }
-      ];
-
-      setCategories(categoriesData);
-      setPrices(prices);
-    } catch (e) {
-      console.log('categoriesReq error', e);
-    }
+        setCategories(categoriesReq.data);
+      } catch (e) {
+        console.error('Error fetching categories:', e);
+      }
+    })();
   }, []);
 
   return (
     <>
-      <Head>
-        {/* Global Site Tag (gtag.js) - Google Analytics */}
-        <script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');
-      `
-          }}
-        />
-        <title>{pageTitle}</title>
-        <meta name="description" content={description} />
-      </Head>
       <Header categories={categories} />
       <SubHeader categories={categories} />
       <main>{children}</main>
-      <Footer categories={categories} prices={prices} />
+      <Footer categories={categories} prices={priceRanges} />
     </>
   );
 }

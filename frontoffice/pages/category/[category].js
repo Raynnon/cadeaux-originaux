@@ -1,14 +1,27 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import Layout from '../../components/Layout';
-import Pagination from '../../components/categories/Pagination';
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { XIcon } from '@heroicons/react/solid';
+import { XMarkIcon as XIcon } from '@heroicons/react/24/solid';
+import PropTypes from 'prop-types';
 
+import Layout from '../../components/Layout';
+import Pagination from '../../components/categories/Pagination';
 import filterProducts from '../../components/categories/filterProducts';
 import CheckboxRadio from '../../components/categories/CheckboxRadio';
 import Select from '../../components/categories/Select.js';
 import ProductsCard from '../../components/categories/ProductsCard';
+import { specialCategoryDescriptions } from '../../data/categories';
+import { priceSymbols } from '../../data/prices';
+import { FILTER_TITLES, SORT_OPTIONS, PAGINATION, LABELS } from '../../constants';
+
+/**
+ * Category Page Component
+ * Displays products filtered by category with various filter options
+ * @param {Object} filters - Initial filter values
+ * @param {Object} categories - All available categories
+ * @param {Object} currentCategory - Current category being displayed
+ */
 
 export default function Category({ filters, categories, currentCategory }) {
   const [mobileFiltersActive, setMobileFiltersActive] = useState(false);
@@ -26,33 +39,38 @@ export default function Category({ filters, categories, currentCategory }) {
   const productsPerPage = filters.productsPerPage;
   const categoryName = filters.categoryName;
 
-  // GET PRODUCTS ON FILTER CHANGE
-  useEffect(async () => {
-    const products = await filterProducts(
-      selectedGenre,
-      prices,
-      selectedType,
-      selectedOccasion,
-      selectedParty,
-      selectedSortBy,
-      currentPage,
-      productsPerPage
-    );
+  // Fetch products when filters change
+  useEffect(() => {
+    (async () => {
+      try {
+        // Get filtered products for current page
+        const products = await filterProducts(
+          selectedGenre,
+          prices,
+          selectedType,
+          selectedOccasion,
+          selectedParty,
+          selectedSortBy,
+          currentPage,
+          productsPerPage
+        );
 
-    console.log('Test', currentCategory);
+        setFilteredProducts(products);
 
-    setFilteredProducts(products);
+        // Get total count for pagination
+        const maxProducts = await filterProducts(
+          selectedGenre,
+          prices,
+          selectedType,
+          selectedOccasion,
+          selectedParty
+        );
 
-    //SETUP MAX PRODUCTS FOR PAGINATION
-    const maxProducts = await filterProducts(
-      selectedGenre,
-      prices,
-      selectedType,
-      selectedOccasion,
-      selectedParty
-    );
-
-    setNumberOfProducts(maxProducts.numberOfProducts);
+        setNumberOfProducts(maxProducts.numberOfProducts);
+      } catch (e) {
+        console.error('Error fetching filtered products:', e);
+      }
+    })();
   }, [
     selectedGenre,
     selectedOccasion,
@@ -64,10 +82,16 @@ export default function Category({ filters, categories, currentCategory }) {
     productsPerPage
   ]);
 
+  /**
+   * Handle pagination page change
+   */
   const onUpdateCurrentPage = (page) => {
     selectCurrentPage(Number(page));
   };
 
+  /**
+   * Generate page title based on category
+   */
   const pageTitle = () => {
     if (categoryName === 'Nouveau') {
       return 'Nouveaux cadeaux - Mes cadeaux originaux';
@@ -79,16 +103,23 @@ export default function Category({ filters, categories, currentCategory }) {
   };
 
   return (
-    <Layout pageTitle={pageTitle()} description={currentCategory.description}>
-      {mobileFiltersActive ? (
+    <>
+      <Head>
+        <title>{pageTitle()}</title>
+        <meta name="description" content={currentCategory.description} />
+      </Head>
+      <Layout>
+      {/* Mobile Filters Close Button */}
+      {mobileFiltersActive && (
         <XIcon
           className="absolute top-3 left-3 z-50 h-12 w-12 cursor-pointer"
           onClick={() => setMobileFiltersActive(false)}
         />
-      ) : null}
+      )}
 
+      {/* Page Header */}
       <div className="mx-1 lg:px-6 mt-6 text-center">
-        <h1 className="text-4xl font-semibold lg:mx-64">{`${categoryName}`}</h1>
+        <h1 className="text-4xl font-semibold lg:mx-64">{categoryName}</h1>
         <p className="my-5 text-center lg:mx-64">
           {currentCategory.description}
         </p>
@@ -103,14 +134,14 @@ export default function Category({ filters, categories, currentCategory }) {
       </div>
 
       <div className="flex flex-col lg:flex-row -mb-10">
-        {/* FILTERS */}
+        {/* Filters Sidebar */}
         <aside className="px-1 sm:block lg:pb-5 lg:pt-4 lg:px-5 xl:px-10 lg:bg-coolGray-100">
           <div className="flex items-center justify-between lg:hidden mx-2">
             <p
-              className="bg-coolGray-900 text-white py-2 px-4"
+              className="bg-coolGray-900 text-white py-2 px-4 cursor-pointer"
               onClick={() => setMobileFiltersActive(true)}
             >
-              Filters
+              {LABELS.FILTERS}
             </p>
 
             <Pagination
@@ -121,51 +152,50 @@ export default function Category({ filters, categories, currentCategory }) {
             />
           </div>
 
+          {/* Filter Form */}
           <form
             className={`${
               mobileFiltersActive ? 'absolute' : 'hidden'
             } lg:static z-40 flex flex-col items-center w-full text-center lg:text-left lg-text lg:block xl:w-52 bg-coolGray-100 top-0 left-0 pt-5 h-full`}
           >
-            {categoryName === 'Nouveau' ||
-            categoryName === 'Meilleurs cadeaux' ? null : (
-              <>
-                <ul>
-                  <label htmlFor="sort">
-                    <h4>Classer par:</h4>
-                  </label>
-                  <select
-                    id="sorts"
-                    className="block w-full bg-white hover:border-coolGray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
-                    onChange={(e) => {
-                      setSelectedSortBy(e.target.value);
-                    }}
-                    defaultValue={selectedSortBy}
-                  >
-                    <option value="Nouveau">Nouveau</option>
-                    <option value="Meilleures ventes">Meilleures ventes</option>
-                  </select>
-                </ul>
-              </>
+            {/* Sort By Filter (only for regular categories) */}
+            {categoryName !== 'Nouveau' &&
+            categoryName !== 'Meilleurs cadeaux' && (
+              <ul>
+                <label htmlFor="sorts">
+                  <h4>{FILTER_TITLES.SORT_BY}</h4>
+                </label>
+                <select
+                  id="sorts"
+                  className="block w-full bg-white hover:border-coolGray-100 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
+                  onChange={(e) => {
+                    setSelectedSortBy(e.target.value);
+                  }}
+                  defaultValue={selectedSortBy}
+                >
+                  <option value={SORT_OPTIONS.NEW}>{SORT_OPTIONS.NEW}</option>
+                  <option value={SORT_OPTIONS.BEST_SELLERS}>{SORT_OPTIONS.BEST_SELLERS}</option>
+                </select>
+              </ul>
             )}
 
-            {currentCategory.parent.includes('Genre') ? null : (
+            {/* Genre Filter */}
+            {!currentCategory.parent.includes('Genre') && (
               <div>
-                <h4>Genre</h4>
+                <h4>{FILTER_TITLES.GENRE}</h4>
                 <ul onChange={(e) => setSelectedGenre(e.target.value)}>
-                  {categories.Genre.map((genre, index) => {
-                    return (
-                      <CheckboxRadio
-                        key={index}
-                        type="radio"
-                        value={genre.name}
-                        name="genre"
-                      />
-                    );
-                  })}
+                  {categories.Genre.map((genre, index) => (
+                    <CheckboxRadio
+                      key={index}
+                      type="radio"
+                      value={genre.name}
+                      name="genre"
+                    />
+                  ))}
                   <CheckboxRadio
                     type="radio"
                     value=""
-                    description={'Tout'}
+                    description={FILTER_TITLES.ALL}
                     name="genre"
                     checked
                   />
@@ -173,10 +203,11 @@ export default function Category({ filters, categories, currentCategory }) {
               </div>
             )}
 
+            {/* Type Filter */}
             {!currentCategory.parent.includes('Type') &&
-            selectedGenre !== 'Animal' ? (
+            selectedGenre !== 'Animal' && (
               <div>
-                <h4>Type</h4>
+                <h4>{FILTER_TITLES.TYPE}</h4>
                 <ul>
                   {categories.Type.filter(
                     (type) =>
@@ -214,70 +245,69 @@ export default function Category({ filters, categories, currentCategory }) {
                   })}
                 </ul>
               </div>
-            ) : null}
+            )}
 
-            <h4>Prix</h4>
+            {/* Price Filter */}
+            <h4>{FILTER_TITLES.PRICE}</h4>
             <ul>
-              {['€', '€€', '€€€'].map((price, index) => {
-                return (
-                  <CheckboxRadio
-                    key={index}
-                    type="checkbox"
-                    value={price}
-                    name="prix"
-                    checked={prices.includes(price)}
-                    changeCategoryHandler={(changedPrice) => {
-                      if (prices.includes(changedPrice)) {
-                        setPrices(
-                          prices.filter((price) => price !== changedPrice)
-                        );
-                      } else {
-                        setPrices([...prices, changedPrice]);
-                      }
-                    }}
-                  />
-                );
-              })}
+              {priceSymbols.map((price, index) => (
+                <CheckboxRadio
+                  key={index}
+                  type="checkbox"
+                  value={price}
+                  name="prix"
+                  checked={prices.includes(price)}
+                  changeCategoryHandler={(changedPrice) => {
+                    if (prices.includes(changedPrice)) {
+                      setPrices(
+                        prices.filter((price) => price !== changedPrice)
+                      );
+                    } else {
+                      setPrices([...prices, changedPrice]);
+                    }
+                  }}
+                />
+              ))}
             </ul>
-            {!selectedParty && !currentCategory.parent.includes('Occasion') ? (
+            {/* Occasion Filter */}
+            {!selectedParty && !currentCategory.parent.includes('Occasion') && (
               <Select
-                categoryName="Occasion"
+                categoryName={FILTER_TITLES.OCCASION}
                 category={categories.Occasion}
                 changeCategoryHandler={(categoryName) => {
                   setSelectedOccasion(categoryName);
                 }}
               />
-            ) : null}
-            {!selectedOccasion && !currentCategory.parent.includes('Fête') ? (
+            )}
+            {/* Party Filter */}
+            {!selectedOccasion && !currentCategory.parent.includes('Fête') && (
               <Select
-                categoryName="Fête"
+                categoryName={FILTER_TITLES.PARTY}
                 category={categories.Fête}
                 changeCategoryHandler={(categoryName) => {
                   setSelectedParty(categoryName);
                 }}
               />
-            ) : null}
+            )}
           </form>
         </aside>
 
-        {/*PRODUCTS */}
-        {!mobileFiltersActive ? (
+        {/* Products Grid */}
+        {!mobileFiltersActive && (
           <div>
             <div className="px-1 mt-6 lg:mt-0 lg:px-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 justify-between mb-10">
-              {filteredProducts.map((product, index) => {
-                console.log('product', product);
-                return (
-                  <ProductsCard
-                    key={index}
-                    cardNumber={index}
-                    productId={product._id}
-                    productName={product.name}
-                    productPrice={product.price}
-                    productImages={product.images}
-                  />
-                );
-              })}
+              {filteredProducts.map((product, index) => (
+                <ProductsCard
+                  key={index}
+                  cardNumber={index}
+                  productId={product._id}
+                  productName={product.name}
+                  productPrice={product.price}
+                  productImages={product.images}
+                />
+              ))}
             </div>
+            {/* Bottom Pagination */}
             <div className="px-2 lg:mt-0 lg:px-5 pb-6">
               <Pagination
                 numberOfProducts={numberOfProducts}
@@ -288,45 +318,41 @@ export default function Category({ filters, categories, currentCategory }) {
               />
             </div>
           </div>
-        ) : null}
+        )}
       </div>
-
-      <style global jsx>{`
-        h4 {
-          margin-top: 10px;
-          margin-bottom: 5px;
-          font-weight: 600;
-          font-size: 1.25rem;
-        }
-      `}</style>
     </Layout>
+    </>
   );
 }
 
+// PropTypes validation
+Category.propTypes = {
+  filters: PropTypes.object.isRequired,
+  categories: PropTypes.object.isRequired,
+  currentCategory: PropTypes.object.isRequired
+};
+
+/**
+ * Server-side data fetching for category page
+ * Fetches category information and sets up initial filters
+ */
 export async function getServerSideProps({ query }) {
   try {
     const { category } = query;
 
+    // Format category name from URL slug
     const formatedCategoryName =
       category.charAt(0).toUpperCase() + category.slice(1).replace(/-/g, ' ');
 
     let currentCategory = {};
 
+    // Handle special categories (Nouveau, Meilleurs cadeaux)
     if (formatedCategoryName === 'Nouveau') {
-      currentCategory = {
-        name: formatedCategoryName,
-        description:
-          "Trouvez tous nos nouveaux cadeaux mis en ligne. Si vous cherchez un cadeau vraiment original alors n'hésitez pas à parcourir cette liste d'articles récents.",
-        parent: ['']
-      };
+      currentCategory = specialCategoryDescriptions['Nouveau'];
     } else if (formatedCategoryName === 'Meilleurs cadeaux') {
-      currentCategory = {
-        name: formatedCategoryName,
-        description:
-          'Retrouvez nos articles les plus vendus sur cette page. En choisissant parmi nos meilleurs cadeaux, vous vous assurez de faire plaisir à ceux qui les recevront!',
-        parent: ['']
-      };
+      currentCategory = specialCategoryDescriptions['Meilleurs cadeaux'];
     } else {
+      // Fetch regular category from API
       const dataCurrentCategories = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/categories/?name=${formatedCategoryName}`
       );
@@ -334,18 +360,18 @@ export async function getServerSideProps({ query }) {
       currentCategory = dataCurrentCategories.data[0];
     }
 
-    // GET CATEGORIES
+    // Fetch all categories for filters
     const dataCategories = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/categories/?ordered=true`
     );
 
     const categories = dataCategories.data;
 
-    // INITIATE DEFAULT FILTERS
+    // Initialize default filters based on current category
     let sortBy =
       currentCategory.name === 'Meilleurs cadeaux'
-        ? 'Meilleures ventes'
-        : 'Nouveau';
+        ? SORT_OPTIONS.BEST_SELLERS
+        : SORT_OPTIONS.NEW;
 
     let selectedGenre = currentCategory.parent.includes('Genre')
       ? currentCategory.name
@@ -370,8 +396,8 @@ export async function getServerSideProps({ query }) {
       selectedType: selectedType,
       selectedOccasion,
       selectedParty,
-      currentPage: 1,
-      productsPerPage: 24
+      currentPage: PAGINATION.INITIAL_PAGE,
+      productsPerPage: PAGINATION.PRODUCTS_PER_PAGE
     };
 
     return {
@@ -384,5 +410,6 @@ export async function getServerSideProps({ query }) {
     };
   } catch (e) {
     console.error(e);
+    return { notFound: true };
   }
 }

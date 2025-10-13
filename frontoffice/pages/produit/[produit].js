@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Layout from '../../components/Layout';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -31,7 +32,12 @@ export default function Product({
   };
 
   return (
-    <Layout pageTitle={product.name} description={metaDescription}>
+    <>
+      <Head>
+        <title>{product.name}</title>
+        <meta name="description" content={metaDescription} />
+      </Head>
+      <Layout>
       <main className="mt-10 px-10 xl:px-32 ">
         <div className="flex flex-col lg:flex-row justify-between">
           <div className="flex lg:flex-col xl:flex-row justify-center lg:justify-start xl:justify-between items-center xl:items-center lg:pr-20 mb-10">
@@ -43,7 +49,6 @@ export default function Product({
                   width={580}
                   height={580}
                   quality={100}
-                  objectFit="responsive"
                 />
               </div>
             ) : null}
@@ -56,15 +61,15 @@ export default function Product({
                         key={index}
                         className="w-20 xl:w-36 border-2 border-transparent hover:border-orange-400"
                       >
-                        <Image
-                          alt={product.name}
-                          src={image}
-                          width={140}
-                          height={140}
-                          layout="responsive"
-                          className="cursor-pointer"
-                          onMouseEnter={() => setMainImage({ image }.image)}
-                        />
+                          <Image
+                            alt={product.name}
+                            src={image}
+                            width={140}
+                            height={140}
+                            layout="responsive"
+                            className="cursor-pointer"
+                            onMouseEnter={() => setMainImage({ image }.image)}
+                          />
                       </div>
                     );
                   })
@@ -74,18 +79,20 @@ export default function Product({
           <div className="flex flex-col items-center lg:items-start mx-5 lg:w-1/2">
             <h1 className="mb-5 text-4xl font-semibold">{product.name}</h1>
             <p className="text-justify leading-loose">{product.description}</p>
-            {product.urlAmazon ? (
-              <Link href={product.urlAmazon}>
-                <a rel="noopener">
-                  <button
-                    className="w-44 py-3 mt-10 text-white bg-orange-400 text-2xl hover:bg-orange-500"
-                    onClick={addVisit}
-                  >
-                    Acheter
-                  </button>
-                </a>
+            {product.urlAmazon && (
+              <Link
+                href={product.urlAmazon}
+                rel="noopener"
+                target="_blank"
+              >
+                <button
+                  className="w-44 py-3 mt-10 text-white bg-orange-400 text-2xl hover:bg-orange-500"
+                  onClick={addVisit}
+                >
+                  Acheter
+                </button>
               </Link>
-            ) : null}
+            )}
 
             <ul className="mt-10">
               {product.strongPoints
@@ -102,7 +109,6 @@ export default function Product({
                             src="/icons/cadeau.png"
                             width={32}
                             height={32}
-                            objectFit="responsive"
                             className="rounded-md cursor-pointer"
                           />
                         </div>
@@ -114,7 +120,6 @@ export default function Product({
                             src="/icons/cadeau.png"
                             width={32}
                             height={32}
-                            objectFit="responsive"
                             className="rounded-md cursor-pointer"
                           />
                         </div>
@@ -128,7 +133,8 @@ export default function Product({
 
         <ProductsSuggestion />
       </main>
-    </Layout>
+      </Layout>
+    </>
   );
 }
 
@@ -165,5 +171,6 @@ export async function getServerSideProps({ query }) {
     };
   } catch (e) {
     console.error(e);
+    return { notFound: true };
   }
 }
