@@ -31,7 +31,7 @@ export default function SubHeader({ categories }) {
       {/* Logo - Shows on scroll */}
       <Link
         href="/"
-        className={`hidden flex self-center pt-1 ${
+        className={`hidden self-center pt-1 ${
           subHeaderLogoActive ? 'lg:inline' : ''
         }`}
       >
