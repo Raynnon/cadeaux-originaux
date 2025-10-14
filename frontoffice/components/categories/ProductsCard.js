@@ -20,12 +20,11 @@ export default function ProductsCard({
     >
       <div className="flex flex-col border-2 border-coolGray-100 hover:bg-coolGray-100 p-2 mx-1 mb-5 group cursor-pointer">
         {productImages && (
-          <div>
+          <div className="relative w-full aspect-square overflow-hidden">
             <Image
               src={productImages[0]}
-              width={225}
-              height={225}
-              layout="responsive"
+              fill
+              style={{ objectFit: 'cover' }}
               priority={cardNumber <= 12}
               alt={productName}
             />

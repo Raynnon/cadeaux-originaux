@@ -56,21 +56,22 @@ export default function ProductsSuggestion({ type }) {
               }
             }}
           >
-            <div className="flex flex-col shadow-md h-46 hover:bg-coolGray-100 cursor-pointer">
+            <div className="flex flex-col shadow-md hover:bg-coolGray-100 cursor-pointer overflow-hidden">
               {/* Product Image */}
               {product.images && (
-                <Image
-                  alt={product.name}
-                  src={product.images[0]}
-                  width={IMAGE_CONFIG.SIZES.SMALL}
-                  height={IMAGE_CONFIG.SIZES.SMALL}
-                  objectFit="cover"
-                  className="z-1"
-                />
+                <div className="relative w-full aspect-square overflow-hidden">
+                  <Image
+                    alt={product.name}
+                    src={product.images[0]}
+                    fill
+                    style={{ objectFit: 'cover' }}
+                    className="z-1"
+                  />
+                </div>
               )}
               {/* Product Name */}
-              <div className="flex items-center text-center font-small h-16 align-middle justify-center">
-                <p>{product.name}</p>
+              <div className="flex items-center text-center font-small h-16 align-middle justify-center px-2">
+                <p className="text-sm">{product.name}</p>
               </div>
             </div>
           </Link>

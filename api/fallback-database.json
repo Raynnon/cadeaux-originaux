@@ -1,0 +1,1802 @@
+{
+  "products": [
+    {
+      "_id": "68ee859bd8c916a0204643ab9362",
+      "name": "Montre connectée smartwatch sport",
+      "price": "89.99",
+      "description": "Montre intelligente avec suivi d'activité, cardiofréquencemètre et notifications smartphone",
+      "strongPoints": [
+        "Étanche IP68",
+        "Autonomie 7 jours",
+        "GPS intégré",
+        "100+ modes sport"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte",
+        "Ado"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël",
+        "Saint-Valentin"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08DFCWVZ4",
+      "imagesFolder": "montre-connectee-sport",
+      "visits": 150
+    },
+    {
+      "_id": "68ee859beda0b320a1c0a94c6a11",
+      "name": "Set de couteaux japonais professionnel",
+      "price": "129.99",
+      "description": "Ensemble de 5 couteaux de cuisine en acier inoxydable avec bloc en bambou",
+      "strongPoints": [
+        "Acier japonais",
+        "Ultra-tranchants",
+        "Design ergonomique",
+        "Support bambou"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël",
+        "Pendaison de crémaillère"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B07QKWVV8H",
+      "imagesFolder": "couteaux-japonais",
+      "visits": 89
+    },
+    {
+      "_id": "68ee859b789e1fd0339723602cde",
+      "name": "Enceinte Bluetooth portable waterproof",
+      "price": "49.99",
+      "description": "Enceinte sans fil résistante à l'eau avec son 360° et autonomie 24h",
+      "strongPoints": [
+        "Son puissant 20W",
+        "Étanche IPX7",
+        "24h autonomie",
+        "Microphone intégré"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte",
+        "Ado"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [
+        "Piscine",
+        "Plage"
+      ],
+      "urlAmazon": "https://www.amazon.fr/dp/B09C5JZ6HM",
+      "imagesFolder": "enceinte-bluetooth-portable",
+      "visits": 203
+    },
+    {
+      "_id": "68ee859b03108d65cdd19562013a",
+      "name": "Kit de peinture par numéros adulte",
+      "price": "24.99",
+      "description": "Tableau à peindre 40x50cm avec 24 pots de peinture acrylique et pinceaux",
+      "strongPoints": [
+        "Facile pour débutants",
+        "Peintures incluses",
+        "Toile numérotée",
+        "Relaxant"
+      ],
+      "whoKind": [
+        "Femme",
+        "Homme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08T6DJQK9",
+      "imagesFolder": "peinture-numeros",
+      "visits": 67
+    },
+    {
+      "_id": "68ee859bef3e9aa177ed381f1677",
+      "name": "Drone avec caméra 4K",
+      "price": "199.99",
+      "description": "Drone pliable avec caméra 4K, stabilisation 3 axes et autonomie 30min",
+      "strongPoints": [
+        "Vidéo 4K UHD",
+        "Portée 500m",
+        "Mode follow me",
+        "Retour automatique"
+      ],
+      "whoKind": [
+        "Homme"
+      ],
+      "whoType": [
+        "Adulte",
+        "Ado"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08KZYX2JL",
+      "imagesFolder": "drone-camera-4k",
+      "visits": 312
+    },
+    {
+      "_id": "68ee859b7dda89e6c3533bf8a1b2",
+      "name": "Coffret dégustation whisky premium",
+      "price": "79.99",
+      "description": "Coffret de 6 whiskys single malt avec verres de dégustation et guide",
+      "strongPoints": [
+        "6 whiskys d'exception",
+        "Guide de dégustation",
+        "2 verres inclus",
+        "Coffret cadeau"
+      ],
+      "whoKind": [
+        "Homme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Fête des pères",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B07ZPC9QD4",
+      "imagesFolder": "coffret-whisky",
+      "visits": 128
+    },
+    {
+      "_id": "68ee859b569e4807830539addc5b",
+      "name": "Lampe lune 3D avec support",
+      "price": "29.99",
+      "description": "Lampe décorative en forme de lune avec 16 couleurs LED et télécommande",
+      "strongPoints": [
+        "Impression 3D réaliste",
+        "16 couleurs",
+        "Télécommande",
+        "Sans fil"
+      ],
+      "whoKind": [
+        "Femme",
+        "Homme"
+      ],
+      "whoType": [
+        "Adulte",
+        "Enfant",
+        "Ado"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël",
+        "Saint-Valentin"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B07R4Y7D9P",
+      "imagesFolder": "lampe-lune-3d",
+      "visits": 445
+    },
+    {
+      "_id": "68ee859b1ac42aaa834144c003c0",
+      "name": "Kit barista café maison",
+      "price": "69.99",
+      "description": "Ensemble complet avec mousseur lait, doseur, tasseur et accessoires barista",
+      "strongPoints": [
+        "Mousseur électrique",
+        "Acier inoxydable",
+        "Kit complet 8 pièces",
+        "Qualité pro"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08M5X7KYN",
+      "imagesFolder": "kit-barista-cafe",
+      "visits": 94
+    },
+    {
+      "_id": "68ee859b4721e7adf0b28d521468",
+      "name": "Puzzle 3D maquette bois mécanique",
+      "price": "44.99",
+      "description": "Puzzle mécanique en bois à assembler sans colle, modèle horloge fonctionnelle",
+      "strongPoints": [
+        "Sans colle",
+        "Mécanisme réel",
+        "300 pièces",
+        "Bois écologique"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte",
+        "Ado"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B07XQJF3Z8",
+      "imagesFolder": "puzzle-3d-bois",
+      "visits": 156
+    },
+    {
+      "_id": "68ee859b19824354b4901dc88c6a",
+      "name": "Set de spa maison aromathérapie",
+      "price": "39.99",
+      "description": "Coffret bien-être avec huiles essentielles, sels de bain, bougies et masques",
+      "strongPoints": [
+        "10 produits inclus",
+        "Huiles bio",
+        "Coffret luxe",
+        "Parfums naturels"
+      ],
+      "whoKind": [
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Fête des mères",
+        "Saint-Valentin"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08XYQB2NH",
+      "imagesFolder": "set-spa-maison",
+      "visits": 221
+    },
+    {
+      "_id": "68ee859bbfa76ddc44f9ea791dac",
+      "name": "Gourde isotherme inox 1L",
+      "price": "27.99",
+      "description": "Bouteille thermos gardant le chaud 12h et le froid 24h, sans BPA",
+      "strongPoints": [
+        "Double paroi isolante",
+        "Étanche",
+        "Sans BPA",
+        "Écologique"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte",
+        "Ado"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [
+        "Sport",
+        "Randonnée"
+      ],
+      "urlAmazon": "https://www.amazon.fr/dp/B07X3TDQZM",
+      "imagesFolder": "gourde-isotherme",
+      "visits": 178
+    },
+    {
+      "_id": "68ee859b4f4ab3fce5e4acd01823",
+      "name": "Casque gaming RGB sans fil",
+      "price": "89.99",
+      "description": "Casque gamer avec son surround 7.1, micro antibruit et éclairage RGB",
+      "strongPoints": [
+        "Son 7.1 surround",
+        "Sans fil 2.4GHz",
+        "Autonomie 30h",
+        "RGB personnalisable"
+      ],
+      "whoKind": [
+        "Homme"
+      ],
+      "whoType": [
+        "Ado",
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08FD1W3PQ",
+      "imagesFolder": "casque-gaming-rgb",
+      "visits": 389
+    },
+    {
+      "_id": "68ee859b0b0d5924792eab8e5e2f",
+      "name": "Projecteur étoiles galaxie LED",
+      "price": "34.99",
+      "description": "Projecteur de ciel étoilé avec nébuleuse, bluetooth et télécommande",
+      "strongPoints": [
+        "Effets galaxie",
+        "Musique bluetooth",
+        "Timer programmable",
+        "10 modes"
+      ],
+      "whoKind": [
+        "Femme",
+        "Homme"
+      ],
+      "whoType": [
+        "Enfant",
+        "Ado",
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08L8VXFPK",
+      "imagesFolder": "projecteur-etoiles",
+      "visits": 267
+    },
+    {
+      "_id": "68ee859be83b208143157338a61f",
+      "name": "Planche à découper bambou magnétique",
+      "price": "45.99",
+      "description": "Planche de cuisine XL avec tiroirs compartiments et support couteau magnétique",
+      "strongPoints": [
+        "Bambou premium",
+        "Bandes magnétiques",
+        "Tiroirs intégrés",
+        "XL 45x30cm"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Pendaison de crémaillère"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B09BK8QNVX",
+      "imagesFolder": "planche-bambou-magnetique",
+      "visits": 112
+    },
+    {
+      "_id": "68ee859b35f714ef3c702d059ebf",
+      "name": "Kit fabrication bière maison",
+      "price": "59.99",
+      "description": "Kit brassage complet pour brasser 5L de bière artisanale à la maison",
+      "strongPoints": [
+        "Kit complet",
+        "Guide illustré",
+        "Ingrédients inclus",
+        "Réutilisable"
+      ],
+      "whoKind": [
+        "Homme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Fête des pères",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B07KYHBXZ2",
+      "imagesFolder": "kit-biere-maison",
+      "visits": 143
+    },
+    {
+      "_id": "68ee859b4f67a2d6e3ed90367437",
+      "name": "Tapis de yoga premium avec sac",
+      "price": "34.99",
+      "description": "Tapis de yoga épais 6mm antidérapant en TPE écologique avec sangle de transport",
+      "strongPoints": [
+        "6mm d'épaisseur",
+        "Antidérapant",
+        "Écologique TPE",
+        "Sac inclus"
+      ],
+      "whoKind": [
+        "Femme",
+        "Homme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [
+        "Sport"
+      ],
+      "urlAmazon": "https://www.amazon.fr/dp/B08CXVD7FY",
+      "imagesFolder": "tapis-yoga-premium",
+      "visits": 198
+    },
+    {
+      "_id": "68ee859b20fd689b1821d0a8168a",
+      "name": "Coffret rhum arrangé à faire soi-même",
+      "price": "49.99",
+      "description": "Kit DIY avec épices, fruits séchés et bocaux pour préparer son rhum arrangé",
+      "strongPoints": [
+        "4 recettes incluses",
+        "Bocaux en verre",
+        "Épices premium",
+        "Guide détaillé"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B09HQWP5T7",
+      "imagesFolder": "coffret-rhum-arrange",
+      "visits": 87
+    },
+    {
+      "_id": "68ee859b66added8c3813e8d62e7",
+      "name": "Chargeur sans fil 3-en-1 pliable",
+      "price": "39.99",
+      "description": "Station de charge rapide pour iPhone, Apple Watch et AirPods, pliable voyage",
+      "strongPoints": [
+        "Charge 3 appareils",
+        "Pliable compact",
+        "Charge rapide 15W",
+        "Design moderne"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte",
+        "Ado"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B09M3PKFXY",
+      "imagesFolder": "chargeur-sans-fil-3en1",
+      "visits": 276
+    },
+    {
+      "_id": "68ee859b51643f18b26fec685cb4",
+      "name": "Kit jardinage intérieur LED",
+      "price": "79.99",
+      "description": "Potager d'intérieur intelligent avec lampe LED croissance pour herbes aromatiques",
+      "strongPoints": [
+        "Lampe LED intégrée",
+        "Arrosage auto",
+        "12 capsules incluses",
+        "Sans terre"
+      ],
+      "whoKind": [
+        "Femme",
+        "Homme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Fête des mères",
+        "Pendaison de crémaillère"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08RHJZ3YK",
+      "imagesFolder": "kit-jardinage-led",
+      "visits": 134
+    },
+    {
+      "_id": "68ee859b63b26f5fd55c5dc4e322",
+      "name": "Appareil à raclette 8 personnes",
+      "price": "69.99",
+      "description": "Raclette électrique avec grill pierre naturelle et 8 poêlons individuels",
+      "strongPoints": [
+        "Pierre à griller",
+        "8 personnes",
+        "Thermostat réglable",
+        "Revêtement anti-adhésif"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Noël",
+        "Anniversaire",
+        "Pendaison de crémaillère"
+      ],
+      "parties": [
+        "Soirée"
+      ],
+      "urlAmazon": "https://www.amazon.fr/dp/B07VFMR9X3",
+      "imagesFolder": "appareil-raclette-8",
+      "visits": 245
+    },
+    {
+      "_id": "68ee859b33a33fbcb4c7d12d0cad",
+      "name": "Coffret thé premium japonais",
+      "price": "44.99",
+      "description": "Collection de 12 thés japonais bio avec théière en fonte et tasses",
+      "strongPoints": [
+        "12 thés bio",
+        "Théière fonte 0.8L",
+        "2 tasses",
+        "Coffret bambou"
+      ],
+      "whoKind": [
+        "Femme",
+        "Homme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Fête des mères",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08WHGX9PL",
+      "imagesFolder": "coffret-the-japonais",
+      "visits": 156
+    },
+    {
+      "_id": "68ee859b149d0c0195b6df7fb9c1",
+      "name": "Jumelles compactes randonnée 10x42",
+      "price": "54.99",
+      "description": "Jumelles professionnelles étanches avec vision nocturne et grossissement 10x",
+      "strongPoints": [
+        "Optique HD",
+        "Étanche BAK4",
+        "Vision nocturne",
+        "Léger 500g"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte",
+        "Ado"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Fête des pères"
+      ],
+      "parties": [
+        "Randonnée",
+        "Nature"
+      ],
+      "urlAmazon": "https://www.amazon.fr/dp/B08D64N1MZ",
+      "imagesFolder": "jumelles-randonnee",
+      "visits": 98
+    },
+    {
+      "_id": "68ee859bd3b68fc9fb59c5b61b66",
+      "name": "Set cocktail barman professionnel",
+      "price": "39.99",
+      "description": "Kit mixologie 14 pièces en acier inoxydable avec shaker, doseur et accessoires",
+      "strongPoints": [
+        "14 pièces inox",
+        "Shaker 750ml",
+        "Livre recettes",
+        "Support bambou"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Pendaison de crémaillère",
+        "Noël"
+      ],
+      "parties": [
+        "Soirée"
+      ],
+      "urlAmazon": "https://www.amazon.fr/dp/B07MKJD2QS",
+      "imagesFolder": "set-cocktail-barman",
+      "visits": 187
+    },
+    {
+      "_id": "68ee859b1e7e045c82fef945e982",
+      "name": "Carafe filtrante eau design 2.4L",
+      "price": "32.99",
+      "description": "Carafe avec filtre à charbon actif, indicateur électronique et 3 filtres inclus",
+      "strongPoints": [
+        "Filtration charbon",
+        "Indicateur LED",
+        "3 filtres inclus",
+        "Sans BPA"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Pendaison de crémaillère"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08ZSJHQWV",
+      "imagesFolder": "carafe-filtrante",
+      "visits": 167
+    },
+    {
+      "_id": "68ee859b2339d8a0ff0c12f1ba41",
+      "name": "Hamac parachute ultra-léger",
+      "price": "34.99",
+      "description": "Hamac de camping 2 places en nylon parachute avec sangles et mousquetons",
+      "strongPoints": [
+        "Charge 200kg",
+        "Ultra-compact",
+        "Installation facile",
+        "Séchage rapide"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte",
+        "Ado"
+      ],
+      "occasions": [
+        "Anniversaire"
+      ],
+      "parties": [
+        "Camping",
+        "Jardin"
+      ],
+      "urlAmazon": "https://www.amazon.fr/dp/B07GD9V8WJ",
+      "imagesFolder": "hamac-parachute",
+      "visits": 213
+    },
+    {
+      "_id": "68ee859bcc46cdabae703cbb7627",
+      "name": "Microscope numérique USB 1000x",
+      "price": "49.99",
+      "description": "Microscope électronique portable avec écran LCD et prise photo/vidéo",
+      "strongPoints": [
+        "Grossissement 1000x",
+        "Écran 4.3 pouces",
+        "8 LED réglables",
+        "Carte SD"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Enfant",
+        "Ado",
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08J7PYW6M",
+      "imagesFolder": "microscope-numerique",
+      "visits": 145
+    },
+    {
+      "_id": "68ee859ba8d5c0672b686233738d",
+      "name": "Pierre à pizza pour four",
+      "price": "29.99",
+      "description": "Pierre réfractaire rectangulaire 38x30cm avec pelle en bambou",
+      "strongPoints": [
+        "Pierre cordierite",
+        "Résiste 800°C",
+        "Pelle incluse",
+        "Cuisson pro"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Pendaison de crémaillère"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08FQCM4Z7",
+      "imagesFolder": "pierre-pizza-four",
+      "visits": 192
+    },
+    {
+      "_id": "68ee859b1ca77111ed3a8259c860",
+      "name": "Trousse de toilette voyage suspendue",
+      "price": "24.99",
+      "description": "Organisateur cosmétiques imperméable avec crochet et multiples compartiments",
+      "strongPoints": [
+        "Imperméable",
+        "Multiples poches",
+        "Crochet suspendu",
+        "Grande capacité"
+      ],
+      "whoKind": [
+        "Femme",
+        "Homme"
+      ],
+      "whoType": [
+        "Adulte",
+        "Ado"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [
+        "Voyage"
+      ],
+      "urlAmazon": "https://www.amazon.fr/dp/B07XKBN8JQ",
+      "imagesFolder": "trousse-toilette-voyage",
+      "visits": 234
+    },
+    {
+      "_id": "68ee859bba3ada891fa0b99172c1",
+      "name": "Balance de cuisine connectée",
+      "price": "29.99",
+      "description": "Balance alimentaire précise 5kg avec app nutritionnelle et conversion liquide",
+      "strongPoints": [
+        "Précision 1g",
+        "App smartphone",
+        "Infos nutritionnelles",
+        "Design verre"
+      ],
+      "whoKind": [
+        "Femme",
+        "Homme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Pendaison de crémaillère"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08P5VQ8D3",
+      "imagesFolder": "balance-cuisine-connectee",
+      "visits": 178
+    },
+    {
+      "_id": "68ee859b4302d42ed809db113c2e",
+      "name": "Set 6 verres whisky cristal",
+      "price": "54.99",
+      "description": "Verres à whisky old fashioned en cristal sans plomb avec coffret",
+      "strongPoints": [
+        "Cristal premium",
+        "Design classique",
+        "Lave-vaisselle",
+        "Coffret cadeau"
+      ],
+      "whoKind": [
+        "Homme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Fête des pères",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B07YKGF6QP",
+      "imagesFolder": "verres-whisky-cristal",
+      "visits": 124
+    },
+    {
+      "_id": "68ee859ba89f8e79e9025d99e175",
+      "name": "Télescope astronomique débutant",
+      "price": "119.99",
+      "description": "Télescope réfracteur 70mm avec trépied, oculaires et application mobile",
+      "strongPoints": [
+        "Ouverture 70mm",
+        "Trépied réglable",
+        "App carte du ciel",
+        "3 oculaires"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Ado",
+        "Adulte",
+        "Enfant"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08RNBJ6Q7",
+      "imagesFolder": "telescope-astronomique",
+      "visits": 289
+    },
+    {
+      "_id": "68ee859b50cf5351d2bcfda0ba18",
+      "name": "Machine à pâtes électrique",
+      "price": "159.99",
+      "description": "Machine automatique pour pâtes fraîches maison, 13 moules et balance intégrée",
+      "strongPoints": [
+        "100% automatique",
+        "13 formes de pâtes",
+        "Balance intégrée",
+        "Nettoyage facile"
+      ],
+      "whoKind": [
+        "Femme",
+        "Homme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël",
+        "Pendaison de crémaillère"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08XYMHZQK",
+      "imagesFolder": "machine-pates-electrique",
+      "visits": 167
+    },
+    {
+      "_id": "68ee859b8453da5bb568d26a4973",
+      "name": "Sac à dos ordinateur antivol USB",
+      "price": "42.99",
+      "description": "Sac business imperméable avec port USB, compartiment 17 pouces et antivol",
+      "strongPoints": [
+        "Port USB externe",
+        "Antivol",
+        "Imperméable",
+        "Ordinateur 17 pouces"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte",
+        "Ado"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Rentrée scolaire"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B07QFXV6FD",
+      "imagesFolder": "sac-dos-antivol",
+      "visits": 312
+    },
+    {
+      "_id": "68ee859b1f1aa9f901e324d30690",
+      "name": "Coffret gin artisanal avec botaniques",
+      "price": "64.99",
+      "description": "Kit création gin maison avec bouteille, 12 botaniques et guide mixologie",
+      "strongPoints": [
+        "12 botaniques premium",
+        "Bouteille verre",
+        "Guide recettes",
+        "Personnalisable"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B09C8VTHNM",
+      "imagesFolder": "coffret-gin-artisanal",
+      "visits": 98
+    },
+    {
+      "_id": "68ee859b45bdc2633d139c24f41c",
+      "name": "Trottinette électrique adulte pliable",
+      "price": "349.99",
+      "description": "Trottinette électrique 25km/h, autonomie 30km, pliable en 3 secondes",
+      "strongPoints": [
+        "Vitesse 25km/h",
+        "Autonomie 30km",
+        "Pliage rapide",
+        "Double suspension"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte",
+        "Ado"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08QGXR7WJ",
+      "imagesFolder": "trottinette-electrique",
+      "visits": 456
+    },
+    {
+      "_id": "68ee859b15b4d68279afbbc9f415",
+      "name": "Plaid chauffant électrique doux",
+      "price": "49.99",
+      "description": "Couverture chauffante sherpa 150x180cm avec 6 niveaux de chaleur et arrêt auto",
+      "strongPoints": [
+        "6 niveaux chaleur",
+        "Arrêt automatique",
+        "Lavable machine",
+        "Extra doux"
+      ],
+      "whoKind": [
+        "Femme",
+        "Homme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08MWNB7PK",
+      "imagesFolder": "plaid-chauffant",
+      "visits": 287
+    },
+    {
+      "_id": "68ee859b8e5f971858092554276b",
+      "name": "Kit fabrication fromage maison",
+      "price": "39.99",
+      "description": "Kit complet pour faire mozzarella, ricotta et fromage frais à la maison",
+      "strongPoints": [
+        "4 types de fromages",
+        "Tous ingrédients inclus",
+        "Guide illustré",
+        "Moules inclus"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B07Y8MJNKP",
+      "imagesFolder": "kit-fromage-maison",
+      "visits": 112
+    },
+    {
+      "_id": "68ee859b6f742812bd6a4160f665",
+      "name": "Horloge murale design industriel",
+      "price": "54.99",
+      "description": "Grande horloge silencieuse 60cm style vintage industriel métal et bois",
+      "strongPoints": [
+        "Diamètre 60cm",
+        "Silencieuse",
+        "Style industriel",
+        "Chiffres romains"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Pendaison de crémaillère",
+        "Anniversaire"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08BCJKX9R",
+      "imagesFolder": "horloge-murale-industriel",
+      "visits": 203
+    },
+    {
+      "_id": "68ee859bf2a9d7c62f39096f24cd",
+      "name": "Carafe à vin aérateur design",
+      "price": "34.99",
+      "description": "Carafe en cristal 1.5L avec aérateur intégré et bouchon verseur",
+      "strongPoints": [
+        "Aération optimale",
+        "Cristal sans plomb",
+        "Design élégant",
+        "Facile à nettoyer"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Pendaison de crémaillère"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B07QK8BMVX",
+      "imagesFolder": "carafe-vin-aerateur",
+      "visits": 145
+    },
+    {
+      "_id": "68ee859b97d797c0a01643cd38f7",
+      "name": "Coussin massant shiatsu chauffant",
+      "price": "44.99",
+      "description": "Coussin de massage électrique 3D avec chaleur infrarouge pour nuque et dos",
+      "strongPoints": [
+        "Massage 3D",
+        "Chaleur infrarouge",
+        "Portable",
+        "Auto et maison"
+      ],
+      "whoKind": [
+        "Femme",
+        "Homme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Fête des mères",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B07WPXK9CQ",
+      "imagesFolder": "coussin-massage-shiatsu",
+      "visits": 256
+    },
+    {
+      "_id": "68ee859b581dd7033cbf75bb4e56",
+      "name": "Tablier de cuisine cuir vintage",
+      "price": "49.99",
+      "description": "Tablier professionnel en cuir véritable avec poches et lanières réglables",
+      "strongPoints": [
+        "Cuir véritable",
+        "Multiples poches",
+        "Réglable",
+        "Style vintage"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Fête des pères"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08D8KQPRZ",
+      "imagesFolder": "tablier-cuir-vintage",
+      "visits": 134
+    },
+    {
+      "_id": "68ee859b34ca2e7d9d589a846105",
+      "name": "Climatiseur portable 4-en-1",
+      "price": "89.99",
+      "description": "Refroidisseur d'air mobile avec humidificateur, ventilateur et purificateur",
+      "strongPoints": [
+        "4 fonctions",
+        "3 vitesses",
+        "Réservoir 4L",
+        "Silencieux"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08YJZGBP4",
+      "imagesFolder": "climatiseur-portable",
+      "visits": 345
+    },
+    {
+      "_id": "68ee859bfb6d198b45078ccb74cc",
+      "name": "Kit origami papier japonais",
+      "price": "22.99",
+      "description": "Coffret 500 feuilles origami colorées avec livre instructions 100 modèles",
+      "strongPoints": [
+        "500 feuilles",
+        "100 modèles",
+        "Papier premium",
+        "Tous niveaux"
+      ],
+      "whoKind": [
+        "Femme",
+        "Homme"
+      ],
+      "whoType": [
+        "Enfant",
+        "Ado",
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08VCNPZQX",
+      "imagesFolder": "kit-origami-japonais",
+      "visits": 178
+    },
+    {
+      "_id": "68ee859b42497676a058c8e10693",
+      "name": "Machine à pop-corn vintage rouge",
+      "price": "59.99",
+      "description": "Machine pop-corn électrique design rétro avec mesureur et sans huile",
+      "strongPoints": [
+        "Design vintage",
+        "Sans huile",
+        "Rapide 3min",
+        "Facile à nettoyer"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Pendaison de crémaillère"
+      ],
+      "parties": [
+        "Cinéma",
+        "Soirée"
+      ],
+      "urlAmazon": "https://www.amazon.fr/dp/B08NCRJ4TX",
+      "imagesFolder": "machine-popcorn-vintage",
+      "visits": 223
+    },
+    {
+      "_id": "68ee859b5d3666e006cb58df1929",
+      "name": "Support smartphone voiture magnétique",
+      "price": "19.99",
+      "description": "Support téléphone voiture ventilation avec aimant puissant et rotation 360°",
+      "strongPoints": [
+        "Fixation magnétique",
+        "Rotation 360°",
+        "Installation facile",
+        "Compatible tous smartphones"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte",
+        "Ado"
+      ],
+      "occasions": [
+        "Anniversaire"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08GKPQ5VW",
+      "imagesFolder": "support-smartphone-voiture",
+      "visits": 267
+    },
+    {
+      "_id": "68ee859bac6c5148a8af8a35dc45",
+      "name": "Set 3 valises rigides légères",
+      "price": "139.99",
+      "description": "Ensemble valises ABS ultra-légères avec serrure TSA et 4 roues silencieuses",
+      "strongPoints": [
+        "3 tailles S/M/L",
+        "Ultra-légères",
+        "4 roues 360°",
+        "Serrure TSA"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [
+        "Voyage"
+      ],
+      "urlAmazon": "https://www.amazon.fr/dp/B08QV5XKMJ",
+      "imagesFolder": "set-valises-rigides",
+      "visits": 198
+    },
+    {
+      "_id": "68ee859bc8b3dca67eec20b05931",
+      "name": "Plancha électrique XXL pierre",
+      "price": "89.99",
+      "description": "Plancha électrique 45x25cm avec revêtement pierre et thermostat réglable",
+      "strongPoints": [
+        "Surface XXL",
+        "Revêtement pierre",
+        "Thermostat réglable",
+        "Facile à nettoyer"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Fête des pères",
+        "Pendaison de crémaillère"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B07Y3QGBMR",
+      "imagesFolder": "plancha-electrique-xxl",
+      "visits": 189
+    },
+    {
+      "_id": "68ee859b8ff4793b5b99f8506afd",
+      "name": "Kit calligraphie moderne complet",
+      "price": "34.99",
+      "description": "Ensemble calligraphie avec porte-plumes, encres, papiers et guide d'apprentissage",
+      "strongPoints": [
+        "Kit complet débutant",
+        "12 plumes",
+        "5 encres",
+        "Guide illustré"
+      ],
+      "whoKind": [
+        "Femme",
+        "Homme"
+      ],
+      "whoType": [
+        "Adulte",
+        "Ado"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08Y5SQ9KL",
+      "imagesFolder": "kit-calligraphie-moderne",
+      "visits": 145
+    },
+    {
+      "_id": "68ee859bcc24ab753e760ff64d02",
+      "name": "Bouilloire électrique température réglable",
+      "price": "54.99",
+      "description": "Bouilloire 1.7L avec 5 températures préréglées et maintien au chaud 30min",
+      "strongPoints": [
+        "5 températures",
+        "Maintien chaleur",
+        "Inox premium",
+        "Sans BPA"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Pendaison de crémaillère"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08T1Z7QMX",
+      "imagesFolder": "bouilloire-temperature",
+      "visits": 223
+    },
+    {
+      "_id": "68ee859b9078b454f551332c4361",
+      "name": "Mini projecteur portable full HD",
+      "price": "149.99",
+      "description": "Vidéoprojecteur compact 1080p natif avec haut-parleurs et connexion wifi",
+      "strongPoints": [
+        "1080p natif",
+        "WiFi intégré",
+        "Portable 800g",
+        "3000 lumens"
+      ],
+      "whoKind": [
+        "Homme",
+        "Femme"
+      ],
+      "whoType": [
+        "Adulte",
+        "Ado"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Noël"
+      ],
+      "parties": [
+        "Cinéma"
+      ],
+      "urlAmazon": "https://www.amazon.fr/dp/B09NNKLM3P",
+      "imagesFolder": "mini-projecteur-portable",
+      "visits": 387
+    },
+    {
+      "_id": "68ee859b069ca07a9c02c5547ea9",
+      "name": "Coffret chocolats artisanaux premium",
+      "price": "39.99",
+      "description": "Assortiment 24 chocolats belges artisanaux dans coffret luxe",
+      "strongPoints": [
+        "Chocolats belges",
+        "24 pièces variées",
+        "Coffret luxe",
+        "Fait main"
+      ],
+      "whoKind": [
+        "Femme",
+        "Homme"
+      ],
+      "whoType": [
+        "Adulte"
+      ],
+      "occasions": [
+        "Anniversaire",
+        "Saint-Valentin",
+        "Fête des mères",
+        "Noël"
+      ],
+      "parties": [],
+      "urlAmazon": "https://www.amazon.fr/dp/B08WLPJB9K",
+      "imagesFolder": "coffret-chocolats-premium",
+      "visits": 312
+    }
+  ],
+  "categories": [
+    {
+      "name": "Genre",
+      "description": "Catégorie principale Genre",
+      "parent": []
+    },
+    {
+      "name": "Type",
+      "description": "Catégorie principale Type",
+      "parent": []
+    },
+    {
+      "name": "Occasion",
+      "description": "Catégorie principale Occasion",
+      "parent": []
+    },
+    {
+      "name": "Fête",
+      "description": "Catégorie principale Fête",
+      "parent": []
+    },
+    {
+      "name": "High-Tech",
+      "description": "Catégorie principale High-Tech",
+      "parent": []
+    },
+    {
+      "name": "Cuisine & Maison",
+      "description": "Catégorie principale Cuisine & Maison",
+      "parent": []
+    },
+    {
+      "name": "Sport & Outdoor",
+      "description": "Catégorie principale Sport & Outdoor",
+      "parent": []
+    },
+    {
+      "name": "Bien-être",
+      "description": "Catégorie principale Bien-être",
+      "parent": []
+    },
+    {
+      "name": "Loisirs créatifs",
+      "description": "Catégorie principale Loisirs créatifs",
+      "parent": []
+    },
+    {
+      "name": "Pour Homme",
+      "description": "Cadeaux pour hommes",
+      "parent": [
+        "Genre"
+      ]
+    },
+    {
+      "name": "Pour Femme",
+      "description": "Cadeaux pour femmes",
+      "parent": [
+        "Genre"
+      ]
+    },
+    {
+      "name": "Pour Enfant",
+      "description": "Cadeaux pour enfants",
+      "parent": [
+        "Genre"
+      ]
+    },
+    {
+      "name": "Pour Ado",
+      "description": "Cadeaux pour adolescents",
+      "parent": [
+        "Genre"
+      ]
+    },
+    {
+      "name": "Adulte",
+      "description": "Pour les adultes",
+      "parent": [
+        "Type",
+        "Pour Homme",
+        "Pour Femme"
+      ]
+    },
+    {
+      "name": "Enfant",
+      "description": "Pour les enfants",
+      "parent": [
+        "Type",
+        "Pour Enfant"
+      ]
+    },
+    {
+      "name": "Ado",
+      "description": "Pour les adolescents",
+      "parent": [
+        "Type",
+        "Pour Ado"
+      ]
+    },
+    {
+      "name": "Anniversaire",
+      "description": "Cadeaux d'anniversaire",
+      "parent": [
+        "Occasion"
+      ]
+    },
+    {
+      "name": "Noël",
+      "description": "Cadeaux de Noël",
+      "parent": [
+        "Occasion"
+      ]
+    },
+    {
+      "name": "Saint-Valentin",
+      "description": "Cadeaux de Saint-Valentin",
+      "parent": [
+        "Occasion"
+      ]
+    },
+    {
+      "name": "Fête des mères",
+      "description": "Cadeaux pour la fête des mères",
+      "parent": [
+        "Occasion"
+      ]
+    },
+    {
+      "name": "Fête des pères",
+      "description": "Cadeaux pour la fête des pères",
+      "parent": [
+        "Occasion"
+      ]
+    },
+    {
+      "name": "Pendaison de crémaillère",
+      "description": "Cadeaux de pendaison de crémaillère",
+      "parent": [
+        "Occasion"
+      ]
+    },
+    {
+      "name": "Rentrée scolaire",
+      "description": "Cadeaux de rentrée scolaire",
+      "parent": [
+        "Occasion"
+      ]
+    },
+    {
+      "name": "Piscine",
+      "description": "Pour la piscine",
+      "parent": [
+        "Fête"
+      ]
+    },
+    {
+      "name": "Plage",
+      "description": "Pour la plage",
+      "parent": [
+        "Fête"
+      ]
+    },
+    {
+      "name": "Sport",
+      "description": "Pour le sport",
+      "parent": [
+        "Fête"
+      ]
+    },
+    {
+      "name": "Randonnée",
+      "description": "Pour la randonnée",
+      "parent": [
+        "Fête"
+      ]
+    },
+    {
+      "name": "Camping",
+      "description": "Pour le camping",
+      "parent": [
+        "Fête"
+      ]
+    },
+    {
+      "name": "Jardin",
+      "description": "Pour le jardin",
+      "parent": [
+        "Fête"
+      ]
+    },
+    {
+      "name": "Soirée",
+      "description": "Pour les soirées",
+      "parent": [
+        "Fête"
+      ]
+    },
+    {
+      "name": "Cinéma",
+      "description": "Pour le cinéma",
+      "parent": [
+        "Fête"
+      ]
+    },
+    {
+      "name": "Voyage",
+      "description": "Pour les voyages",
+      "parent": [
+        "Fête"
+      ]
+    },
+    {
+      "name": "Nature",
+      "description": "Pour la nature",
+      "parent": [
+        "Fête"
+      ]
+    },
+    {
+      "name": "Tech & Gadgets",
+      "description": "Gadgets électroniques",
+      "parent": [
+        "High-Tech",
+        "Pour Homme"
+      ]
+    },
+    {
+      "name": "Audio & Vidéo",
+      "description": "Enceintes, casques",
+      "parent": [
+        "High-Tech"
+      ]
+    },
+    {
+      "name": "Domotique",
+      "description": "Objets connectés",
+      "parent": [
+        "High-Tech"
+      ]
+    },
+    {
+      "name": "Ustensiles cuisine",
+      "description": "Accessoires de cuisine",
+      "parent": [
+        "Cuisine & Maison"
+      ]
+    },
+    {
+      "name": "Électroménager",
+      "description": "Petits électroménagers",
+      "parent": [
+        "Cuisine & Maison"
+      ]
+    },
+    {
+      "name": "Arts de la table",
+      "description": "Vaisselle et accessoires",
+      "parent": [
+        "Cuisine & Maison"
+      ]
+    },
+    {
+      "name": "Fitness",
+      "description": "Équipement fitness",
+      "parent": [
+        "Sport & Outdoor"
+      ]
+    },
+    {
+      "name": "Camping & Randonnée",
+      "description": "Matériel outdoor",
+      "parent": [
+        "Sport & Outdoor"
+      ]
+    },
+    {
+      "name": "Vélo & Trottinette",
+      "description": "Vélos et accessoires",
+      "parent": [
+        "Sport & Outdoor"
+      ]
+    },
+    {
+      "name": "Massage & Relaxation",
+      "description": "Appareils de massage",
+      "parent": [
+        "Bien-être"
+      ]
+    },
+    {
+      "name": "Aromathérapie",
+      "description": "Huiles essentielles",
+      "parent": [
+        "Bien-être"
+      ]
+    },
+    {
+      "name": "Beauté & Spa",
+      "description": "Soins et produits de beauté",
+      "parent": [
+        "Bien-être",
+        "Pour Femme"
+      ]
+    },
+    {
+      "name": "DIY & Craft",
+      "description": "Kits créatifs",
+      "parent": [
+        "Loisirs créatifs"
+      ]
+    },
+    {
+      "name": "Peinture & Dessin",
+      "description": "Matériel artistique",
+      "parent": [
+        "Loisirs créatifs"
+      ]
+    },
+    {
+      "name": "Couture & Tricot",
+      "description": "Matériel couture",
+      "parent": [
+        "Loisirs créatifs"
+      ]
+    },
+    {
+      "name": "Romantique",
+      "description": "Cadeaux romantiques",
+      "parent": [
+        "Occasion"
+      ]
+    },
+    {
+      "name": "Bébé",
+      "description": "Cadeaux pour bébé",
+      "parent": [
+        "Occasion",
+        "Genre"
+      ]
+    },
+    {
+      "name": "Mariage",
+      "description": "Cadeaux de mariage",
+      "parent": [
+        "Occasion"
+      ]
+    },
+    {
+      "name": "Remerciements",
+      "description": "Cadeaux de remerciement",
+      "parent": [
+        "Occasion"
+      ]
+    },
+    {
+      "name": "Cadeau rigolo",
+      "description": "Cadeaux fun et rigolos",
+      "parent": [
+        "Occasion"
+      ]
+    }
+  ]
+}

@@ -13,11 +13,14 @@ const filteredProducts = async (
   // If there is no specified page so we retun the count of documents
   let count = !currentPage && !productsPerPage;
 
+  // Transform genre from "Pour Homme" to "Homme" to match product data
+  const transformedGenre = selectedGenre ? selectedGenre.replace('Pour ', '') : selectedGenre;
+
   const parametersName = {
     sortBy: selectedSortBy,
     currentPage: currentPage,
     productsPerPage: productsPerPage,
-    whoKind: selectedGenre,
+    whoKind: transformedGenre,
     whoType: selectedType.join(","),
     price: prices.join(","),
     occasions: selectedOccasion,

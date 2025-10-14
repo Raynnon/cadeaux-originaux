@@ -1,17 +1,14 @@
-const express = require("express");
-const cors = require("cors");
-const router = require("./routes/routes");
-require("./database/mongoDB");
+const app = require("./src/app");
+const connectDatabase = require("./src/config/database");
+const setupDevelopmentMode = require("./src/config/developmentSetup");
 
-const app = express();
+// Connect to database
+connectDatabase();
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(cors());
-app.use(express.static("public"));
+// Setup development mode if needed
+setupDevelopmentMode();
 
-app.use(router);
-
+// Start server
 app.listen(process.env.PORT, () => {
   console.log(`Server listening on port ${process.env.PORT}`);
 });
