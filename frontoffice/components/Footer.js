@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import Link from "next/link";
-import PropTypes from "prop-types";
+import Link from 'next/link';
+import PropTypes from 'prop-types';
 
 /**
  * Footer Component
@@ -13,16 +13,14 @@ export default function Footer({ categories }) {
   const mainCategories = ['Genre', 'Type', 'Occasion', 'Fête', 'High-Tech'];
 
   return (
-    <footer className="pb-5 pt-5 bg-coolGray-600 text-coolGray-300 items-center xl:px-40 mt-10 footer-hover">
+    <footer className="pb-5 pt-5 bg-primary-400 text-white items-center xl:px-40 mt-10 footer-hover">
       <div className="text-center">
         <ul className="container mx-auto flex justify-around text-sm md:text-lg">
           {/* Nouveau */}
           <li>
             <ul className="flex flex-col font-semibold">
               <li>
-                <Link href="/category/Nouveau">
-                  NOUVEAU
-                </Link>
+                <Link href="/category/Nouveau">NOUVEAU</Link>
               </li>
             </ul>
           </li>
@@ -31,9 +29,7 @@ export default function Footer({ categories }) {
           <li>
             <ul className="flex flex-col font-semibold">
               <li>
-                <Link href="/category/Meilleurs-cadeaux">
-                  POPULAIRE
-                </Link>
+                <Link href="/category/Meilleurs-cadeaux">POPULAIRE</Link>
               </li>
             </ul>
           </li>
@@ -47,7 +43,11 @@ export default function Footer({ categories }) {
               <li key={index}>
                 <ul className="flex flex-col font-semibold">
                   <li>
-                    <Link href={`/category/${categoryName.split(/[ ,]+/).join("-")}`}>
+                    <Link
+                      href={`/category/${categoryName
+                        .split(/[ ,]+/)
+                        .join('-')}`}
+                    >
                       {categoryName.toUpperCase()}
                     </Link>
                   </li>
@@ -68,6 +68,7 @@ export default function Footer({ categories }) {
 
 // PropTypes validation
 Footer.propTypes = {
-  categories: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
+  categories: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+    .isRequired,
   prices: PropTypes.array
 };
