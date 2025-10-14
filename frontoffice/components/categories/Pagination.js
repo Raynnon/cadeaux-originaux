@@ -37,9 +37,9 @@ export default function Pagination({
     return pageNumberArr.map((page, index) => {
       let classToAdd = '';
       if (page + 1 === currentPage) {
-        classToAdd = 'z-10 bg-orange-400 border-orange-500';
+        classToAdd = 'z-10 bg-primary-400 border-primary-500 text-white';
       } else {
-        classToAdd = 'bg-white cursor-pointer';
+        classToAdd = 'bg-white cursor-pointer hover:bg-primary-50 transition-colors';
       }
 
       return (

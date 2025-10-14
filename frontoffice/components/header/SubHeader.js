@@ -27,7 +27,7 @@ export default function SubHeader({ categories }) {
   }
 
   return (
-    <div className="hidden sticky top-0 bg-orange-400 h-11 z-50 px-16 lg:flex drop-shadow">
+    <div className="hidden sticky top-0 bg-primary-400 h-11 z-50 px-16 lg:flex drop-shadow">
       {/* Logo - Shows on scroll */}
       <Link
         href="/"
@@ -85,7 +85,7 @@ export default function SubHeader({ categories }) {
                         >
                           <Link
                             href={`/category/${subcategory.name.split(/[ ,]+/).join('-')}`}
-                            className="hover:text-orange-400 text-sm"
+                            className="hover:text-secondary-400 text-sm transition-colors"
                           >
                             {subcategory.name}
                           </Link>
@@ -110,14 +110,14 @@ export default function SubHeader({ categories }) {
                         className="py-2 my-1 border-b border-coolGray-200 last:border-0 last:my-0 text-coolGray-800"
                         key={index}
                       >
-                        <p className="font-semibold text-orange-400 mb-1 text-sm">{category}</p>
+                        <p className="font-semibold text-primary-500 mb-1 text-sm">{category}</p>
                         <ul className="pl-2">
                           {categories[category].map((subcategory, subIndex) => {
                             return (
                               <li key={subIndex} className="py-1">
                                 <Link
                                   href={`/category/${subcategory.name.split(/[ ,]+/).join('-')}`}
-                                  className="hover:text-orange-400 text-sm block"
+                                  className="hover:text-secondary-400 text-sm block transition-colors"
                                 >
                                   {subcategory.name}
                                 </Link>

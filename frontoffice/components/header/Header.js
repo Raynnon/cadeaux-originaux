@@ -80,7 +80,7 @@ export default function Header({ categories }) {
               {/* Featured Categories */}
               {displayedCategories.map((category, index) => {
                 return (
-                  <li key={index} className="px-4 py-2 bg-coolGray-100 text-orange-400 border-b-2 border-coolGray-200">
+                  <li key={index} className="px-4 py-2 bg-coolGray-100 text-primary-500 border-b-2 border-coolGray-200">
                     <Link
                       href={`/category/${category.split(/[ ,]+/).join('-')}`}
                       className="font-semibold block"

@@ -6,6 +6,19 @@ const path = require("path");
 const fs = require("fs");
 
 /**
+ * Convert numeric price to price symbol based on ranges
+ * € : 0-30€
+ * €€ : 30-75€
+ * €€€ : 75€+
+ */
+const getPriceSymbol = (numericPrice) => {
+  const price = parseFloat(numericPrice);
+  if (price < 30) return '€';
+  if (price < 75) return '€€';
+  return '€€€';
+};
+
+/**
  * Load fallback database from JSON file
  */
 const loadFallbackDatabase = () => {
@@ -54,7 +67,10 @@ const filterFallbackProducts = (products, params) => {
     );
   }
   if (params.price) {
-    filtered = filtered.filter(p => p.price === params.price);
+    const priceSymbols = params.price.split(",");
+    filtered = filtered.filter(p =>
+      priceSymbols.includes(getPriceSymbol(p.price))
+    );
   }
 
   // Sort

@@ -39,7 +39,7 @@ export default function ProductsCard({
             <p className="font-semibold">Prix</p>
             <p className="text-center">{productPrice}</p>
           </div>
-          <button className="border border-coolGray-300 group-hover:bg-orange-400 group-hover:border-transparent group-hover:text-white p-1 h-9">
+          <button className="border border-coolGray-300 group-hover:bg-secondary-400 group-hover:border-transparent group-hover:text-white p-1 h-9 transition-all">
             En savoir plus
           </button>
         </div>

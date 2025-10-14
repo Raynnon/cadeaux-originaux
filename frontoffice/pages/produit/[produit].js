@@ -59,7 +59,7 @@ export default function Product({
                     return (
                       <div
                         key={index}
-                        className="w-20 xl:w-36 border-2 border-transparent hover:border-orange-400"
+                        className="w-20 xl:w-36 border-2 border-transparent hover:border-secondary-400 transition-colors"
                       >
                           <Image
                             alt={product.name}
@@ -86,7 +86,7 @@ export default function Product({
                 target="_blank"
               >
                 <button
-                  className="w-44 py-3 mt-10 text-white bg-orange-400 text-2xl hover:bg-orange-500"
+                  className="w-44 py-3 mt-10 text-white bg-primary-500 text-2xl hover:bg-primary-600 transition-colors"
                   onClick={addVisit}
                 >
                   Acheter
