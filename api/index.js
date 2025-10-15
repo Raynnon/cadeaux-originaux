@@ -8,7 +8,13 @@ connectDatabase();
 // Setup development mode if needed
 setupDevelopmentMode();
 
-// Start server
-app.listen(process.env.PORT, () => {
-  console.log(`Server listening on port ${process.env.PORT}`);
-});
+// Start server (only in local development)
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
+  });
+}
+
+// Export for Vercel serverless
+module.exports = app;
