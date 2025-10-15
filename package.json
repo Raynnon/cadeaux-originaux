@@ -1,1 +1,9 @@
-{}
+{
+  "name": "cadeaux-originaux-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev:frontoffice": "pnpm --filter frontoffice dev",
+    "build:frontoffice": "pnpm --filter frontoffice build"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "buildCommand": "cd frontoffice && pnpm install && pnpm build",
+  "outputDirectory": "frontoffice/.next",
+  "installCommand": "pnpm install --filter=frontoffice...",
+  "framework": "nextjs",
+  "rootDirectory": "frontoffice"
+}
