@@ -1,0 +1,23 @@
+services:
+  # API Backend
+  - type: web
+    name: cadeaux-originaux-api
+    runtime: node
+    region: frankfurt
+    plan: free
+    buildCommand: cd api && pnpm install
+    startCommand: cd api && node index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+    healthCheckPath: /health
+
+  # Cron job to keep the API awake
+  - type: cron
+    name: keep-api-awake
+    runtime: node
+    schedule: "*/10 * * * *"
+    buildCommand: echo "No build needed"
+    startCommand: curl https://cadeaux-originaux-api.onrender.com/health
